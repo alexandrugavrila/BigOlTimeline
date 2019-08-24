@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+    <svg height="200px" width="200px">
+      <g class="blue">
+        <circle cx="100" cy="100" r="50" style="fill: #0091EA"></circle>
+        <circle cx="100" cy="150" r="50" style="fill: #0091EA"></circle>
+      </g>
+      <circle cx="150" cy="125" r="50" style="fill: #00C853"></circle>
+    </svg>
+    <script>
+      d3.selectAll('g.blue').on('mouseenter', function() {
+        this.parentElement.appendChild(this);
+      });
+    </script>
+  </body>
+</html>

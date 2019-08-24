@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+	<h1>Big Ol Timeline</h1>
+		<style>
+			#regionsheader {
+				position: sticky;
+				top: 0px; }
+			.regionText {
+				font: 15px Arial; }
+			.regionBox {
+				fill:rgb(255,255,255);
+				stroke:black;
+				stroke-width:2 }
+			.powergroup { filter: url('#powerborder') }
+			.powergrouphover { 
+				filter: url('#powerhover');
+				border: 8px solid black; }
+		</style>
+		
+	</svg>
+		
+	<div id="regionsheader">	
+		<svg width="1500" height="100">
+			<title>TimelineRegions</title>	
+			<rect class="regionBox" x="100" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="150.0" y="15" text-anchor="middle" alignment-baseline="middle">Ireland</text>
+			<rect class="regionBox" x="200" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="250.0" y="15" text-anchor="middle" alignment-baseline="middle">Scotland</text>
+			<rect class="regionBox" x="300" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="350.0" y="15" text-anchor="middle" alignment-baseline="middle">Britain</text>
+			<rect class="regionBox" x="400" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="450.0" y="15" text-anchor="middle" alignment-baseline="middle">Skandinavia</text>
+			<rect class="regionBox" x="500" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="550.0" y="15" text-anchor="middle" alignment-baseline="middle">European S...</text>
+			<rect class="regionBox" x="600" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="650.0" y="15" text-anchor="middle" alignment-baseline="middle">Poland</text>
+			<rect class="regionBox" x="700" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="750.0" y="15" text-anchor="middle" alignment-baseline="middle">Dacia</text>
+			<rect class="regionBox" x="800" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="850.0" y="15" text-anchor="middle" alignment-baseline="middle">Germany</text>
+			<rect class="regionBox" x="900" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="950.0" y="15" text-anchor="middle" alignment-baseline="middle">France</text>
+			<rect class="regionBox" x="1000" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="1050.0" y="15" text-anchor="middle" alignment-baseline="middle">Spain</text>
+			<rect class="regionBox" x="1100" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="1150.0" y="15" text-anchor="middle" alignment-baseline="middle">Italian Pe...</text>
+			<rect class="regionBox" x="1200" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="1250.0" y="15" text-anchor="middle" alignment-baseline="middle">North Africa</text>
+			<rect class="regionBox" x="1300" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="1350.0" y="15" text-anchor="middle" alignment-baseline="middle">Greece</text>
+			<rect class="regionBox" x="1400" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+			<text class="regionText" x="1450.0" y="15" text-anchor="middle" alignment-baseline="middle">Thrace</text>
+		</svg>
+	</div>		
+			
+	<svg width="1500" height="7000" viewbox="0 3000 1500 7000" >
+		<defs>
+			<filter id="powerborder">
+					<feMorphology operator="erode" in="SourceAlpha" radius="4" result="dilated_alpha_outer" />
+					<feMorphology operator="erode" in="SourceAlpha" radius="0" result="dilated_alpha_inner" />
+					<feComposite operator="xor" in="dilated_alpha_outer"  in2="dilated_alpha_inner" result="outline" />
+					<feComposite operator="over" in="outline" in2="SourceGraphic" result="output" />
+				</filter>
+	
+				<filter id="powerhover">
+					<feMorphology operator="dilate" in="SourceGraphic" radius="6" result="outer" />
+					<!-- <feMorphology operator="dilate" in="SourceGraphic" radius="2" result="inner" />
+					<feComposite operator="xor" in="inner" in2="outer" result="outline_color" />
+					<feColorMatrix in="outline_color" type="matrix"
+					values="0 0 0 0 0
+							0 0 0 0 0
+							0 0 0 0 0
+							0 0 0 1 0" result="outline"/>
+					<feComposite operator="over" in="outline" in2="outer" result="output" /> -->
+				</filter>
+		</defs>
+		<title>TimelineBody</title>
+		<line x1="10" y1="0" x2="6019" y2="0" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="0" x2="1400" y2="0" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="500" x2="1400" y2="500" sstyle="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="1000" x2="1400" y2="1000" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="1500" x2="1400" y2="1500" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="2000" x2="1400" y2="2000" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="2500" x2="1400" y2="2500" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="3000" x2="1400" y2="3000" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="3500" x2="1400" y2="3500" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="4000" x2="1400" y2="4000" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="4500" x2="1400" y2="4500" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="5000" x2="1400" y2="5000" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="5500" x2="1400" y2="5500" style="stroke:rgb(255,0,0);stroke-width:2"/>
+		<line x1="10" y1="6000" x2="1400" y2="6000" style="stroke:rgb(255,0,0);stroke-width:2"/>
+	</svg>
+	
+	<script type="text/javascript">
+		var powergroups = document.getElementsByClassName('powergroup')
+		for (var i = 0; i < powergroups.length; i++) {
+			powergroups[i].addEventListener('mouseover', powerMouseOverEffects);
+			powergroups[i].addEventListener('mouseout', powerMouseOutEffects);
+		}
+		function powerMouseOverEffects() {
+			this.parentElement.appendChild(this);		// Bring to front
+			this.classList.add('powergrouphover');		// Add the dilate image filter
+		}
+		function powerMouseOutEffects() {
+			this.classList.remove('powergrouphover');	// Remove the dilate image filter
+		}
+	</script>
+</body>
+</html>

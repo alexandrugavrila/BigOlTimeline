@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+	<h1>Big Ol Timeline</h1>
+	<style>
+		#regionsheader {
+			position: sticky;
+			top: 0px; }
+		.regiontext {
+			font: 15px Arial; }
+		.powertitle {
+			font: 15px Arial; }
+		.regionbox {
+			fill:rgb(255,255,255);
+			stroke:black;
+			stroke-width:2 }
+		.yearline {
+			stroke: rgb(0,0,0);
+			stroke-width:2 }
+		.powergroup { filter: url('#powerborder') }
+		.powergrouphover { filter: url('#powerhover') }
+	</style>
+		
+	<div id="regionsheader">	
+		<svg width="1500" height="100">
+			<g id="timelineregions">
+				<title>TimelineRegions</title>
+			</g>
+		</svg>
+	</div>		
+			
+	<svg width="1500" height="7000" viewbox="0 3000 1500 7000" >
+		<defs>
+			<filter id="powerborder">
+					<feMorphology operator="erode" in="SourceAlpha" radius="4" result="dilated_alpha_outer" />
+					<feMorphology operator="erode" in="SourceAlpha" radius="0" result="dilated_alpha_inner" />
+					<feComposite operator="xor" in="dilated_alpha_outer"  in2="dilated_alpha_inner" result="outline" />
+					<feComposite operator="over" in="outline" in2="SourceGraphic" result="output" />
+				</filter>
+	
+				<filter id="powerhover">
+					<feMorphology operator="dilate" in="SourceGraphic" radius="6" result="outer" />
+					<feMorphology operator="dilate" in="SourceGraphic" radius="2" result="inner" />
+					<feComposite operator="xor" in="inner" in2="outer" result="outline_color" />
+					<feColorMatrix in="outline_color" type="matrix"
+					values="0 0 0 0 0
+							0 0 0 0 0
+							0 0 0 0 0
+							0 0 0 1 0" result="outline"/>
+					<feComposite operator="over" in="outline" in2="outer" result="output" />
+				</filter>
+		</defs>
+		<g id="timelineyears">
+			<title>TimelineYears</title>
+		</g>
+		<g id="timelinebody">
+			<title>TimelineBody</title>
+		</g>
+	</svg>
+	<script type="text/javascript">
+		// This controls the mouseover events for the power groups. It Dilates every entry 
+		// for that power and puts an outline around contiguous blocks
+		var powergroups = document.getElementsByClassName('powergroup')
+		for (var i = 0; i < powergroups.length; i++) {
+			powergroups[i].addEventListener('mouseover', powerMouseOverEffects);
+			powergroups[i].addEventListener('mouseout', powerMouseOutEffects);
+		}
+		function powerMouseOverEffects() {
+			this.parentElement.appendChild(this);		// Bring to front
+			this.classList.add('powergrouphover');		// Add the dilate image filter
+		}
+		function powerMouseOutEffects() {
+			this.classList.remove('powergrouphover');	// Remove the dilate image filter
+		}
+	</script>
+</body>
+</html>
