@@ -7,312 +7,316 @@
 <body>
 	<h1>Big Ol Timeline</h1>
 	<style>
-		#regionsheader {
+		/* To make the region header sticky */
+		#header {
 			position: sticky;
 			top: 0px; }
-		.regiontext {
-			font: 15px Arial; }
-		.powertitle {
-			font: 15px Arial; }
-		.regionbox {
-			fill:rgb(255,255,255);
-			stroke:black;
-			stroke-width:2 }
-		.yearline {
-			stroke: rgb(0,0,0);
-			stroke-width:2 }
-		.powergroup { filter: url('#powerborder') }
-		.powergrouphover { filter: url('#powerhover') }
 	</style>
 		
-	<div id="regionsheader">	
-		<svg width="1500" height="100">
+	<div id="header">	
+		<svg id="headersvg" width="1500" height="100" style="overflow:visible">
+			<style>
+				.regionbox {
+					fill:rgb(255,255,255);
+					stroke:black;
+					stroke-width:2 }
+				.regiontext {
+					pointer-events: none;
+					font: 15px Arial; }
+				.tooltiptext {
+					font: 15px Arial; }
+			</style>
+
 			<g id="timelineregions">
-				<title>TimelineRegions</title>
-				<rect class="regionbox" x="100" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="100" y="0" width="100" height="30" data-tooltip-text="Ireland" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="150.0" y="15" text-anchor="middle" alignment-baseline="middle">Ireland</text>
-				<rect class="regionbox" x="200" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="200" y="0" width="100" height="30" data-tooltip-text="Scotland" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="250.0" y="15" text-anchor="middle" alignment-baseline="middle">Scotland</text>
-				<rect class="regionbox" x="300" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="300" y="0" width="100" height="30" data-tooltip-text="Britain" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="350.0" y="15" text-anchor="middle" alignment-baseline="middle">Britain</text>
-				<rect class="regionbox" x="400" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="400" y="0" width="100" height="30" data-tooltip-text="Skandinavia" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="450.0" y="15" text-anchor="middle" alignment-baseline="middle">Skandinavia</text>
-				<rect class="regionbox" x="500" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="500" y="0" width="100" height="30" data-tooltip-text="European Steppe" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="550.0" y="15" text-anchor="middle" alignment-baseline="middle">European S...</text>
-				<rect class="regionbox" x="600" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="600" y="0" width="100" height="30" data-tooltip-text="Poland" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="650.0" y="15" text-anchor="middle" alignment-baseline="middle">Poland</text>
-				<rect class="regionbox" x="700" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="700" y="0" width="100" height="30" data-tooltip-text="Dacia" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="750.0" y="15" text-anchor="middle" alignment-baseline="middle">Dacia</text>
-				<rect class="regionbox" x="800" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="800" y="0" width="100" height="30" data-tooltip-text="Germany" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="850.0" y="15" text-anchor="middle" alignment-baseline="middle">Germany</text>
-				<rect class="regionbox" x="900" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="900" y="0" width="100" height="30" data-tooltip-text="France" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="950.0" y="15" text-anchor="middle" alignment-baseline="middle">France</text>
-				<rect class="regionbox" x="1000" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="1000" y="0" width="100" height="30" data-tooltip-text="Spain" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="1050.0" y="15" text-anchor="middle" alignment-baseline="middle">Spain</text>
-				<rect class="regionbox" x="1100" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="1100" y="0" width="100" height="30" data-tooltip-text="Italian Peninsula" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="1150.0" y="15" text-anchor="middle" alignment-baseline="middle">Italian Pe...</text>
-				<rect class="regionbox" x="1200" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="1200" y="0" width="100" height="30" data-tooltip-text="North Africa" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="1250.0" y="15" text-anchor="middle" alignment-baseline="middle">North Africa</text>
-				<rect class="regionbox" x="1300" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="1300" y="0" width="100" height="30" data-tooltip-text="Greece" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="1350.0" y="15" text-anchor="middle" alignment-baseline="middle">Greece</text>
-				<rect class="regionbox" x="1400" y="0" width="100" height="30" style="fill:rgb(255,255,255);stroke:black;stroke-width:2" />
+				<rect class="regionbox" x="1400" y="0" width="100" height="30" data-tooltip-text="Thrace" style="fill:rgb(255,255,255);" />
 				<text class="regiontext" x="1450.0" y="15" text-anchor="middle" alignment-baseline="middle">Thrace</text>
 			</g>
+			<g id="headertooltip" visibility="hidden">
+				<rect x="2" y="2" width="100" height="30" fill="black" opacity="0.4" />
+				<rect x="0" y="0" width="100" height="30" fill="white" />
+				<text class="tooltiptext" x="4" y="20">headertooltip</text>
+			</g>
+
+			<script xlink:href="BOTHeaderScripts.js"></script>
 		</svg>
 	</div>		
-			
-	<svg width="1500" height="7000" viewbox="0 3000 1500 7000" >
-		<defs>
-			<filter id="powerborder">
-					<feMorphology operator="erode" in="SourceAlpha" radius="4" result="dilated_alpha_outer" />
-					<feMorphology operator="erode" in="SourceAlpha" radius="0" result="dilated_alpha_inner" />
-					<feComposite operator="xor" in="dilated_alpha_outer"  in2="dilated_alpha_inner" result="outline" />
-					<feComposite operator="over" in="outline" in2="SourceGraphic" result="output" />
-				</filter>
 	
-				<filter id="powerhover">
-					<feMorphology operator="dilate" in="SourceGraphic" radius="6" result="outer" />
-					<feMorphology operator="dilate" in="SourceGraphic" radius="2" result="inner" />
-					<feComposite operator="xor" in="inner" in2="outer" result="outline_color" />
-					<feColorMatrix in="outline_color" type="matrix"
-					values="0 0 0 0 0
-							0 0 0 0 0
-							0 0 0 0 0
-							0 0 0 1 0" result="outline"/>
-					<feComposite operator="over" in="outline" in2="outer" result="output" />
-				</filter>
-		</defs>
-		<g id="timelineyears">
-			<title>TimelineYears</title>
-			<line class="yearline" x1="10" y1="0" x2="10" y2="6019" />
-			<line class="yearline" x1="10" y1="0" x2="1500" y2="0" />
-			<line class="yearline" x1="10" y1="100" x2="1500" y2="100" />
-			<line class="yearline" x1="10" y1="200" x2="1500" y2="200" />
-			<line class="yearline" x1="10" y1="300" x2="1500" y2="300" />
-			<line class="yearline" x1="10" y1="400" x2="1500" y2="400" />
-			<line class="yearline" x1="10" y1="500" x2="1500" y2="500" />
-			<line class="yearline" x1="10" y1="600" x2="1500" y2="600" />
-			<line class="yearline" x1="10" y1="700" x2="1500" y2="700" />
-			<line class="yearline" x1="10" y1="800" x2="1500" y2="800" />
-			<line class="yearline" x1="10" y1="900" x2="1500" y2="900" />
-			<line class="yearline" x1="10" y1="1000" x2="1500" y2="1000" />
-			<line class="yearline" x1="10" y1="1100" x2="1500" y2="1100" />
-			<line class="yearline" x1="10" y1="1200" x2="1500" y2="1200" />
-			<line class="yearline" x1="10" y1="1300" x2="1500" y2="1300" />
-			<line class="yearline" x1="10" y1="1400" x2="1500" y2="1400" />
-			<line class="yearline" x1="10" y1="1500" x2="1500" y2="1500" />
-			<line class="yearline" x1="10" y1="1600" x2="1500" y2="1600" />
-			<line class="yearline" x1="10" y1="1700" x2="1500" y2="1700" />
-			<line class="yearline" x1="10" y1="1800" x2="1500" y2="1800" />
-			<line class="yearline" x1="10" y1="1900" x2="1500" y2="1900" />
-			<line class="yearline" x1="10" y1="2000" x2="1500" y2="2000" />
-			<line class="yearline" x1="10" y1="2100" x2="1500" y2="2100" />
-			<line class="yearline" x1="10" y1="2200" x2="1500" y2="2200" />
-			<line class="yearline" x1="10" y1="2300" x2="1500" y2="2300" />
-			<line class="yearline" x1="10" y1="2400" x2="1500" y2="2400" />
-			<line class="yearline" x1="10" y1="2500" x2="1500" y2="2500" />
-			<line class="yearline" x1="10" y1="2600" x2="1500" y2="2600" />
-			<line class="yearline" x1="10" y1="2700" x2="1500" y2="2700" />
-			<line class="yearline" x1="10" y1="2800" x2="1500" y2="2800" />
-			<line class="yearline" x1="10" y1="2900" x2="1500" y2="2900" />
-			<line class="yearline" x1="10" y1="3000" x2="1500" y2="3000" />
-			<line class="yearline" x1="10" y1="3100" x2="1500" y2="3100" />
-			<line class="yearline" x1="10" y1="3200" x2="1500" y2="3200" />
-			<line class="yearline" x1="10" y1="3300" x2="1500" y2="3300" />
-			<line class="yearline" x1="10" y1="3400" x2="1500" y2="3400" />
-			<line class="yearline" x1="10" y1="3500" x2="1500" y2="3500" />
-			<line class="yearline" x1="10" y1="3600" x2="1500" y2="3600" />
-			<line class="yearline" x1="10" y1="3700" x2="1500" y2="3700" />
-			<line class="yearline" x1="10" y1="3800" x2="1500" y2="3800" />
-			<line class="yearline" x1="10" y1="3900" x2="1500" y2="3900" />
-			<line class="yearline" x1="10" y1="4000" x2="1500" y2="4000" />
-			<line class="yearline" x1="10" y1="4100" x2="1500" y2="4100" />
-			<line class="yearline" x1="10" y1="4200" x2="1500" y2="4200" />
-			<line class="yearline" x1="10" y1="4300" x2="1500" y2="4300" />
-			<line class="yearline" x1="10" y1="4400" x2="1500" y2="4400" />
-			<line class="yearline" x1="10" y1="4500" x2="1500" y2="4500" />
-			<line class="yearline" x1="10" y1="4600" x2="1500" y2="4600" />
-			<line class="yearline" x1="10" y1="4700" x2="1500" y2="4700" />
-			<line class="yearline" x1="10" y1="4800" x2="1500" y2="4800" />
-			<line class="yearline" x1="10" y1="4900" x2="1500" y2="4900" />
-			<line class="yearline" x1="10" y1="5000" x2="1500" y2="5000" />
-			<line class="yearline" x1="10" y1="5100" x2="1500" y2="5100" />
-			<line class="yearline" x1="10" y1="5200" x2="1500" y2="5200" />
-			<line class="yearline" x1="10" y1="5300" x2="1500" y2="5300" />
-			<line class="yearline" x1="10" y1="5400" x2="1500" y2="5400" />
-			<line class="yearline" x1="10" y1="5500" x2="1500" y2="5500" />
-			<line class="yearline" x1="10" y1="5600" x2="1500" y2="5600" />
-			<line class="yearline" x1="10" y1="5700" x2="1500" y2="5700" />
-			<line class="yearline" x1="10" y1="5800" x2="1500" y2="5800" />
-			<line class="yearline" x1="10" y1="5900" x2="1500" y2="5900" />
-			<line class="yearline" x1="10" y1="6000" x2="1500" y2="6000" />
-		</g>
-		<g id="timelinebody">
-			<title>TimelineBody</title>
-			<g id="achaemenidpersiagroup" class="powergroup">
-				<rect x="1400" y="3517" width="100" height="35" style="fill:rgb(255,0,0)" />
-				<text class="powertitle" x="1450" y="3532" text-anchor="middle" alignment-baseline="middle">Achaemeni...</text>
+	<div id="body">
+		<svg width="1500" height="7000" viewbox="0 3000 1500 7000" style="overflow:visible">
+			<style>
+				.powertitle {
+					font: 15px Arial; }
+				.powergroup { filter: url('#powerborder') }
+				.powergrouphover { filter: url('#powerhover') }
+
+				.yearline {
+					stroke: rgb(0,0,0);
+					stroke-width: 2 }
+			</style>
+			<defs>
+				<filter id="powerborder">
+						<feMorphology operator="erode" in="SourceAlpha" radius="4" result="dilated_alpha_outer" />
+						<feMorphology operator="erode" in="SourceAlpha" radius="0" result="dilated_alpha_inner" />
+						<feComposite operator="xor" in="dilated_alpha_outer"  in2="dilated_alpha_inner" result="outline" />
+						<feComposite operator="over" in="outline" in2="SourceGraphic" result="output" />
+					</filter>
+		
+					<filter id="powerhover">
+						<feMorphology operator="dilate" in="SourceGraphic" radius="6" result="outer" />
+						<feMorphology operator="dilate" in="SourceGraphic" radius="2" result="inner" />
+						<feComposite operator="xor" in="inner" in2="outer" result="outline_color" />
+						<feColorMatrix in="outline_color" type="matrix"
+						values="0 0 0 0 0
+								0 0 0 0 0
+								0 0 0 0 0
+								0 0 0 1 0" result="outline"/>
+						<feComposite operator="over" in="outline" in2="outer" result="output" />
+					</filter>
+			</defs>
+			
+			<g id="timelineyears">
+				<line class="yearline" x1="10" y1="0" x2="10" y2="6019" />
+				<line class="yearline" x1="10" y1="0" x2="1500" y2="0" />
+				<line class="yearline" x1="10" y1="100" x2="1500" y2="100" />
+				<line class="yearline" x1="10" y1="200" x2="1500" y2="200" />
+				<line class="yearline" x1="10" y1="300" x2="1500" y2="300" />
+				<line class="yearline" x1="10" y1="400" x2="1500" y2="400" />
+				<line class="yearline" x1="10" y1="500" x2="1500" y2="500" />
+				<line class="yearline" x1="10" y1="600" x2="1500" y2="600" />
+				<line class="yearline" x1="10" y1="700" x2="1500" y2="700" />
+				<line class="yearline" x1="10" y1="800" x2="1500" y2="800" />
+				<line class="yearline" x1="10" y1="900" x2="1500" y2="900" />
+				<line class="yearline" x1="10" y1="1000" x2="1500" y2="1000" />
+				<line class="yearline" x1="10" y1="1100" x2="1500" y2="1100" />
+				<line class="yearline" x1="10" y1="1200" x2="1500" y2="1200" />
+				<line class="yearline" x1="10" y1="1300" x2="1500" y2="1300" />
+				<line class="yearline" x1="10" y1="1400" x2="1500" y2="1400" />
+				<line class="yearline" x1="10" y1="1500" x2="1500" y2="1500" />
+				<line class="yearline" x1="10" y1="1600" x2="1500" y2="1600" />
+				<line class="yearline" x1="10" y1="1700" x2="1500" y2="1700" />
+				<line class="yearline" x1="10" y1="1800" x2="1500" y2="1800" />
+				<line class="yearline" x1="10" y1="1900" x2="1500" y2="1900" />
+				<line class="yearline" x1="10" y1="2000" x2="1500" y2="2000" />
+				<line class="yearline" x1="10" y1="2100" x2="1500" y2="2100" />
+				<line class="yearline" x1="10" y1="2200" x2="1500" y2="2200" />
+				<line class="yearline" x1="10" y1="2300" x2="1500" y2="2300" />
+				<line class="yearline" x1="10" y1="2400" x2="1500" y2="2400" />
+				<line class="yearline" x1="10" y1="2500" x2="1500" y2="2500" />
+				<line class="yearline" x1="10" y1="2600" x2="1500" y2="2600" />
+				<line class="yearline" x1="10" y1="2700" x2="1500" y2="2700" />
+				<line class="yearline" x1="10" y1="2800" x2="1500" y2="2800" />
+				<line class="yearline" x1="10" y1="2900" x2="1500" y2="2900" />
+				<line class="yearline" x1="10" y1="3000" x2="1500" y2="3000" />
+				<line class="yearline" x1="10" y1="3100" x2="1500" y2="3100" />
+				<line class="yearline" x1="10" y1="3200" x2="1500" y2="3200" />
+				<line class="yearline" x1="10" y1="3300" x2="1500" y2="3300" />
+				<line class="yearline" x1="10" y1="3400" x2="1500" y2="3400" />
+				<line class="yearline" x1="10" y1="3500" x2="1500" y2="3500" />
+				<line class="yearline" x1="10" y1="3600" x2="1500" y2="3600" />
+				<line class="yearline" x1="10" y1="3700" x2="1500" y2="3700" />
+				<line class="yearline" x1="10" y1="3800" x2="1500" y2="3800" />
+				<line class="yearline" x1="10" y1="3900" x2="1500" y2="3900" />
+				<line class="yearline" x1="10" y1="4000" x2="1500" y2="4000" />
+				<line class="yearline" x1="10" y1="4100" x2="1500" y2="4100" />
+				<line class="yearline" x1="10" y1="4200" x2="1500" y2="4200" />
+				<line class="yearline" x1="10" y1="4300" x2="1500" y2="4300" />
+				<line class="yearline" x1="10" y1="4400" x2="1500" y2="4400" />
+				<line class="yearline" x1="10" y1="4500" x2="1500" y2="4500" />
+				<line class="yearline" x1="10" y1="4600" x2="1500" y2="4600" />
+				<line class="yearline" x1="10" y1="4700" x2="1500" y2="4700" />
+				<line class="yearline" x1="10" y1="4800" x2="1500" y2="4800" />
+				<line class="yearline" x1="10" y1="4900" x2="1500" y2="4900" />
+				<line class="yearline" x1="10" y1="5000" x2="1500" y2="5000" />
+				<line class="yearline" x1="10" y1="5100" x2="1500" y2="5100" />
+				<line class="yearline" x1="10" y1="5200" x2="1500" y2="5200" />
+				<line class="yearline" x1="10" y1="5300" x2="1500" y2="5300" />
+				<line class="yearline" x1="10" y1="5400" x2="1500" y2="5400" />
+				<line class="yearline" x1="10" y1="5500" x2="1500" y2="5500" />
+				<line class="yearline" x1="10" y1="5600" x2="1500" y2="5600" />
+				<line class="yearline" x1="10" y1="5700" x2="1500" y2="5700" />
+				<line class="yearline" x1="10" y1="5800" x2="1500" y2="5800" />
+				<line class="yearline" x1="10" y1="5900" x2="1500" y2="5900" />
+				<line class="yearline" x1="10" y1="6000" x2="1500" y2="6000" />
 			</g>
-			<g id="avarsgroup" class="powergroup">
-				<rect x="700" y="4598" width="100" height="237" style="fill:rgb(133,255,185)" />
-				<text class="powertitle" x="750" y="4613" text-anchor="middle" alignment-baseline="middle">Avars</text>
+			<g id="timelinebody">
+				<g id="achaemenidpersiagroup" class="powergroup">
+					<rect x="1400" y="3487" width="100" height="35" style="fill:rgb(255,0,0);" />
+					<text class="powertitle" x="1450" y="3502" text-anchor="middle" alignment-baseline="middle">Achaemeni...</text>
+				</g>
+				<g id="avarsgroup" class="powergroup">
+					<rect x="700" y="4568" width="100" height="237" style="fill:rgb(133,255,185);" />
+					<text class="powertitle" x="750" y="4583" text-anchor="middle" alignment-baseline="middle">Avars</text>
+				</g>
+				<g id="bulgariagroup" class="powergroup">
+					<rect x="700" y="4806" width="100" height="88" style="fill:rgb(0,151,110);" />
+					<text class="powertitle" x="750" y="4821" text-anchor="middle" alignment-baseline="middle">Bulgaria</text>
+				</g>
+				<g id="byzantineempiregroup" class="powergroup">
+					<rect x="1100" y="4554" width="100" height="18" style="fill:rgb(112,48,160);" />
+					<rect x="1200" y="4534" width="100" height="135" style="fill:rgb(112,48,160);" />
+					<rect x="1300" y="4395" width="100" height="809" style="fill:rgb(112,48,160);" />
+					<rect x="1400" y="4395" width="100" height="795" style="fill:rgb(112,48,160);" />
+					<text class="powertitle" x="1450" y="4410" text-anchor="middle" alignment-baseline="middle">Byzantine...</text>
+				</g>
+				<g id="carthagegroup" class="powergroup">
+					<rect x="1200" y="3350" width="100" height="447" style="fill:rgb(116,175,215);" />
+					<text class="powertitle" x="1250" y="3365" text-anchor="middle" alignment-baseline="middle">Carthage</text>
+				</g>
+				<g id="denmarkgroup" class="powergroup">
+					<rect x="400" y="5398" width="100" height="125" style="fill:rgb(169,208,142);" />
+					<text class="powertitle" x="450" y="5413" text-anchor="middle" alignment-baseline="middle">Denmark</text>
+				</g>
+				<g id="englandgroup" class="powergroup">
+					<rect x="100" y="5236" width="100" height="472" style="fill:rgb(209,16,36);" />
+					<rect x="200" y="5603" width="100" height="105" style="fill:rgb(209,16,36);" />
+					<rect x="300" y="4928" width="100" height="780" style="fill:rgb(209,16,36);" />
+					<text class="powertitle" x="350" y="4943" text-anchor="middle" alignment-baseline="middle">England</text>
+				</g>
+				<g id="francegroup" class="powergroup">
+					<rect x="900" y="4988" width="100" height="1031" style="fill:rgb(0,36,150);" />
+					<text class="powertitle" x="950" y="5003" text-anchor="middle" alignment-baseline="middle">France</text>
+				</g>
+				<g id="franksgroup" class="powergroup">
+					<rect x="900" y="4614" width="100" height="229" style="fill:rgb(92,156,214);" />
+					<text class="powertitle" x="950" y="4629" text-anchor="middle" alignment-baseline="middle">Franks</text>
+				</g>
+				<g id="germanfranksgroup" class="powergroup">
+					<rect x="800" y="4930" width="100" height="32" style="fill:rgb(201,201,201);" />
+					<text class="powertitle" x="850" y="4945" text-anchor="middle" alignment-baseline="middle">German Fr...</text>
+				</g>
+				<g id="germanygroup" class="powergroup">
+					<rect x="800" y="5872" width="100" height="147" style="fill:rgb(82,82,82);" />
+					<text class="powertitle" x="850" y="5887" text-anchor="middle" alignment-baseline="middle">Germany</text>
+				</g>
+				<g id="goldenhordegroup" class="powergroup">
+					<rect x="500" y="5260" width="100" height="202" style="fill:rgb(249,2,3);" />
+					<text class="powertitle" x="550" y="5275" text-anchor="middle" alignment-baseline="middle">Golden Ho...</text>
+				</g>
+				<g id="greecegroup" class="powergroup">
+					<rect x="1300" y="5830" width="100" height="189" style="fill:rgb(6,99,169);" />
+					<text class="powertitle" x="1350" y="5845" text-anchor="middle" alignment-baseline="middle">Greece</text>
+				</g>
+				<g id="holyromanempiregroup" class="powergroup">
+					<rect x="800" y="4963" width="100" height="685" style="fill:rgb(123,123,123);" />
+					<text class="powertitle" x="850" y="4978" text-anchor="middle" alignment-baseline="middle">Holy Roma...</text>
+				</g>
+				<g id="irelandgroup" class="powergroup">
+					<rect x="100" y="5923" width="100" height="96" style="fill:rgb(22,155,98);" />
+					<text class="powertitle" x="150" y="5938" text-anchor="middle" alignment-baseline="middle">Ireland</text>
+				</g>
+				<g id="italygroup" class="powergroup">
+					<rect x="1100" y="5861" width="100" height="158" style="fill:rgb(0,147,69);" />
+					<text class="powertitle" x="1150" y="5876" text-anchor="middle" alignment-baseline="middle">Italy</text>
+				</g>
+				<g id="kievanrusgroup" class="powergroup">
+					<rect x="500" y="4862" width="100" height="192" style="fill:rgb(232,3,106);" />
+					<text class="powertitle" x="550" y="4877" text-anchor="middle" alignment-baseline="middle">Kievan Rus</text>
+				</g>
+				<g id="macedoniagroup" class="powergroup">
+					<rect x="1300" y="3663" width="100" height="36" style="fill:rgb(0,255,255);" />
+					<rect x="1400" y="3658" width="100" height="41" style="fill:rgb(0,255,255);" />
+					<text class="powertitle" x="1450" y="3673" text-anchor="middle" alignment-baseline="middle">Macedonia</text>
+				</g>
+				<g id="mongolsgroup" class="powergroup">
+					<rect x="500" y="5242" width="100" height="17" style="fill:rgb(145,114,186);" />
+				</g>
+				<g id="numidiagroup" class="powergroup">
+					<rect x="1200" y="3798" width="100" height="95" style="fill:rgb(137,43,42);" />
+					<text class="powertitle" x="1250" y="3813" text-anchor="middle" alignment-baseline="middle">Numidia</text>
+				</g>
+				<g id="ostragothsgroup" class="powergroup">
+					<rect x="1100" y="4476" width="100" height="74" style="fill:rgb(242,160,104);" />
+					<text class="powertitle" x="1150" y="4491" text-anchor="middle" alignment-baseline="middle">Ostragoths</text>
+				</g>
+				<g id="ottomanempiregroup" class="powergroup">
+					<rect x="700" y="5527" width="100" height="164" style="fill:rgb(226,10,23);" />
+					<rect x="1200" y="5575" width="100" height="256" style="fill:rgb(226,10,23);" />
+					<rect x="1300" y="5461" width="100" height="368" style="fill:rgb(226,10,23);" />
+					<rect x="1400" y="5394" width="100" height="485" style="fill:rgb(226,10,23);" />
+					<text class="powertitle" x="1450" y="5409" text-anchor="middle" alignment-baseline="middle">Ottoman E...</text>
+				</g>
+				<g id="polandgroup" class="powergroup">
+					<rect x="600" y="4966" width="100" height="420" style="fill:rgb(153,51,0);" />
+					<rect x="600" y="5919" width="100" height="100" style="fill:rgb(153,51,0);" />
+					<text class="powertitle" x="650" y="4981" text-anchor="middle" alignment-baseline="middle">Poland</text>
+				</g>
+				<g id="poland-lithuaniagroup" class="powergroup">
+					<rect x="600" y="5386" width="100" height="409" style="fill:rgb(200,67,0);" />
+					<text class="powertitle" x="650" y="5401" text-anchor="middle" alignment-baseline="middle">Poland-Li...</text>
+				</g>
+				<g id="romaniagroup" class="powergroup">
+					<rect x="700" y="5919" width="100" height="100" style="fill:rgb(253,209,22);" />
+					<text class="powertitle" x="750" y="5934" text-anchor="middle" alignment-baseline="middle">Romania</text>
+				</g>
+				<g id="romegroup" class="powergroup">
+					<rect x="300" y="4059" width="100" height="351" style="fill:rgb(192,0,0);" />
+					<rect x="800" y="3992" width="100" height="18" style="fill:rgb(192,0,0);" />
+					<rect x="900" y="3949" width="100" height="527" style="fill:rgb(192,0,0);" />
+					<rect x="1000" y="3795" width="100" height="681" style="fill:rgb(192,0,0);" />
+					<rect x="1100" y="3247" width="100" height="1229" style="fill:rgb(192,0,0);" />
+					<rect x="1200" y="3970" width="100" height="459" style="fill:rgb(192,0,0);" />
+					<rect x="1300" y="3853" width="100" height="542" style="fill:rgb(192,0,0);" />
+					<rect x="1400" y="4047" width="100" height="348" style="fill:rgb(192,0,0);" />
+					<text class="powertitle" x="1150" y="3262" text-anchor="middle" alignment-baseline="middle">Rome</text>
+				</g>
+				<g id="russiagroup" class="powergroup">
+					<rect x="500" y="5556" width="100" height="463" style="fill:rgb(191,143,0);" />
+					<rect x="600" y="5816" width="100" height="98" style="fill:rgb(191,143,0);" />
+					<text class="powertitle" x="550" y="5571" text-anchor="middle" alignment-baseline="middle">Russia</text>
+				</g>
+				<g id="scotlandgroup" class="powergroup">
+					<rect x="200" y="4844" width="100" height="759" style="fill:rgb(0,122,192);" />
+					<text class="powertitle" x="250" y="4859" text-anchor="middle" alignment-baseline="middle">Scotland</text>
+				</g>
+				<g id="spaingroup" class="powergroup">
+					<rect x="1000" y="5480" width="100" height="539" style="fill:rgb(254,196,0);" />
+					<text class="powertitle" x="1050" y="5495" text-anchor="middle" alignment-baseline="middle">Spain</text>
+				</g>
+				<g id="swedengroup" class="powergroup">
+					<rect x="400" y="5815" width="100" height="90" style="fill:rgb(0,106,166);" />
+					<text class="powertitle" x="450" y="5830" text-anchor="middle" alignment-baseline="middle">Sweden</text>
+				</g>
+				<g id="unitedkingdomgroup" class="powergroup">
+					<rect x="100" y="5708" width="100" height="215" style="fill:rgb(208,20,44);" />
+					<rect x="200" y="5708" width="100" height="311" style="fill:rgb(208,20,44);" />
+					<rect x="300" y="5708" width="100" height="311" style="fill:rgb(208,20,44);" />
+					<text class="powertitle" x="350" y="5723" text-anchor="middle" alignment-baseline="middle">United Ki...</text>
+				</g>
+				<g id="visigothsgroup" class="powergroup">
+					<rect x="1000" y="4477" width="100" height="236" style="fill:rgb(198,89,17);" />
+					<text class="powertitle" x="1050" y="4492" text-anchor="middle" alignment-baseline="middle">Visigoths</text>
+				</g>
 			</g>
-			<g id="bulgariagroup" class="powergroup">
-				<rect x="700" y="4836" width="100" height="88" style="fill:rgb(0,151,110)" />
-				<text class="powertitle" x="750" y="4851" text-anchor="middle" alignment-baseline="middle">Bulgaria</text>
-			</g>
-			<g id="byzantineempiregroup" class="powergroup">
-				<rect x="1100" y="4584" width="100" height="18" style="fill:rgb(112,48,160)" />
-				<rect x="1200" y="4564" width="100" height="135" style="fill:rgb(112,48,160)" />
-				<rect x="1300" y="4425" width="100" height="809" style="fill:rgb(112,48,160)" />
-				<rect x="1400" y="4425" width="100" height="795" style="fill:rgb(112,48,160)" />
-				<text class="powertitle" x="1450" y="4440" text-anchor="middle" alignment-baseline="middle">Byzantine...</text>
-			</g>
-			<g id="carthagegroup" class="powergroup">
-				<rect x="1200" y="3380" width="100" height="447" style="fill:rgb(116,175,215)" />
-				<text class="powertitle" x="1250" y="3395" text-anchor="middle" alignment-baseline="middle">Carthage</text>
-			</g>
-			<g id="denmarkgroup" class="powergroup">
-				<rect x="400" y="5428" width="100" height="125" style="fill:rgb(169,208,142)" />
-				<text class="powertitle" x="450" y="5443" text-anchor="middle" alignment-baseline="middle">Denmark</text>
-			</g>
-			<g id="englandgroup" class="powergroup">
-				<rect x="100" y="5266" width="100" height="472" style="fill:rgb(209,16,36)" />
-				<rect x="200" y="5633" width="100" height="105" style="fill:rgb(209,16,36)" />
-				<rect x="300" y="4958" width="100" height="780" style="fill:rgb(209,16,36)" />
-				<text class="powertitle" x="350" y="4973" text-anchor="middle" alignment-baseline="middle">England</text>
-			</g>
-			<g id="francegroup" class="powergroup">
-				<rect x="900" y="5018" width="100" height="1031" style="fill:rgb(0,36,150)" />
-				<text class="powertitle" x="950" y="5033" text-anchor="middle" alignment-baseline="middle">France</text>
-			</g>
-			<g id="franksgroup" class="powergroup">
-				<rect x="900" y="4644" width="100" height="229" style="fill:rgb(92,156,214)" />
-				<text class="powertitle" x="950" y="4659" text-anchor="middle" alignment-baseline="middle">Franks</text>
-			</g>
-			<g id="germanfranksgroup" class="powergroup">
-				<rect x="800" y="4960" width="100" height="32" style="fill:rgb(201,201,201)" />
-				<text class="powertitle" x="850" y="4975" text-anchor="middle" alignment-baseline="middle">German Fr...</text>
-			</g>
-			<g id="germanygroup" class="powergroup">
-				<rect x="800" y="5902" width="100" height="147" style="fill:rgb(82,82,82)" />
-				<text class="powertitle" x="850" y="5917" text-anchor="middle" alignment-baseline="middle">Germany</text>
-			</g>
-			<g id="goldenhordegroup" class="powergroup">
-				<rect x="500" y="5290" width="100" height="202" style="fill:rgb(249,2,3)" />
-				<text class="powertitle" x="550" y="5305" text-anchor="middle" alignment-baseline="middle">Golden Ho...</text>
-			</g>
-			<g id="greecegroup" class="powergroup">
-				<rect x="1300" y="5860" width="100" height="189" style="fill:rgb(6,99,169)" />
-				<text class="powertitle" x="1350" y="5875" text-anchor="middle" alignment-baseline="middle">Greece</text>
-			</g>
-			<g id="holyromanempiregroup" class="powergroup">
-				<rect x="800" y="4993" width="100" height="685" style="fill:rgb(123,123,123)" />
-				<text class="powertitle" x="850" y="5008" text-anchor="middle" alignment-baseline="middle">Holy Roma...</text>
-			</g>
-			<g id="irelandgroup" class="powergroup">
-				<rect x="100" y="5953" width="100" height="96" style="fill:rgb(22,155,98)" />
-				<text class="powertitle" x="150" y="5968" text-anchor="middle" alignment-baseline="middle">Ireland</text>
-			</g>
-			<g id="italygroup" class="powergroup">
-				<rect x="1100" y="5891" width="100" height="158" style="fill:rgb(0,147,69)" />
-				<text class="powertitle" x="1150" y="5906" text-anchor="middle" alignment-baseline="middle">Italy</text>
-			</g>
-			<g id="kievanrusgroup" class="powergroup">
-				<rect x="500" y="4892" width="100" height="192" style="fill:rgb(232,3,106)" />
-				<text class="powertitle" x="550" y="4907" text-anchor="middle" alignment-baseline="middle">Kievan Rus</text>
-			</g>
-			<g id="macedoniagroup" class="powergroup">
-				<rect x="1300" y="3693" width="100" height="36" style="fill:rgb(0,255,255)" />
-				<rect x="1400" y="3688" width="100" height="41" style="fill:rgb(0,255,255)" />
-				<text class="powertitle" x="1450" y="3703" text-anchor="middle" alignment-baseline="middle">Macedonia</text>
-			</g>
-			<g id="mongolsgroup" class="powergroup">
-				<rect x="500" y="5272" width="100" height="17" style="fill:rgb(145,114,186)" />
-			</g>
-			<g id="numidiagroup" class="powergroup">
-				<rect x="1200" y="3828" width="100" height="95" style="fill:rgb(137,43,42)" />
-				<text class="powertitle" x="1250" y="3843" text-anchor="middle" alignment-baseline="middle">Numidia</text>
-			</g>
-			<g id="ostragothsgroup" class="powergroup">
-				<rect x="1100" y="4506" width="100" height="74" style="fill:rgb(242,160,104)" />
-				<text class="powertitle" x="1150" y="4521" text-anchor="middle" alignment-baseline="middle">Ostragoths</text>
-			</g>
-			<g id="ottomanempiregroup" class="powergroup">
-				<rect x="700" y="5557" width="100" height="164" style="fill:rgb(226,10,23)" />
-				<rect x="1200" y="5605" width="100" height="256" style="fill:rgb(226,10,23)" />
-				<rect x="1300" y="5491" width="100" height="368" style="fill:rgb(226,10,23)" />
-				<rect x="1400" y="5424" width="100" height="485" style="fill:rgb(226,10,23)" />
-				<text class="powertitle" x="1450" y="5439" text-anchor="middle" alignment-baseline="middle">Ottoman E...</text>
-			</g>
-			<g id="polandgroup" class="powergroup">
-				<rect x="600" y="4996" width="100" height="420" style="fill:rgb(153,51,0)" />
-				<rect x="600" y="5949" width="100" height="100" style="fill:rgb(153,51,0)" />
-				<text class="powertitle" x="650" y="5011" text-anchor="middle" alignment-baseline="middle">Poland</text>
-			</g>
-			<g id="poland-lithuaniagroup" class="powergroup">
-				<rect x="600" y="5416" width="100" height="409" style="fill:rgb(200,67,0)" />
-				<text class="powertitle" x="650" y="5431" text-anchor="middle" alignment-baseline="middle">Poland-Li...</text>
-			</g>
-			<g id="romaniagroup" class="powergroup">
-				<rect x="700" y="5949" width="100" height="100" style="fill:rgb(253,209,22)" />
-				<text class="powertitle" x="750" y="5964" text-anchor="middle" alignment-baseline="middle">Romania</text>
-			</g>
-			<g id="romegroup" class="powergroup">
-				<rect x="300" y="4089" width="100" height="351" style="fill:rgb(192,0,0)" />
-				<rect x="800" y="4022" width="100" height="18" style="fill:rgb(192,0,0)" />
-				<rect x="900" y="3979" width="100" height="527" style="fill:rgb(192,0,0)" />
-				<rect x="1000" y="3825" width="100" height="681" style="fill:rgb(192,0,0)" />
-				<rect x="1100" y="3277" width="100" height="1229" style="fill:rgb(192,0,0)" />
-				<rect x="1200" y="4000" width="100" height="459" style="fill:rgb(192,0,0)" />
-				<rect x="1300" y="3883" width="100" height="542" style="fill:rgb(192,0,0)" />
-				<rect x="1400" y="4077" width="100" height="348" style="fill:rgb(192,0,0)" />
-				<text class="powertitle" x="1150" y="3292" text-anchor="middle" alignment-baseline="middle">Rome</text>
-			</g>
-			<g id="russiagroup" class="powergroup">
-				<rect x="500" y="5586" width="100" height="463" style="fill:rgb(191,143,0)" />
-				<rect x="600" y="5846" width="100" height="98" style="fill:rgb(191,143,0)" />
-				<text class="powertitle" x="550" y="5601" text-anchor="middle" alignment-baseline="middle">Russia</text>
-			</g>
-			<g id="scotlandgroup" class="powergroup">
-				<rect x="200" y="4874" width="100" height="759" style="fill:rgb(0,122,192)" />
-				<text class="powertitle" x="250" y="4889" text-anchor="middle" alignment-baseline="middle">Scotland</text>
-			</g>
-			<g id="spaingroup" class="powergroup">
-				<rect x="1000" y="5510" width="100" height="539" style="fill:rgb(254,196,0)" />
-				<text class="powertitle" x="1050" y="5525" text-anchor="middle" alignment-baseline="middle">Spain</text>
-			</g>
-			<g id="swedengroup" class="powergroup">
-				<rect x="400" y="5845" width="100" height="90" style="fill:rgb(0,106,166)" />
-				<text class="powertitle" x="450" y="5860" text-anchor="middle" alignment-baseline="middle">Sweden</text>
-			</g>
-			<g id="unitedkingdomgroup" class="powergroup">
-				<rect x="100" y="5738" width="100" height="215" style="fill:rgb(208,20,44)" />
-				<rect x="200" y="5738" width="100" height="311" style="fill:rgb(208,20,44)" />
-				<rect x="300" y="5738" width="100" height="311" style="fill:rgb(208,20,44)" />
-				<text class="powertitle" x="350" y="5753" text-anchor="middle" alignment-baseline="middle">United Ki...</text>
-			</g>
-			<g id="visigothsgroup" class="powergroup">
-				<rect x="1000" y="4507" width="100" height="236" style="fill:rgb(198,89,17)" />
-				<text class="powertitle" x="1050" y="4522" text-anchor="middle" alignment-baseline="middle">Visigoths</text>
-			</g>
-		</g>
-	</svg>
-	<script type="text/javascript">
-		// This controls the mouseover events for the power groups. It Dilates every entry 
-		// for that power and puts an outline around contiguous blocks
-		var powergroups = document.getElementsByClassName('powergroup')
-		for (var i = 0; i < powergroups.length; i++) {
-			powergroups[i].addEventListener('mouseover', powerMouseOverEffects);
-			powergroups[i].addEventListener('mouseout', powerMouseOutEffects);
-		}
-		function powerMouseOverEffects() {
-			this.parentElement.appendChild(this);		// Bring to front
-			this.classList.add('powergrouphover');		// Add the dilate image filter
-		}
-		function powerMouseOutEffects() {
-			this.classList.remove('powergrouphover');	// Remove the dilate image filter
-		}
-	</script>
+
+			<script xlink:href="BOTBodyScripts.js"></script>
+		</svg>
+	</div>
+
 </body>
 </html>

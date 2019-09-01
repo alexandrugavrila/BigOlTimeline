@@ -13,6 +13,13 @@ Documentation
 	createChartBodyDicts(), but the code still supports having the None entries drawn, just remove 
 	the if statement.
 
+	style_dict for createSVG functions:
+		{
+			'fill:rgb': ,
+			'stroke': ,
+			'stroke_width': ,
+		}
+
 Naming Conventions
 	User-defined functions: camelcase lower
 	Variables: underscores
@@ -25,7 +32,9 @@ Thing to dynamically change
 	Dilation for mouse hover
 		In blankBOT, timelineBody powerhover filter
 	Border thickness on Dilation
-		In blankBOT, timelineBody powerhover filter difference between first two dilations
+		In blankBOT, timelineBody powerhover filter: difference between first two dilations
+	Thickness of gridlines
+		In blankBOT, chartbody SVG style: .yearline
 
 Thoughts
 	Hover outline is still weird. Maybe possible to generate it using offset instead of 
