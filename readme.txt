@@ -8,6 +8,8 @@ Instructions
 	   pick a temporary one and put it in the table at the bottom of this readme)
 	6. Refresh PowerCenters power query
 
+	If there was a new region, add it to the region list in WriteSVG.py, and add it to the viewbox switches in BOTHeaderScripts.js
+
 Documentation
 	Currently entries with None for power are removed from the entries, this is done in 
 	createChartBodyDicts(), but the code still supports having the None entries drawn, just remove 
@@ -20,9 +22,13 @@ Documentation
 			'stroke_width': ,
 		}
 
+	tooltipmap aspect ration: 2395.275/1772.186
+	                          width:height = 1.35:1
+
 Naming Conventions
 	User-defined functions: camelcase lower
-	Variables: underscores
+	Python variables: underscores
+	Javascript variables: lowercase
 	CSS names: lowercase
 
 
