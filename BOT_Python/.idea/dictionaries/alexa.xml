@@ -2,8 +2,11 @@
   <dictionary name="alexa">
     <words>
       <w>dataframe</w>
+      <w>gallia</w>
+      <w>germania</w>
       <w>gridlines</w>
       <w>powergroup</w>
+      <w>powerrect</w>
       <w>powertext</w>
       <w>powertitle</w>
       <w>regionbox</w>

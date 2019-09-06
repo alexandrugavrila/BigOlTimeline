@@ -20,6 +20,13 @@ def truncateText(text, max_chars):
     return new_text
 
 
+# Turns a date from integer format to BC AD format
+def makeYearBC(year_str):
+    if int(year_str) < 0: return year_str[1:] + 'BC'       # If the year is negative cut off the negative and put BC at thend
+    elif year_str == '2019': return 'Present'              # If the year is 2019 return Present
+    else: return year_str                                  # If the year is positive and not 2019
+
+
 # Reads a file from a path into a list of lines
 def readFile(path):
     with open(path) as in_file:
@@ -39,14 +46,14 @@ def regionSwitch(region):
     return {
         'Ireland': 1,
         'Scotland': 2,
-        'Britain': 3,
+        'Britannia': 3,
         'Skandinavia': 4,
         'European Steppe': 5,
         'Poland': 6,
         'Dacia': 7,
-        'Germany': 8,
-        'France': 9,
-        'Spain': 10,
+        'Germania': 8,
+        'Gallia': 9,
+        'Iberian Peninsula': 10,
         'Italian Peninsula': 11,
         'North Africa': 12,
         'Greece': 13,
@@ -184,7 +191,7 @@ def createSVGLine(class_str_list, x1, y1, x2, y2, data_dict, style_dict):
 
 
 # Creates an SVG text tag with the given parameters
-def createSVGTextCenter(class_str_list, x, y, text):
+def createSVGTextCenter(class_str_list, visibility, x, y, text):
     text_tag = '<text'
     if class_str_list:                      # There are classes to add
         text_tag += ' class="'                  # Initialize the class tag
@@ -192,6 +199,8 @@ def createSVGTextCenter(class_str_list, x, y, text):
             text_tag += class_str + ' '             # Add the class and a space
         text_tag = text_tag[:-1] + '"'          # Remove the last space and replace it with a double quote
 
+    if visibility:
+        text_tag += ' visibility="' + visibility + '"'
     text_tag += ' x="' + str(x) + '"'
     text_tag += ' y="' + str(y) + '"'
     text_tag += ' text-anchor="middle" alignment-baseline="middle">'
@@ -202,10 +211,13 @@ def createSVGTextCenter(class_str_list, x, y, text):
 
 
 # Create an opening group tag with the given parameters
-def createSVGOpenGroupTag(id_string, class_string, filter_string):
+def createSVGOpenGroupTag(id_string, class_string, data_dict, filter_string):
     g_tag = '<g'
     if id_string: g_tag += ' id="' + id_string + '"'
     if class_string: g_tag += ' class="' + class_string + '"'
+    if data_dict:
+        for data in data_dict:
+            g_tag += ' ' + data + '="' + data_dict[data] + '"'
     if filter_string: g_tag += ' filter="' + filter_string + '"'
     g_tag += '>'
     return g_tag
@@ -217,7 +229,7 @@ def createChartBodyDicts(df):
     for i in range(len(df)):
         if df['Power'][i] != 'None':
             df_dict.append(
-                dict(Region=df['Region'][i], Start=df['Start Year'][i], Finish=df['End Year'][i], Power=df['Power'][i]))
+                dict(Region=df['Region'][i], Start=df['Start Year'][i], End=df['End Year'][i], Power=df['Power'][i]))
     return df_dict
 
 
@@ -243,14 +255,19 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
         # Set parameters of current box
         curr_power = dp['Power']
         curr_region = dp['Region']
+        class_str_list = ['powerrect']
         x = regionSwitch(dp['Region']) * params['bar_width']
         y = (dp['Start'] + params['bottom_date'] * params['year_height'])
-        bar_height = (dp['Finish'] - dp['Start']) * params['year_height']
+        bar_height = (dp['End'] - dp['Start']) * params['year_height']
         rx, ry = None, None
         if params['body_rx']: rx = params['body_rx']
         if params['body_ry']: ry = params['body_ry']
-        data_dict = None
+        box_data_dict = {'data-start-year': makeYearBC(str(dp['Start'])),
+                         'data-end-year': makeYearBC(str(dp['End'])),
+                         'data-region': curr_region}
         style_dict = {'fill:rgb': powerColorSwitchRGB(curr_power)}
+
+        group_data_dict = {'data-power-name': curr_power}
 
         # If we are in the same power block, and in the same region, add 1 to iteration.
         if curr_power == last_power and curr_region == last_region:
@@ -262,32 +279,33 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
         if curr_power != last_power:
             power_group_str = str(dp['Power']).lower().replace(" ", "") + 'group'
             class_str = 'powergroup'
-            if last_power == '':                                                    # If its the first region just add the opening group tag
-                svg_tag = createSVGOpenGroupTag(power_group_str, class_str, None)
-            elif curr_power == 'None':                                              # If the region is None add a closing group tag and then the opening group tag without the filter
+            if last_power == '':                                                                         # If its the first region just add the opening group tag
+                svg_tag = createSVGOpenGroupTag(power_group_str, class_str, group_data_dict, None)
+            elif curr_power == 'None':                                                                   # If the region is None add a closing group tag and then the opening group tag without the filter
                 body_svg_list.append('</g>')
-                svg_tag = createSVGOpenGroupTag(power_group_str, None, None)
-            else:                                                                   # If it's not the first region or none add the region title, the closing group tag, then the opening group tag
-                for tag in text_svg_list:                                               # Add the chart body titles to the group
+                svg_tag = createSVGOpenGroupTag(power_group_str, None, group_data_dict, None)
+            else:                                                                                        # If it's not the first region or none add the region title, the closing group tag, then the opening group tag
+                for tag in text_svg_list:                                                                   # Add the chart body titles to the group
                     body_svg_list.append(tag)
-                text_svg_list = []                                                      # Rest the list of text for the next power group
-                body_svg_list.append('</g>')                                            # Add the closing group tag
-                svg_tag = createSVGOpenGroupTag(power_group_str, class_str, None)       # Add the next opening group tag
+                text_svg_list = []                                                                          # Rest the list of text for the next power group
+                body_svg_list.append('</g>')                                                                # Add the closing group tag
+                svg_tag = createSVGOpenGroupTag(power_group_str, class_str, group_data_dict, None)       # Add the next opening group tag
             body_svg_list.append(svg_tag)
 
         if curr_power == 'None':
-            svg_tag = createSVGRect(None, x, y, params['bar_width'], bar_height, rx, ry, data_dict, style_dict)
+            svg_tag = createSVGRect(class_str_list, x, y, params['bar_width'], bar_height, rx, ry, box_data_dict, style_dict)
         else:
-            svg_tag = createSVGRect(None, x, y, params['bar_width'], bar_height, rx, ry, data_dict, style_dict)
+            svg_tag = createSVGRect(class_str_list, x, y, params['bar_width'], bar_height, rx, ry, box_data_dict, style_dict)
         body_svg_list.append(svg_tag)
 
         # If the current block is the center block, and it is the correct iteration, create the power title text tag
         if centers_df_dict[dp['Power']]['Center'] == curr_region and iteration == centers_df_dict[dp['Power']]['Iteration']:
+            title_x = int(x + (params['bar_width'] / 2))
+            title_y = int(y + (params['header_length'] / 2))
             if bar_height > (2 * params['body_font_size']):         # If the bar is big enough to display the text
-                title_x = int(x + (params['bar_width'] / 2))
-                title_y = int(y + (params['header_length'] / 2))
-                text_svg_list.append(createSVGTextCenter(['powertitle'], title_x, title_y, truncateText(curr_power, 11)))
-
+                text_svg_list.append(createSVGTextCenter(['powertitle'], None, title_x, title_y, truncateText(curr_power, 11)))
+            else:
+                text_svg_list.append(createSVGTextCenter(['powertitle'], 'hidden', title_x, title_y, truncateText(curr_power, 11)))
         last_power = curr_power
         last_region = curr_region
 
@@ -332,7 +350,7 @@ def insertChartRegions(html_lines, params, regions):
 
         x = x + (params['bar_width'] / 2)  # Center x on middle of box width
         y = int(params['header_length'] / 2)  # Center y on middle of box height
-        name_tag = createSVGTextCenter(['regiontext'], x, y, truncateText(region, 12))
+        name_tag = createSVGTextCenter(['regiontext'], None, x, y, truncateText(region, 12))
         svg_list.append(name_tag)
 
     # Add the proper indentation to every line and insert it into the html lines
@@ -383,14 +401,14 @@ if __name__ == "__main__":
         'curr_year': 2019,          # Current year
         'header_font_size': 15,     # Font size of the header labels
         'body_font_size': 15,       # Size of text in the chart body
-        'body_rx': None,               # Rounding of chart body corners
-        'body_ry': None,               # Rounding of chart body corners
-        'header_rx': None,             # Rounding of chart header corners
-        'header_ry': None,             # Rounding of chart header corners
+        'body_rx': None,            # Rounding of chart body corners
+        'body_ry': None,            # Rounding of chart body corners
+        'header_rx': None,          # Rounding of chart header corners
+        'header_ry': None,          # Rounding of chart header corners
     }
 
-    regions_list = ['Ireland', 'Scotland', 'Britain', 'Skandinavia', 'European Steppe', 'Poland', 'Dacia', 'Germany',
-                    'France', 'Spain', 'Italian Peninsula', 'North Africa', 'Greece', 'Thrace']
+    regions_list = ['Ireland', 'Scotland', 'Britannia', 'Skandinavia', 'European Steppe', 'Poland', 'Dacia', 'Germania',
+                    'Gallia', 'Iberian Peninsula', 'Italian Peninsula', 'North Africa', 'Greece', 'Thrace']
 
     base_html_lines = readFile(base_HTML_path)                                               # Get the HTML template
     result_html_lines = insertChartBody(BOT_data_path, base_html_lines,)                     # Insert the chart body svg tags to the correct place
