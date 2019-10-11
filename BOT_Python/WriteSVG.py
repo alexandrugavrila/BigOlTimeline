@@ -2,8 +2,9 @@ import pandas as pd
 import pprint as pp
 
 
-# Prints entire data frame then resets parameters
 def printFullDf(df):
+    """ Prints entire data frame then resets parameters """
+
     pd.set_option('display.max_rows', len(df))
     pd.set_option('display.max_columns', len(df.columns))
     print(df)
@@ -11,8 +12,8 @@ def printFullDf(df):
     pd.reset_option('display.max_columns')
 
 
-# If the text is longer than max, cut 2 characters off and add '...'
 def truncateText(text, max_chars):
+    """ If the text is longer than max, cut 2 characters off and add '...' """
     if len(text) > max_chars:  # If the power is more then 12 characters cut it to 10 and add '...'
         new_text = text[0:(max_chars - 2)] + '...'
     else:
@@ -20,29 +21,33 @@ def truncateText(text, max_chars):
     return new_text
 
 
-# Turns a date from integer format to BC AD format
 def makeYearBC(year_str):
+    """ Turns a date from integer format to BC AD format """
+
     if int(year_str) < 0: return year_str[1:] + 'BC'       # If the year is negative cut off the negative and put BC at thend
     elif year_str == '2019': return 'Present'              # If the year is 2019 return Present
     else: return year_str                                  # If the year is positive and not 2019
 
 
-# Reads a file from a path into a list of lines
 def readFile(path):
+    """ Reads a file from a path into a list of lines """
+
     with open(path) as in_file:
         lines = in_file.readlines()
     return lines
 
 
-# Writes a list of lines to a path
 def writeFile(path, lines):
+    """ Writes a list of lines to a path """
+
     with open(path, 'w+') as out_file:
         out_file.writelines(lines)
 
 
-# A bank of all the regions matched to what column represents it on the table
-# no default, throws error if it is called with something that isn't an entry
 def regionSwitch(region):
+    """ A bank of all the regions matched to what column represents it on the table
+        no default, throws error if it is called with something that isn't an entry """
+
     return {
         'Ireland': 1,
         'Scotland': 2,
@@ -53,17 +58,18 @@ def regionSwitch(region):
         'Dacia': 7,
         'Germania': 8,
         'Gallia': 9,
-        'Iberian Peninsula': 10,
-        'Italian Peninsula': 11,
+        'Hispania': 10,
+        'Italia': 11,
         'North Africa': 12,
         'Greece': 13,
         'Thrace': 14
     }[region]
 
 
-# A bank of all the powers in the chart matched to its color in RGB format
-# no default, throws error if it is called with something that isn't an entry
 def powerColorSwitchRGB(power):
+    """ A bank of all the powers in the chart matched to its color in RGB format
+         no default, throws error if it is called with something that isn't an entry """
+
     return {
         'None': '(255,255,255)',
         'England': '(209,16,36)',
@@ -101,9 +107,9 @@ def powerColorSwitchRGB(power):
     }[power]
 
 
-# Find where the indicated title is, return what its indentation is and what line it's at
 def addIndent(html_lines, group_id, svg_list):
-    # Find where the indicated title is and get its indentation level in spaces or tabs
+    """ Find where the indicated title is, return what its indentation is and what line it's at """
+
     index = 0
     chart_index = 0
     indent_unit = ''
@@ -138,8 +144,9 @@ def addIndent(html_lines, group_id, svg_list):
     return new_svg_list, chart_index
 
 
-# Creates an SVG rectangle tag with the given parameters. If there is no outline, put None for stroke and stroke_width
 def createSVGRect(class_str_list, x, y, width, height, rx, ry, data_dict, style_dict):
+    """ Creates an SVG rectangle tag with the given parameters. If there is no outline, put None for stroke and stroke_width """
+
     rect_tag = '<rect'
     if class_str_list:                      # There are classes to add
         rect_tag += ' class="'                  # Initialize the class tag
@@ -165,8 +172,9 @@ def createSVGRect(class_str_list, x, y, width, height, rx, ry, data_dict, style_
     return rect_tag
 
 
-# Creates an SVG line tag with the given parameters
 def createSVGLine(class_str_list, x1, y1, x2, y2, data_dict, style_dict):
+    """ Creates an SVG line tag with the given parameters """
+
     line_tag = '<line'
     if class_str_list:                      # There are classes to add
         line_tag += ' class="'                  # Initialize the class tag
@@ -190,8 +198,9 @@ def createSVGLine(class_str_list, x1, y1, x2, y2, data_dict, style_dict):
     return line_tag
 
 
-# Creates an SVG text tag with the given parameters
 def createSVGTextCenter(class_str_list, visibility, x, y, text):
+    """ Creates an SVG text tag with the given parameters """
+
     text_tag = '<text'
     if class_str_list:                      # There are classes to add
         text_tag += ' class="'                  # Initialize the class tag
@@ -210,8 +219,9 @@ def createSVGTextCenter(class_str_list, visibility, x, y, text):
     return text_tag
 
 
-# Create an opening group tag with the given parameters
 def createSVGOpenGroupTag(id_string, class_string, data_dict, filter_string):
+    """ Create an opening group tag with the given parameters """
+
     g_tag = '<g'
     if id_string: g_tag += ' id="' + id_string + '"'
     if class_string: g_tag += ' class="' + class_string + '"'
@@ -220,11 +230,13 @@ def createSVGOpenGroupTag(id_string, class_string, data_dict, filter_string):
             g_tag += ' ' + data + '="' + data_dict[data] + '"'
     if filter_string: g_tag += ' filter="' + filter_string + '"'
     g_tag += '>'
+
     return g_tag
 
 
-# Turns data frame into a list of dictionaries
 def createChartBodyDicts(df):
+    """ Turns data frame into a list of dictionaries """
+
     df_dict = []
     for i in range(len(df)):
         if df['Power'][i] != 'None':
@@ -233,9 +245,9 @@ def createChartBodyDicts(df):
     return df_dict
 
 
-# Turns the data frame into a dictionary of dictionaries with pattern {Power: {Center: 'center region'
-#                                                                              Iteration: 'iteration'}}
 def createCenterRegionsDicts(df):
+    """ Turns the data frame into a dictionary of dictionaries with pattern {Power: {Center: 'center region'
+                                                                                     Iteration: 'iteration'}} """
     df_dict = {}
     for i in range(len(df)):
         df_dict[str(df['Power'][i])] = {'Center': df['CenterRegion'][i],
@@ -244,13 +256,14 @@ def createCenterRegionsDicts(df):
     return df_dict
 
 
-# Turns the list of dictionaries into a list of SVG rectangle element tags
 def createChartBodySvgList(body_df_dict, centers_df_dict, params):
+    """ Turns the list of dictionaries into a list of SVG rectangle element tags """
+
     body_svg_list = []
     text_svg_list = []
     last_power = ''
-    last_region = ''  # Track region changes in case the name of a power needs to be put in something other than the first iteration
-    iteration = 1  # Track what iteration of a powers control we're on in the current region, reset to 1 when the region changes
+    last_region = ''            # Track region changes in case the name of a power needs to be put in something other than the first iteration
+    iteration = 1               # Track what iteration of a powers control we're on in the current region, reset to 1 when the region changes
     for dp in body_df_dict:
         # Set parameters of current box
         curr_power = dp['Power']
@@ -315,8 +328,9 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
     return body_svg_list
 
 
-# Inserts the list of svg elements that makes up the chart body into the current HTML lines list
 def insertChartBody(path, html_lines):
+    """ Inserts the list of svg elements that makes up the chart body into the current HTML lines list """
+
     chart_body_df = pd.read_excel(path, sheet_name='ChartBodyData', usecols=range(1, 5))                        # Get the dataframe for the chart body from the excel doc
     center_regions_df = pd.read_excel(path, sheet_name='PowerCenters', usecols=range(1, 4))                     # Get the dataframe for each powers central region from the excel doc
 
@@ -332,8 +346,9 @@ def insertChartBody(path, html_lines):
     return new_html_lines
 
 
-# Inserts the x-axis headings for the chart
 def insertChartRegions(html_lines, params, regions):
+    """ Inserts the x-axis headings for the chart """
+
     # Create an SVG rect for every region in the chart
     svg_list = []
     for region in regions:
@@ -361,8 +376,9 @@ def insertChartRegions(html_lines, params, regions):
     return new_html_lines
 
 
-# Inserts the y-axis headings and the year lines across the chart
 def insertChartYears(html_lines, params, regions):
+    """ Inserts the y-axis headings and the year lines across the chart """
+
     year_level = 0
     vert_line_level = 10
     line_spacing = 100
@@ -396,7 +412,7 @@ if __name__ == "__main__":
     chart_params = {
         'bar_width': 100,           # The width of every bar in the chart in pixels
         'year_height': 1,           # How many pixels each year will represent
-        'bottom_date': 4000,        # Year BC the chart will start
+        'bottom_date': 1000,        # Year BC the chart will start
         'header_length': 30,        # Length of the regions header
         'curr_year': 2019,          # Current year
         'header_font_size': 15,     # Font size of the header labels
@@ -408,7 +424,7 @@ if __name__ == "__main__":
     }
 
     regions_list = ['Ireland', 'Scotland', 'Britannia', 'Skandinavia', 'European Steppe', 'Poland', 'Dacia', 'Germania',
-                    'Gallia', 'Iberian Peninsula', 'Italian Peninsula', 'North Africa', 'Greece', 'Thrace']
+                    'Gallia', 'Hispania', 'Italia', 'North Africa', 'Greece', 'Thrace']
 
     base_html_lines = readFile(base_HTML_path)                                               # Get the HTML template
     result_html_lines = insertChartBody(BOT_data_path, base_html_lines,)                     # Insert the chart body svg tags to the correct place

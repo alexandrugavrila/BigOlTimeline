@@ -1,7 +1,8 @@
 // This controls the mouseover tooltip events for the region headers. It will pop up
 // a tooltip that shows the map of what the region looks like
 
-var headersvg = document.getElementById('headersvg')
+var headersvg = document.getElementById('headersvg');
+var headerregions = document.getElementById('timelineregions');
 var headertooltip = document.getElementById('headertooltip');
 var headertooltiptext = document.getElementById('headertooltiptext');
 var headertooltipmap = document.getElementById('headertooltipmap');             // Get the group container for the map
@@ -11,7 +12,9 @@ var headers = document.getElementsByClassName('regionbox');
 for (var i = 0; i < headers.length; i++) {
     headers[i].addEventListener('mousemove', showHeaderTooltip);
     headers[i].addEventListener('mouseout', hideHeaderTooltip);
+    headers[i].addEventListener('mousedown', mouseClick);
 }
+
 
 function showHeaderTooltip(evt) {
     headertooltip.setAttributeNS(null, 'visibility', 'visible');          // Make the tooltip visible
@@ -49,6 +52,11 @@ function hideHeaderTooltip(evt) {
     hideBorders();
 }
 
+function mouseClick(evt) {
+    var coord = getMousePositionHeader(evt);
+    console.log(coord.x, coord.y);
+}
+
 // Helper Functions
 
 // Return the X and Y of the mouse in the current viewbox
@@ -82,16 +90,24 @@ function getViewBox(border){
         case 'britanniaborder': 
             viewboxgroup = 'westerneurope';
             break;
+        case 'skandinaviaborder':
+            viewboxgroup = 'northerneurope';
+            break;
         case 'galliaborder':
             viewboxgroup = 'westerneurope';
             break;
-        case 'iberianpeninsulaborder':
+        case 'hispaniaborder':
+            viewboxgroup = 'westerneurope';
+            break;
+        case 'italiaborder':
             viewboxgroup = 'westerneurope';
             break;
     }
 
     switch(viewboxgroup) {
         case 'westerneurope':
-            return '1035 460 270 200'
+            return '1035 460 270 200';
+        case 'northerneurope':
+            return '1100 330 405 300';       
     }
 }
