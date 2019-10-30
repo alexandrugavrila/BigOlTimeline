@@ -3,15 +3,20 @@
 // Controls the tooltip popup to display information about each block
 // Draws rectangle for selection and adjusts viewbox on mouseup
 
+// Structural elements
 var bodysvg = document.getElementById('bodysvg');
 var chartbody = document.getElementById('chartbody');
+// Power group hover tooltip elements
 var bodytooltip = document.getElementById('bodytooltip');
 var bodytooltiprects = bodytooltip.getElementsByTagName('rect');
 var bodytooltippower = document.getElementById('bodytooltippower');
 var bodytooltipregion = document.getElementById('bodytooltipregion');
 var bodytooltipyears = document.getElementById('bodytooltipyears');
+// Selectrion elements
 var bodyselectrectgroup = document.getElementById('bodyselectionrectangle');    // The group that contains the selection rectangle
 var bodyselectrect = bodyselectrectgroup.getElementsByTagName('rect')[0];       // The rectangle element inside of the selection group
+// Instructions elements
+var instructionspopup = document.getElementById('instructionspopup');
 
 var zoomfactor = 0.075;                 // The amount the zoomSVGObject function zooms in or out by
 var bodyclick = { x: 0, y: 0 };         // Saves the location of a click on the body svg
@@ -24,12 +29,13 @@ for (var i = 0; i < powergroups.length; i++) {
 bodysvg.addEventListener('mousedown', chartBodyMouseDown);
 bodysvg.addEventListener('wheel', chartBodyMouseWheel);
 
+
 function powerMouseOverEffects() {
     this.parentElement.appendChild(this);		// Bring the group to the front
     this.classList.add('powergrouphover');		// Add the dilate image filter
 
-    var powergrouprects = this.getElementsByTagName('rect');                                // Get a list of every rectangle in the group
-    for (var i = 0; i < powergrouprects.length; i++) {                                      // Add the mouse move and mouse out event listeners to every rectangle
+    var powergrouprects = this.getElementsByTagName('rect');    // Get a list of every rectangle in the group
+    for (var i = 0; i < powergrouprects.length; i++) {      // Add the mouse move and mouse out event listeners to every rectangle
         powergrouprects[i].addEventListener('mousemove', powerRectMouseMoveEffects);
         powergrouprects[i].addEventListener('mouseout', powerRectMouseOutEffects);
     }
@@ -50,8 +56,8 @@ function powerRectMouseMoveEffects(evt) {
     bodytooltip.parentElement.appendChild(bodytooltip);                 // Bring the tooltip to the front
     var selectedrect = evt.target;                                      // Capture the rect we're hovering
 
-    var coord = getMousePositionBody(evt);                                // Get the mouse position of the mousemove event
-    translateSVGObject(bodytooltip, coord.x + 10, coord.y + 40);          // Change the position of the tooltip to 10 pixels left and 40 pixels down from the pointer
+    var coord = getMousePositionBody(evt);                              // Get the mouse position of the mousemove event
+    setTranslateSVGObject(bodytooltip, coord.x + 15, coord.y + 15);     // Change the position of the tooltip to 10 pixels left and 40 pixels down from the pointer
 
     bodytooltippower.textContent = this.parentElement.getAttributeNS(null, 'data-power-name');   // Change first line of tooltip text to be the full power name
     bodytooltipregion.textContent = this.getAttributeNS(null, 'data-region');      // Change the second line of tooltip text to be the region
@@ -107,15 +113,15 @@ function selectionMouseMove(evt) {
     };
     
     if (boxparams.width < 0 && boxparams.height >= 0) {          // If just the width is negative
-        translateSVGObject(bodyselectrectgroup, coord.x, bodyclick.y);
+        setTranslateSVGObject(bodyselectrectgroup, coord.x, bodyclick.y);
         boxparams.width = Math.abs(coord.x - bodyclick.x);
     }
     else if (boxparams.width >= 0 && boxparams.height < 0) {     // If just the height is negative
-        translateSVGObject(bodyselectrectgroup, bodyclick.x, coord.y);
+        setTranslateSVGObject(bodyselectrectgroup, bodyclick.x, coord.y);
         boxparams.height = Math.abs(coord.y - bodyclick.y);
     }
     else if (boxparams.width < 0 && boxparams.height < 0) {     // If both are negative
-        translateSVGObject(bodyselectrectgroup, coord.x, coord.y);
+        setTranslateSVGObject(bodyselectrectgroup, coord.x, coord.y);
         boxparams.width = Math.abs(coord.x - bodyclick.x);
         boxparams.height = Math.abs(coord.y - bodyclick.y);
     }
@@ -132,20 +138,13 @@ function chartPanMouseUp() {
 }
 
 function chartPanMouseMove(evt) {
-    var dx = 0;         // X distance the body and header will be translated
-    var dy = 0;         // Y distance the body will be translated
-    var transforms = chartbody.transform.baseVal;      // Get all of the transforms on the object
+    var dx = 0;     // X distance the body and header will be translated
+    var dy = 0;     // Y distance the body will be translated
+    var transforms = chartbody.transform.baseVal;   // Get all of the transforms on the object
 
-    if(transforms.length === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {   // If there is no transform or the first transform isn't a translate
-        translateSVGObject(chartbody, 0, 0);        // Add an empty translate to the body
-        translateSVGObject(headerregions, 0, 0);    // Add an empty translate to the header
-    }
-    else {
-        dx = transforms.getItem(0).matrix.e + evt.movementX;        // The distance to translate on the x axis is the current translate summed with the new movement
-        dy = transforms.getItem(0).matrix.f + evt.movementY;        // The distance to translate on the y axis is the current translate summed with the new movement
-        translateSVGObject(chartbody, dx, dy);                      // Translate the chart body by dk and dy
-        translateSVGObject(headerregions, dx, 0);                   // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
-    }
+    translateSVGObject(chartbody, evt.movementX, evt.movementY);       // Translate the chart body by dk and dy
+    translateSVGObject(headerregions, evt.movementX, 0);               // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
+    translateSVGObject(instructionsbutton, evt.movementX, 0);          // Translate the 
 }
 
 function chartBodyMouseWheel(evt) {
@@ -154,11 +153,23 @@ function chartBodyMouseWheel(evt) {
     if(evt.altKey) {
         if(evt.deltaY > 0) {    // Mouse scroll down
             zoomSVGObjectOnLocation(chartbody, 1 - zoomfactor, coord.x, coord.y);   // Zoom the body out by the zoom factor, centered on the mouse
-            zoomSVGObjectOnLocation(headerregions, 1 - zoomfactor, coord.x, 0);     // Zoom the header out by the zoom factor, centered on the mouse x and the top of the header
+            zoomSVGObjectOnLocation(headerregions, 1 - zoomfactor, coord.x, 30);     // Zoom the header out by the zoom factor, centered on the mouse x and the top of the header
+            
         }
         else {                  // Mouse scroll up
             zoomSVGObjectOnLocation(chartbody, 1 + zoomfactor, coord.x, coord.y);   // Zoom the body in by the zoom factor, centered on the mouse
-            zoomSVGObjectOnLocation(headerregions, 1 + zoomfactor, coord.x, 0);     // Zoom the header in by the zoom factor, centered on the mouse x and the top of the header
+            zoomSVGObjectOnLocation(headerregions, 1 + zoomfactor, coord.x, 30);     // Zoom the header in by the zoom factor, centered on the mouse x and the top of the header
+            setTranslateSVGObject(headerregions, headerregions.transform.baseVal.getItem(0).matrix.e, 0);   // Set the header to the top of the webpage so the zoom doesnt cut part of it
+        }
+
+        var currX = headerregions.transform.baseVal.getItem(0).matrix.e;    // The current x transform of the header regions
+        var currScaleY = headerregions.transform.baseVal.getItem(1).matrix.d;   // The current y scale transform of the header regions
+        var headerHeight = parseFloat(headerregions.getElementsByTagName('rect')[0].getAttribute('height'));    // The height of the header regions
+        if(currScaleY >= 1) {   // If the header is bigger than default
+            setTranslateSVGObject(headerregions, currX, 0);   // Set the header to the top of the webpage so the zoom doesnt cut part of it
+        }
+        else {  // If the header is smaller than the default
+            setTranslateSVGObject(headerregions, currX, headerHeight - (headerHeight * currScaleY));   // Set the header down by how much it has shrunk so there is no white space between it and the graph
         }
         evt.preventDefault();   // Don't scroll the webpage when zooming
     }
@@ -180,9 +191,20 @@ function getMousePositionBody(evt) {
 function translateSVGObject(object, x, y) {
     formatTransforms(object);
     var transforms = object.transform.baseVal;      // Get all of the transforms on the object
-    var transform = transforms.getItem(0);          // Get the first element on the transform list, which we know to be a translate
+    var translate = transforms.getItem(0);          // Get the first element on the transform list, which we know to be a translate
     
-    transform.setTranslate(x, y);             // Change the position of object to the pointer
+    var currX = translate.matrix.e;
+    var currY = translate.matrix.f;
+    translate.setTranslate(currX + x, currY + y);             // Change the position of object to the pointer
+}
+
+// Set the translate of the object to X and Y
+function setTranslateSVGObject(object, x, y) {
+    formatTransforms(object);
+    var transforms = object.transform.baseVal;      // Get all of the transforms on the object
+    var translate = transforms.getItem(0);          // Get the first element on the transform list, which we know to be a translate
+
+    translate.setTranslate(x, y);             // Change the position of object to the pointer
 }
 
 // Zoom an object by the zoomfactor centered on x,y

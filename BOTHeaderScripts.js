@@ -7,14 +7,21 @@ var headertooltip = document.getElementById('headertooltip');
 var headertooltiptext = document.getElementById('headertooltiptext');
 var headertooltipmap = document.getElementById('headertooltipmap');             // Get the group container for the map
 var headertooltipmapsvg = document.getElementById('headertooltipmapsvg');       // Get the actual map svg
-
+var instructionsbutton = document.getElementById('instructionsbutton');
+var instructionsbuttonbox = document.getElementById('instructionsbuttonbox');
+var instructionsbuttontext = document.getElementById('instructionsbuttontext');
 var headers = document.getElementsByClassName('regionbox');
+
+var instructionsvisibleflag = 0;
+
 for (var i = 0; i < headers.length; i++) {
     headers[i].addEventListener('mousemove', showHeaderTooltip);
     headers[i].addEventListener('mouseout', hideHeaderTooltip);
-    headers[i].addEventListener('mousedown', mouseClick);
 }
-
+instructionsbutton.addEventListener('mouseover', buttonMouseOver);
+instructionsbutton.addEventListener('mouseout', buttonMouseOut);
+instructionsbutton.addEventListener('mousedown', buttonMouseDown);
+instructionsbutton.addEventListener('mouseup', buttonMouseUp);
 
 function showHeaderTooltip(evt) {
     headertooltip.setAttributeNS(null, 'visibility', 'visible');          // Make the tooltip visible
@@ -46,15 +53,37 @@ function showHeaderTooltip(evt) {
     headertooltipmapsvg.setAttribute('viewBox', getViewBox(tarborder));                               // Set the viewbox to what is specified in getviewbox per region
 }
 
-function hideHeaderTooltip(evt) {
+function hideHeaderTooltip() {
     headertooltip.setAttributeNS(null, 'visibility', 'hidden');
     headertooltipmap.setAttributeNS(null, 'visibility', 'hidden');
     hideBorders();
 }
 
-function mouseClick(evt) {
-    var coord = getMousePositionHeader(evt);
-    console.log(coord.x, coord.y);
+function buttonMouseOver() {
+    instructionsbuttonbox.classList.remove('buttonbox');
+    instructionsbuttonbox.classList.add('buttonboxhover');
+}
+
+function buttonMouseOut() {
+    instructionsbuttonbox.classList.remove('buttonboxhover');
+    instructionsbuttonbox.classList.add('buttonbox');
+}
+
+function buttonMouseDown() {
+    instructionsbuttonbox.classList.remove('buttonboxhover');
+    instructionsbuttonbox.classList.add('buttonboxclick');
+}
+
+function buttonMouseUp() {
+    instructionsbuttonbox.classList.remove('buttonboxclick');
+    instructionsbuttonbox.classList.add('buttonboxhover');
+
+    if(instructionspopup.getAttributeNS(null, 'visibility') == 'hidden') {  // If the instructions popup is hidden
+        instructionspopup.setAttributeNS(null, 'visibility', 'visible');        // Make the instructions popup visible
+    } 
+    else {                                                                  // If the instructions popup is visible
+        instructionspopup.setAttributeNS(null, 'visibility', 'hidden');         // Make the instructions popup hidden
+    }
 }
 
 // Helper Functions

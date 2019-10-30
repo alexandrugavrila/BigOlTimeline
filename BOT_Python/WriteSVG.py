@@ -359,7 +359,7 @@ def insertChartRegions(html_lines, params, regions):
         if params['header_rx']: rx = params['header_rx']
         if params['header_ry']: ry = params['header_ry']
         data_dict = {'data-tooltip-text': str(region)}
-        style_dict = {'fill:rgb': '(255,255,255)'}
+        style_dict = None
         box_tag = createSVGRect(['regionbox'], x, y, width, height, rx, ry, data_dict, style_dict)
         svg_list.append(box_tag)
 
