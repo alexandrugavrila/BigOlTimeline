@@ -369,7 +369,7 @@ def insertChartRegions(html_lines, params, regions):
         svg_list.append(name_tag)
 
     # Add the proper indentation to every line and insert it into the html lines
-    indent_svg_list, chart_header_index = addIndent(html_lines, 'timelineregions', svg_list)
+    indent_svg_list, chart_header_index = addIndent(html_lines, 'headerbar', svg_list)
     new_html_lines = html_lines
     new_html_lines[chart_header_index:chart_header_index] = indent_svg_list  # Insert the new svg lines into the html lines list
 
