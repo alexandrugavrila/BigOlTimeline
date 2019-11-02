@@ -1,5 +1,4 @@
 import pandas as pd
-import pprint as pp
 
 
 def printFullDf(df):

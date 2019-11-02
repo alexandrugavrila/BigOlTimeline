@@ -45,12 +45,7 @@ Thing to dynamically change
 Thoughts
 	Hover outline is still weird. Maybe possible to generate it using offset instead of 
 	dilation and erode, but blocks that are thinner than half of the offset would end up 
-	with blank spots. Its fine for now.
-
-	The controls button popup is pretty good, but I'd like its position to be more predictable.
-	Its size is always the same, but I'd like it to maybe always show up in the middle of the 
-	screen, or something like that. I'm not sure.
-
+	with blank spots. Its fine for now
 
 Temp power centers:
 	Power		 		Temp center 				Ideal center

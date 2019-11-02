@@ -1,0 +1,12 @@
+/* To make the controls popup centered */
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -35px;
+    margin-left: -130px; }
+
+/* To make the region header sticky */
+#headerdiv {
+    position: sticky;
+    top: 0px; }
