@@ -107,7 +107,7 @@ def powerColorSwitchRGB(power):
 
 
 def addIndent(html_lines, group_id, svg_list):
-    """ Find where the indicated title is, return what its indentation is and what line it's at """
+    """ Find where the indicated title is, indent all lines to that level, plus indent all internal groups """
 
     index = 0
     chart_index = 0
@@ -199,7 +199,7 @@ def createSVGLine(class_str_list, x1, y1, x2, y2, data_dict, style_dict):
     return line_tag
 
 
-def createSVGTextCenter(class_str_list, visibility, x, y, text):
+def createSVGText(class_str_list, visibility, x, y, anchor, alignment, data_dict, style_dict, text):
     """ Creates an SVG text tag with the given parameters """
 
     text_tag = '<text'
@@ -213,8 +213,18 @@ def createSVGTextCenter(class_str_list, visibility, x, y, text):
         text_tag += ' visibility="' + visibility + '"'
     text_tag += ' x="' + str(x) + '"'
     text_tag += ' y="' + str(y) + '"'
-    text_tag += ' text-anchor="middle" alignment-baseline="middle">'
-    text_tag += text
+    text_tag += ' text-anchor="' + str(anchor) + '"'
+    text_tag += ' alignment-baseline="' + str(alignment) + '"'
+    if data_dict:
+        for data in data_dict:
+            text_tag += ' ' + data + '="' + data_dict[data] + '"'
+    if style_dict:
+        text_tag += ' style="'
+        for style in style_dict:
+            text_tag += style + style_dict[style] + ';'
+        text_tag += '"'
+    text_tag += '>'
+    text_tag += str(text)
     text_tag += '</text>'
 
     return text_tag
@@ -317,9 +327,9 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
             title_x = int(x + (params['bar_width'] / 2))
             title_y = int(y + (params['header_length'] / 2))
             if bar_height > (2 * params['body_font_size']):         # If the bar is big enough to display the text
-                text_svg_list.append(createSVGTextCenter(['powertitle'], None, title_x, title_y, truncateText(curr_power, 11)))
+                text_svg_list.append(createSVGText(['powertitle'], None, title_x, title_y, 'middle', 'middle', None, None, truncateText(curr_power, 11)))
             else:
-                text_svg_list.append(createSVGTextCenter(['powertitle'], 'hidden', title_x, title_y, truncateText(curr_power, 11)))
+                text_svg_list.append(createSVGText(['powertitle'], 'hidden', title_x, title_y, 'middle', 'middle', None, None, truncateText(curr_power, 11)))
         last_power = curr_power
         last_region = curr_region
 
@@ -364,7 +374,7 @@ def insertChartRegions(html_lines, params, regions):
 
         x = x + (params['bar_width'] / 2)  # Center x on middle of box width
         y = int(params['header_length'] / 2)  # Center y on middle of box height
-        name_tag = createSVGTextCenter(['regiontext'], None, x, y, truncateText(region, 12))
+        name_tag = createSVGText(['regiontext'], None, x, y, 'middle', 'middle', None, None, truncateText(region, 12))
         svg_list.append(name_tag)
 
     # Add the proper indentation to every line and insert it into the html lines
@@ -382,6 +392,7 @@ def insertChartYears(html_lines, params, regions):
     format_svg_list = []    # Holds the SVG tags for the chart framework
     primary_lines_svg_list = []     # Holds the SVG tags for the primary lines
     secondary_lines_svg_list = []   # Holds he SVG tags for the secondary lines
+    year_labels_svg_list = []   # Holds the SVG tags for the year labels
 
     x1 = vert_line_level
     y1 = year_level
@@ -395,16 +406,23 @@ def insertChartYears(html_lines, params, regions):
     while year_level < chart_height:
         y1 = year_level
         y2 = year_level
-        if year_level % params['primary_year_spacing'] != 0:    # If the year level is not a primary line level
-            primary_lines_svg_list.append(createSVGLine(['secondaryyearline'], x1, y1, x2, y2, None, None))  # Draw a primary year line
+        if year_level % params['primary_year_spacing'] == 0:    # If the year level is not a primary line level
+            label_x = x1 + 1
+            label_y = y1 - 5
+            label_height = 20
+            label_width = 32
+            primary_lines_svg_list.append(createSVGLine(['primaryyearline'], x1, y1, x2, y2, None, None))  # Draw a primary year line
+            year_labels_svg_list.append(createSVGRect(['yearlabelbackground'], label_x, label_y, label_width, label_height, None, None, None, None))
+            year_labels_svg_list.append(createSVGText(['yearlabel'], None, x1 + 5, y1, 'Left', 'Middle', None, None, year_level - params['bottom_date']))
         else:
-            primary_lines_svg_list.append(createSVGLine(['primaryyearline'], x1, y1, x2, y2, None, None))  # Draw a secondary year line
-        year_level += params['primary_year_spacing']
+            secondary_lines_svg_list.append(createSVGLine(['secondaryyearline'], x1, y1, x2, y2, None, None))  # Draw a secondary year line
+        year_level += params['secondary_year_spacing']
 
     # Add the proper indentation to every line and insert it into the html lines
     new_html_lines = addIndent(new_html_lines, 'timelineyearlines', format_svg_list)
     new_html_lines = addIndent(new_html_lines, 'primaryyearlines', primary_lines_svg_list)
     new_html_lines = addIndent(new_html_lines, 'secondaryyearlines', secondary_lines_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'timelineyearlabels', year_labels_svg_list)
     return new_html_lines
 
 
