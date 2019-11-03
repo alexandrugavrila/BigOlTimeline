@@ -85,6 +85,7 @@ function controlsAnimationEnd(evt) {
 
 }
 
+
 /* BODY EVENTS */
 
 function powerMouseOverEffects() {
@@ -218,12 +219,18 @@ function chartBodyMouseWheel(evt) {
             zoomSVGObjectOnLocation(chartbody, 1 - zoomfactor, coord.x, coord.y);   // Zoom the body out by the zoom factor, centered on the mouse
             zoomSVGObjectOnLocation(headerbar, 1 - zoomfactor, coord.x, 30);    // Zoom the header out by the zoom factor, centered on the mouse x and the top of the header
             counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible
+            if(parseInt(chartbody.transform.baseVal.getItem(1).matrix.a, 10) < 1.5) {
+                secondaryyearlines.setAttributeNS(null, 'visibility', 'hidden');
+            }
         }
         else {                  // Mouse scroll up
             zoomSVGObjectOnLocation(chartbody, 1 + zoomfactor, coord.x, coord.y);   // Zoom the body in by the zoom factor, centered on the mouse
             zoomSVGObjectOnLocation(headerbar, 1 + zoomfactor, coord.x, 30);     // Zoom the header in by the zoom factor, centered on the mouse x and the top of the header
             counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible (This is done in both branches, that is necessary because on this one it has to be done before the final translate)
             setTranslateSVGObject(headerbar, headerbar.transform.baseVal.getItem(0).matrix.e, 0);   // Set the header to the top of the webpage so the zoom doesnt cut part of it
+            if(parseInt(chartbody.transform.baseVal.getItem(1).matrix.a, 10) > 1.5) {
+                secondaryyearlines.setAttributeNS(null, 'visibility', 'visible');
+            }
         }
         
         

@@ -3,6 +3,8 @@
     <words>
       <w>achaemenid</w>
       <w>avars</w>
+      <w>centuryline</w>
+      <w>chartspine</w>
       <w>dataframe</w>
       <w>gallia</w>
       <w>germania</w>
@@ -17,11 +19,18 @@
       <w>powerrect</w>
       <w>powertext</w>
       <w>powertitle</w>
+      <w>primaryyearline</w>
+      <w>primaryyearlines</w>
+      <w>primaryyears</w>
       <w>regionbox</w>
       <w>regiontext</w>
+      <w>secondaryyearline</w>
+      <w>secondaryyearlines</w>
+      <w>secondaryyears</w>
       <w>skandinavia</w>
       <w>timelinebody</w>
       <w>timelineregions</w>
+      <w>timelineyearlines</w>
       <w>timelineyears</w>
       <w>vert</w>
       <w>xlsx</w>

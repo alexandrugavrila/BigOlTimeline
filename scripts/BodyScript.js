@@ -16,7 +16,11 @@ var bodyselectrectgroup = document.getElementById('bodyselectionrectangle');    
 var bodyselectrect = bodyselectrectgroup.getElementsByTagName('rect')[0];       // The rectangle element inside of the selection group
 // Controls elements
 var controlspopup = document.getElementById('controlspopup');
+// Styles
+var primaryyearlines = document.getElementById('primaryyearlines');
+var secondaryyearlines = document.getElementById('secondaryyearlines');
 
+// Global variables
 var zoomfactor = 0.075;                 // The amount the zoomSVGObject function zooms in or out by
 var bodyclick = { x: 0, y: 0 };         // Saves the location of a click on the body svg
 

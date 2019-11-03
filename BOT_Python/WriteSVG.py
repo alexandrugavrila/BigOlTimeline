@@ -114,7 +114,7 @@ def addIndent(html_lines, group_id, svg_list):
     indent_unit = ''
     indent = ''
     for line in html_lines:
-        if '<g id="' + group_id + '">' in line:       # If we hit the chart header
+        if '<g id="' + group_id in line:       # If we hit the chart header
             chart_index = index + 1                                 # Save the index that the chart starts
             indent_chars = (len(line) - len(line.lstrip()))         # Number of characters in indent
             if line[0] == ' ':
@@ -140,7 +140,9 @@ def addIndent(html_lines, group_id, svg_list):
             new_svg = indent + svg + '\n'
         new_svg_list.append(new_svg)
 
-    return new_svg_list, chart_index
+    new_html_lines = html_lines
+    new_html_lines[chart_index:chart_index] = new_svg_list  # Insert the new svg lines into the html lines list
+    return new_html_lines
 
 
 def createSVGRect(class_str_list, x, y, width, height, rx, ry, data_dict, style_dict):
@@ -339,9 +341,7 @@ def insertChartBody(path, html_lines):
     chart_body_svg_list = createChartBodySvgList(chart_body_df_dict, center_regions_df_dict, chart_params)      # Turn the list of dictionaries into a list of SVG grouped tags
 
     # Add the proper indentation to every line and insert it into the html lines
-    indent_svg_list, chart_index = addIndent(html_lines, 'timelinebody', chart_body_svg_list)
-    new_html_lines = html_lines
-    new_html_lines[chart_index:chart_index] = indent_svg_list                                                   # Insert the new svg lines into the html lines list
+    new_html_lines = addIndent(html_lines, 'timelinebody', chart_body_svg_list)
     return new_html_lines
 
 
@@ -368,38 +368,43 @@ def insertChartRegions(html_lines, params, regions):
         svg_list.append(name_tag)
 
     # Add the proper indentation to every line and insert it into the html lines
-    indent_svg_list, chart_header_index = addIndent(html_lines, 'headerbar', svg_list)
-    new_html_lines = html_lines
-    new_html_lines[chart_header_index:chart_header_index] = indent_svg_list  # Insert the new svg lines into the html lines list
-
+    new_html_lines = addIndent(html_lines, 'headerbar', svg_list)
     return new_html_lines
 
 
 def insertChartYears(html_lines, params, regions):
     """ Inserts the y-axis headings and the year lines across the chart """
 
-    year_level = 0
-    vert_line_level = 10
-    line_spacing = 100
-    chart_height = params['bottom_date'] + params['curr_year']
+    year_level = 0      # Store the current level the lines are being drawn
+    vert_line_level = 10    # The x distance of the chartspine from the edge
+    chart_height = params['bottom_date'] + params['curr_year']      # The max height of the chart
+    new_html_lines = html_lines
+    format_svg_list = []    # Holds the SVG tags for the chart framework
+    primary_lines_svg_list = []     # Holds the SVG tags for the primary lines
+    secondary_lines_svg_list = []   # Holds he SVG tags for the secondary lines
 
     x1 = vert_line_level
     y1 = year_level
     x2 = vert_line_level
     y2 = chart_height
-    svg_list = [(createSVGLine(['yearline'], x1, y1, x2, y2, None, None))]          # Draw the vertical line
-    while year_level < params['bottom_date'] + params['curr_year']:
-        x1 = vert_line_level
+    line_type = 'chartspine'
+    format_svg_list.append(createSVGLine([line_type], x1, y1, x2, y2, None, None))   # Draw the chart spine
+
+    # Draw in the year lines
+    x2 = (len(regions) + 1) * params['bar_width']  # The second x point is the length of the chart
+    while year_level < chart_height:
         y1 = year_level
-        x2 = (len(regions) + 1) * params['bar_width']
         y2 = year_level
-        svg_list.append(createSVGLine(['yearline'], x1, y1, x2, y2, None, None))
-        year_level += line_spacing
+        if year_level % params['primary_year_spacing'] != 0:    # If the year level is not a primary line level
+            primary_lines_svg_list.append(createSVGLine(['secondaryyearline'], x1, y1, x2, y2, None, None))  # Draw a primary year line
+        else:
+            primary_lines_svg_list.append(createSVGLine(['primaryyearline'], x1, y1, x2, y2, None, None))  # Draw a secondary year line
+        year_level += params['primary_year_spacing']
 
     # Add the proper indentation to every line and insert it into the html lines
-    indent_svg_list, chart_header_index = addIndent(html_lines, 'timelineyears', svg_list)
-    new_html_lines = html_lines
-    new_html_lines[chart_header_index:chart_header_index] = indent_svg_list  # Insert the new svg lines into the html lines list
+    new_html_lines = addIndent(new_html_lines, 'timelineyearlines', format_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'primaryyearlines', primary_lines_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'secondaryyearlines', secondary_lines_svg_list)
     return new_html_lines
 
 
@@ -409,17 +414,19 @@ if __name__ == "__main__":
     tar_HTML_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\BOT.html'
 
     chart_params = {
-        'bar_width': 100,           # The width of every bar in the chart in pixels
-        'year_height': 1,           # How many pixels each year will represent
-        'bottom_date': 1000,        # Year BC the chart will start
-        'header_length': 30,        # Length of the regions header
-        'curr_year': 2019,          # Current year
-        'header_font_size': 15,     # Font size of the header labels
-        'body_font_size': 15,       # Size of text in the chart body
-        'body_rx': None,            # Rounding of chart body corners
-        'body_ry': None,            # Rounding of chart body corners
-        'header_rx': None,          # Rounding of chart header corners
-        'header_ry': None,          # Rounding of chart header corners
+        'bar_width': 100,               # The width of every bar in the chart in pixels
+        'year_height': 1,               # How many pixels each year will represent
+        'primary_year_spacing': 100,    # The space between the primary year lines
+        'secondary_year_spacing': 20,   # The space between the secondary year lines
+        'bottom_date': 1000,            # Year BC the chart will start
+        'header_length': 30,            # Length of the regions header
+        'curr_year': 2019,              # Current year
+        'header_font_size': 15,         # Font size of the header labels
+        'body_font_size': 15,           # Size of text in the chart body
+        'body_rx': None,                # Rounding of chart body corners
+        'body_ry': None,                # Rounding of chart body corners
+        'header_rx': None,              # Rounding of chart header corners
+        'header_ry': None,              # Rounding of chart header corners
     }
 
     regions_list = ['Ireland', 'Scotland', 'Britannia', 'Skandinavia', 'European Steppe', 'Poland', 'Dacia', 'Germania',
