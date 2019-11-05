@@ -104,6 +104,26 @@ function powerMouseOverEffects() {
     timelinebody.appendChild(powertitle);
 }
 
+function powerRectMouseMoveEffects(evt) {
+    powertooltip.setAttributeNS(null, 'visibility', 'visible');          // Make the tooltip visible
+    powertooltip.parentElement.appendChild(powertooltip);                // Bring the tooltip to the front
+
+    var coord = getMousePositionBody(evt);                               // Get the mouse position of the mousemove event
+    setTranslateSVGObject(powertooltip, coord.x + 15, coord.y + 15);     // Change the position of the tooltip to 10 pixels left and 40 pixels down from the pointer
+
+    powertooltippower.textContent = this.parentElement.getAttributeNS(null, 'data-power-name');   // Change first line of tooltip text to be the full power name
+    powertooltipregion.textContent = this.getAttributeNS(null, 'data-region');      // Change the second line of tooltip text to be the region
+    var startyear = this.getAttributeNS(null, 'data-start-year');                   // Get the start year
+    var endyear = this.getAttributeNS(null, 'data-end-year');                       // Get the end year
+    powertooltipyears.textContent = startyear + " to " + endyear;                   // Change the third line of tooltip text to be the year range
+    var longesttext = Math.max(powertooltippower.getComputedTextLength(),           // Get the length of the longest of the three lines of text
+                               powertooltipregion.getComputedTextLength(), 
+                               powertooltipyears.getComputedTextLength());
+    for (var i = 0; i < powertooltiprects.length; i++) {                            // Change the width of the tooltip to be 8 more than the longest text length
+        powertooltiprects[i].setAttributeNS(null, 'width', longesttext + 8)
+    }
+}
+
 function powerMouseOutEffects() {
     this.classList.remove('powergrouphover');	// Remove the dilate image filter
     
@@ -119,29 +139,8 @@ function powerMouseOutEffects() {
     powertitle.classList.add('powertitle');
 }
 
-function powerRectMouseMoveEffects(evt) {
-    bodytooltip.setAttributeNS(null, 'visibility', 'visible');          // Make the tooltip visible
-    bodytooltip.parentElement.appendChild(bodytooltip);                 // Bring the tooltip to the front
-    var selectedrect = evt.target;                                      // Capture the rect we're hovering
-
-    var coord = getMousePositionBody(evt);                              // Get the mouse position of the mousemove event
-    setTranslateSVGObject(bodytooltip, coord.x + 15, coord.y + 15);     // Change the position of the tooltip to 10 pixels left and 40 pixels down from the pointer
-
-    bodytooltippower.textContent = this.parentElement.getAttributeNS(null, 'data-power-name');   // Change first line of tooltip text to be the full power name
-    bodytooltipregion.textContent = this.getAttributeNS(null, 'data-region');      // Change the second line of tooltip text to be the region
-    var startyear = this.getAttributeNS(null, 'data-start-year');                  // Get the start year
-    var endyear = this.getAttributeNS(null, 'data-end-year');                      // Get the end year
-    bodytooltipyears.textContent = startyear + " to " + endyear;                   // Change the third line of tooltip text to be the year range
-    var longesttext = Math.max(bodytooltippower.getComputedTextLength(),           // Get the length of the longest of the three lines of text
-                               bodytooltipregion.getComputedTextLength(), 
-                               bodytooltipyears.getComputedTextLength());
-    for (var i = 0; i < bodytooltiprects.length; i++) {                            // Change the width of the tooltip to be 8 more than the longest text length
-        bodytooltiprects[i].setAttributeNS(null, 'width', longesttext + 8)
-    }
-}
-
 function powerRectMouseOutEffects() {
-    bodytooltip.setAttributeNS(null, 'visibility', 'hidden');           // Make the tooltip invisible
+    powertooltip.setAttributeNS(null, 'visibility', 'hidden');           // Make the tooltip invisible
 }
 
 function chartBodyMouseDown(evt) {
@@ -163,7 +162,32 @@ function chartBodyMouseDown(evt) {
         bodysvg.addEventListener('mouseup', chartPanMouseUp);
         bodysvg.addEventListener('mouseout', chartPanMouseUp);
     }
+    console.log(coord.x, coord.y);
     evt.preventDefault();   // To stop from highlighting elements on click and drag
+}
+
+function chartBodyMouseEnter(evt) {
+    yeartooltip.setAttributeNS(null, 'visibility', 'visible');
+}
+
+function chartBodyMouseMove(evt) {
+    var coord = getMousePositionBody(evt);
+    var pt = bodysvg.createSVGPoint();
+
+    yeartooltip.setAttributeNS(null, 'visibility', 'visible');
+    ytranslate = chartbody.getCTM().inverse().f
+    yscale = chartbody.getCTM().inverse().d
+    year = coord.y - chartbottom + (ytranslate);
+    //year -= ytranslate * (1 / yscale);
+
+    yeartooltipyear.textContent = year;
+    textlength = yeartooltipyear.getComputedTextLength();
+    setTranslateSVGObject(yeartooltip, coord.x - textlength - 15, coord.y + 15);
+    yeartooltip.getElementsByTagName('rect')[0].setAttributeNS(null, 'width', textlength + 8);   
+}
+
+function chartBodyMouseOut(evt) {
+    yeartooltip.setAttributeNS(null, 'visibility', 'hidden');
 }
 
 function selectionMouseUp() {
@@ -206,7 +230,7 @@ function chartPanMouseUp() {
 }
 
 function chartPanMouseMove(evt) {
-    translateSVGObject(chartbody, evt.movementX, evt.movementY);       // Translate the chart body by dk and dy
+    translateSVGObject(chartbody, evt.movementX, evt.movementY);       // Translate the chart body by dx and dy
     translateSVGObject(headerbar, evt.movementX, 0);               // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
     counterScale(controlspopup, headerbar);     // Keeps the controls dialogue box centered if panning while it's open
 }
