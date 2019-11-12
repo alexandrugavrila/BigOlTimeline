@@ -67,7 +67,8 @@ function controlsButtonMouseUp() {
         executeAnimationsBackwards(controlsanimations);     // Run the controlsbutton animations in reverse
         
     }
-    counterScale(controlspopup, headerbar);     // Counter the scale transform on the popup so its always the same size
+    counterScale(controlspopup, headerbar);     // Counter the scale transform on the popup so it's always the same size
+    counterTranslate(controlspopup, headerbar); // Counter the translate transform on the popup so it's always in the same place
 }
 
 function controlsAnimationEnd(evt) {
@@ -102,6 +103,7 @@ function powerMouseOverEffects() {
     powertitle.classList.remove('powertitle');
     powertitle.classList.add('selectedtitle');
     timelinebody.appendChild(powertitle);
+    makeVisible(yeartooltip);  // Set the year tooltip to visible, as hovering over the box counts as a mouseout
 }
 
 function powerRectMouseMoveEffects(evt) {
@@ -162,31 +164,38 @@ function chartBodyMouseDown(evt) {
         bodysvg.addEventListener('mouseup', chartPanMouseUp);
         bodysvg.addEventListener('mouseout', chartPanMouseUp);
     }
-    console.log(coord.x, coord.y);
+
     evt.preventDefault();   // To stop from highlighting elements on click and drag
 }
 
-function chartBodyMouseEnter(evt) {
+function chartBodyMouseEnter() {
     yeartooltip.setAttributeNS(null, 'visibility', 'visible');
 }
 
 function chartBodyMouseMove(evt) {
-    var coord = getMousePositionBody(evt);
-    var pt = bodysvg.createSVGPoint();
+    var coord = getMousePositionBody(evt);  // Get the mouse position in the SVG
+    var pt1 = bodysvg.createSVGPoint();     // Create an empty point
+    pt1.x = coord.x;                        // Set the point x to the mouse x
+    pt1.y = coord.y;                        // Set the point y to the mouse y
+    matrix = chartbody.getCTM().inverse();  // Get the inverse transform matrix on the chart body
+    var pt2 = pt1.matrixTransform(matrix);  // Apply it to the mouse position point
+    year = pt2.y + chartbottom;             // Subtract the bottom year, that is our year
 
-    yeartooltip.setAttributeNS(null, 'visibility', 'visible');
-    ytranslate = chartbody.getCTM().inverse().f
-    yscale = chartbody.getCTM().inverse().d
-    year = coord.y - chartbottom + (ytranslate);
-    //year -= ytranslate * (1 / yscale);
+    // If the mouse is out of the transformed chart bounds, make the year tooltip invisible
+    if(pt2.x < 0 || pt2.x > chartwidth || pt2.y + chartbottom < chartbottom || pt2.y + chartbottom > charttop){
+        if(isVisible(yeartooltip)){ makeInvisible(yeartooltip); }   // If its visibile make it invisible
+    } 
+    else {    // If the mouse is inside the transformed chart bounds, make the year tooltip visible
+        if(!isVisible(yeartooltip)){ makeVisible(yeartooltip); }    // If its invisible make it visible
+    }
 
-    yeartooltipyear.textContent = year;
-    textlength = yeartooltipyear.getComputedTextLength();
-    setTranslateSVGObject(yeartooltip, coord.x - textlength - 15, coord.y + 15);
-    yeartooltip.getElementsByTagName('rect')[0].setAttributeNS(null, 'width', textlength + 8);   
+    yeartooltipyear.textContent = parseInt(year, 10);   // Set the year tooltip text to the calculated year
+    textlength = yeartooltipyear.getComputedTextLength();   // Find the length of the text
+    setTranslateSVGObject(yeartooltip, coord.x - textlength - 15, coord.y + 15);    // Move the top right corner of the tooltip to 15 left and 15 down of the cursor
+    yeartooltip.getElementsByTagName('rect')[0].setAttributeNS(null, 'width', textlength + 8);   // Set the tooltip to be the length of the text plus a bit
 }
 
-function chartBodyMouseOut(evt) {
+function chartBodyMouseOut() {
     yeartooltip.setAttributeNS(null, 'visibility', 'hidden');
 }
 
@@ -230,45 +239,59 @@ function chartPanMouseUp() {
 }
 
 function chartPanMouseMove(evt) {
-    translateSVGObject(chartbody, evt.movementX, evt.movementY);       // Translate the chart body by dx and dy
-    translateSVGObject(headerbar, evt.movementX, 0);               // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
-    counterScale(controlspopup, headerbar);     // Keeps the controls dialogue box centered if panning while it's open
+    translateSVGObject(chartbody, evt.movementX, evt.movementY);    // Translate the chart body by dx and dy
+    translateSVGObject(headerbar, evt.movementX, 0);    // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
+    counterTranslate(controlspopup, headerbar);     // Keeps the controls dialogue box centered if panning while it's open
+    
+    adjustYearLabelTranslates();    // Keep the year labels where they need to be after a pan
 }
 
 function chartBodyMouseWheel(evt) {
     var coord = getMousePositionBody(evt);
+    xtrans = chartbody.transform.baseVal.getItem(0).matrix.e;
+    xscale = chartbody.transform.baseVal.getItem(1).matrix.a;
 
     if(evt.altKey) {
         if(evt.deltaY > 0) {    // Mouse scroll down
             zoomSVGObjectOnLocation(chartbody, 1 - zoomfactor, coord.x, coord.y);   // Zoom the body out by the zoom factor, centered on the mouse
             zoomSVGObjectOnLocation(headerbar, 1 - zoomfactor, coord.x, 30);    // Zoom the header out by the zoom factor, centered on the mouse x and the top of the header
             counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible
-            if(parseInt(chartbody.transform.baseVal.getItem(1).matrix.a, 10) < 1.5) {
-                secondaryyearlines.setAttributeNS(null, 'visibility', 'hidden');
+            counterTranslate(controlspopup, headerbar); // Translate the controls dialogue box, in case it's visible
+            
+            // If the zoom factor is less than 1.5, hide the secondary year lines
+            if(parseInt(xscale, 10) < 1.5) {
+                makeInvisible(secondaryyearlines);
+                makeInvisible(secondaryyearlabels);
             }
         }
         else {                  // Mouse scroll up
             zoomSVGObjectOnLocation(chartbody, 1 + zoomfactor, coord.x, coord.y);   // Zoom the body in by the zoom factor, centered on the mouse
             zoomSVGObjectOnLocation(headerbar, 1 + zoomfactor, coord.x, 30);     // Zoom the header in by the zoom factor, centered on the mouse x and the top of the header
             counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible (This is done in both branches, that is necessary because on this one it has to be done before the final translate)
-            setTranslateSVGObject(headerbar, headerbar.transform.baseVal.getItem(0).matrix.e, 0);   // Set the header to the top of the webpage so the zoom doesnt cut part of it
-            if(parseInt(chartbody.transform.baseVal.getItem(1).matrix.a, 10) > 1.5) {
-                secondaryyearlines.setAttributeNS(null, 'visibility', 'visible');
-            }
+            counterTranslate(controlspopup, headerbar); // Translate the controls dialogue box, in case it's visible
+            
+            // If the zoom factor is greater than 1.5, show the secondary year lines
+            if(parseInt(xscale, 10) > 1.5) {
+                makeVisible(secondaryyearlines);
+                makeVisible(secondaryyearlabels);
+            }       
         }
-        
-        
 
-        var currX = headerbar.transform.baseVal.getItem(0).matrix.e;    // The current x transform of the header regions
-        var currScaleY = headerbar.transform.baseVal.getItem(1).matrix.d;   // The current y scale transform of the header regions
-        var headerHeight = parseFloat(headerbar.getElementsByTagName('rect')[0].getAttribute('height'));    // The height of the header regions
-        if(currScaleY >= 1) {   // If the header is bigger than default
-            setTranslateSVGObject(headerbar, currX, 0);   // Set the header to the top of the webpage so the zoom doesnt cut part of it
-        }
-        else {  // If the header is smaller than the default
-            setTranslateSVGObject(headerbar, currX, headerHeight - (headerHeight * currScaleY));   // Set the header down by how much it has shrunk so there is no white space between it and the graph
-        }
+        adjustYearLabelFont();     // Counter the scaling of the year labels by adjusting their font
+        adjustYearLabelTranslates();    // Put the year labels where they need to be after a zoom
+        setYearLabelWidths();   // Adjust the year labels width to match the new length of the text
+
         evt.preventDefault();   // Don't scroll the webpage when zooming
+    }
+
+    var currX = headerbar.transform.baseVal.getItem(0).matrix.e;    // The current x transform of the header regions
+    var currScaleY = headerbar.transform.baseVal.getItem(1).matrix.d;   // The current y scale transform of the header regions
+    var headerHeight = parseFloat(headerbar.getElementsByTagName('rect')[0].getAttribute('height'));    // The height of the header regions
+    if(currScaleY >= 1) {   // If the header is bigger than default
+        setTranslateSVGObject(headerbar, currX, 0);   // Set the header to the top of the webpage so the zoom doesnt cut part of it
+    }
+    else {  // If the header is smaller than the default
+        setTranslateSVGObject(headerbar, currX, headerHeight - (headerHeight * currScaleY));   // Set the header down by how much it has shrunk so there is no white space between it and the graph
     }
 }
 

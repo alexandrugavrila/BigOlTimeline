@@ -392,8 +392,10 @@ def insertChartYears(html_lines, params, regions):
     format_svg_list = []    # Holds the SVG tags for the chart framework
     primary_lines_svg_list = []     # Holds the SVG tags for the primary lines
     secondary_lines_svg_list = []   # Holds he SVG tags for the secondary lines
-    year_labels_svg_list = []   # Holds the SVG tags for the year labels
+    p_year_labels_svg_list = []   # Holds the SVG tags for the primary year labels
+    s_year_labels_svg_list = []   # Holds the SVG tags for the secondary year labels
 
+    # Parameters for the chart spine line
     x1 = vert_line_level
     y1 = year_level
     x2 = vert_line_level
@@ -401,28 +403,41 @@ def insertChartYears(html_lines, params, regions):
     line_type = 'chartspine'
     format_svg_list.append(createSVGLine([line_type], x1, y1, x2, y2, None, None))   # Draw the chart spine
 
+    # Parameters for the primary year label
+    p_label_height = 20
+    p_label_width = 32
+
+    # Parameters for the secondary year level
+    s_label_height = 10
+    s_label_width = 25
+
     # Draw in the year lines
     x2 = (len(regions) + 1) * params['bar_width']  # The second x point is the length of the chart
     while year_level < chart_height:
         y1 = year_level
         y2 = year_level
-        if year_level % params['primary_year_spacing'] == 0:    # If the year level is not a primary line level
-            label_x = x1 + 1
-            label_y = y1 - 5
-            label_height = 20
-            label_width = 32
-            primary_lines_svg_list.append(createSVGLine(['primaryyearline'], x1, y1, x2, y2, None, None))  # Draw a primary year line
-            year_labels_svg_list.append(createSVGRect(['yearlabelbackground'], label_x, label_y, label_width, label_height, None, None, None, None))
-            year_labels_svg_list.append(createSVGText(['yearlabel'], None, x1 + 5, y1, 'Left', 'Middle', None, None, year_level - params['bottom_date']))
+        if year_level % params['primary_year_spacing'] == 0:    # If the year level is a primary line level
+            p_label_x = x1 + 1
+            p_label_y = y1 - 5
+
+            primary_lines_svg_list.append(createSVGLine(['pyearline'], x1, y1, x2, y2, None, None))  # Draw a primary year line
+            p_year_labels_svg_list.append(createSVGRect(['yearlabelbackground'], p_label_x, p_label_y, p_label_width, p_label_height, None, None, None, None))
+            p_year_labels_svg_list.append(createSVGText(['pyearlabel'], None, x1 + 5, y1, 'Left', 'Middle', None, None, year_level - params['bottom_date']))
         else:
-            secondary_lines_svg_list.append(createSVGLine(['secondaryyearline'], x1, y1, x2, y2, None, None))  # Draw a secondary year line
+            s_label_x = x1 + 1
+            s_label_y = y1 - 5
+
+            secondary_lines_svg_list.append(createSVGLine(['syearline'], x1, y1, x2, y2, None, None))  # Draw a secondary year line
+            s_year_labels_svg_list.append(createSVGRect(['yearlabelbackground'], s_label_x, s_label_y, s_label_width, s_label_height, None, None, None, None))
+            s_year_labels_svg_list.append(createSVGText(['syearlabel'], None, x1 + 3, y1, 'Left', 'Middle', None, None, year_level - params['bottom_date']))
         year_level += params['secondary_year_spacing']
 
     # Add the proper indentation to every line and insert it into the html lines
     new_html_lines = addIndent(new_html_lines, 'timelineyearlines', format_svg_list)
-    new_html_lines = addIndent(new_html_lines, 'primaryyearlines', primary_lines_svg_list)
-    new_html_lines = addIndent(new_html_lines, 'secondaryyearlines', secondary_lines_svg_list)
-    new_html_lines = addIndent(new_html_lines, 'timelineyearlabels', year_labels_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'pyearlines', primary_lines_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'syearlines', secondary_lines_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'pyearlabels', p_year_labels_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'syearlabels', s_year_labels_svg_list)
     return new_html_lines
 
 
@@ -440,7 +455,7 @@ if __name__ == "__main__":
         'header_length': 30,            # Length of the regions header
         'curr_year': 2019,              # Current year
         'header_font_size': 15,         # Font size of the header labels
-        'body_font_size': 15,           # Size of text in the chart body
+        'body_font_size': 15,           # Size of text in the chart body-
         'body_rx': None,                # Rounding of chart body corners
         'body_ry': None,                # Rounding of chart body corners
         'header_rx': None,              # Rounding of chart header corners

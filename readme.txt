@@ -41,11 +41,17 @@ Thing to dynamically change
 		In blankBOT, timelineBody powerhover filter: difference between first two dilations
 	Thickness of gridlines
 		In blankBOT, chartbody SVG style: .yearline
+	Font size of year labels needs to be changed in python if changed in CSS
 
 Thoughts
 	Hover outline is still weird. Maybe possible to generate it using offset instead of 
 	dilation and erode, but blocks that are thinner than half of the offset would end up 
 	with blank spots. Its fine for now
+
+	I need to find a way to get the svg style sheet dynamically, instead of just
+	getting the second sheet in the css sheetlist. But its not super pressing as I
+	don't intend to add any style sheets right now. (this is done in BodyScript.js in
+	the variable declaraions)
 
 Temp power centers:
 	Power		 		Temp center 				Ideal center

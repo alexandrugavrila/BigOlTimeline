@@ -19,15 +19,25 @@
       <w>powerrect</w>
       <w>powertext</w>
       <w>powertitle</w>
+      <w>primaryyearlabels</w>
       <w>primaryyearline</w>
       <w>primaryyearlines</w>
       <w>primaryyears</w>
+      <w>pyearlabel</w>
+      <w>pyearlabels</w>
+      <w>pyearline</w>
+      <w>pyearlines</w>
       <w>regionbox</w>
       <w>regiontext</w>
+      <w>secondaryyearlabels</w>
       <w>secondaryyearline</w>
       <w>secondaryyearlines</w>
       <w>secondaryyears</w>
       <w>skandinavia</w>
+      <w>syearlabel</w>
+      <w>syearlabels</w>
+      <w>syearline</w>
+      <w>syearlines</w>
       <w>timelinebody</w>
       <w>timelineregions</w>
       <w>timelineyearlabels</w>
