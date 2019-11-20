@@ -24,7 +24,7 @@ function showHeaderTooltip(evt) {
     tooltiptransform.setTranslate(coord.x + 25, coord.y + 10);            // Change the position of the tooltip to 25 pixels left and 10 pixels down from the pointer
     tooltipmaptransform.setTranslate(coord.x + 35, coord.y + 40);         // Change the position of the tooltip map to 35 pixels left and 40 pixels down from the pointer
 
-    headertooltiptext.textContent = selectedregion.getAttributeNS(null, 'data-tooltip-text');        // Change tooltip text to be the region
+    headertooltiptext.textContent = selectedregion.getAttributeNS(null, 'data-region-name');        // Change tooltip text to be the region
     var tarborder = headertooltiptext.textContent.replace(/ /g,'').toLowerCase().concat('border');    // The id of the target border is going to be the region, lowercase, without spaces, plus 'border'
     document.getElementById(tarborder).setAttributeNS(null, 'visibility', 'visible');           // Set the target border to visible
     headertooltipmapsvg.setAttributeNS(null, 'viewBox', getMapViewBox(tarborder));                               // Set the viewbox to what is specified in getviewbox per region
@@ -248,35 +248,71 @@ function chartPanMouseMove(evt) {
 
 function chartBodyMouseWheel(evt) {
     var coord = getMousePositionBody(evt);
-    xtrans = chartbody.transform.baseVal.getItem(0).matrix.e;
-    xscale = chartbody.transform.baseVal.getItem(1).matrix.a;
 
     if(evt.altKey) {
-        if(evt.deltaY > 0) {    // Mouse scroll down
-            zoomSVGObjectOnLocation(chartbody, 1 - zoomfactor, coord.x, coord.y);   // Zoom the body out by the zoom factor, centered on the mouse
-            zoomSVGObjectOnLocation(headerbar, 1 - zoomfactor, coord.x, 30);    // Zoom the header out by the zoom factor, centered on the mouse x and the top of the header
-            counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible
-            counterTranslate(controlspopup, headerbar); // Translate the controls dialogue box, in case it's visible
+        var oldxscale = parseFloat(chartbody.transform.baseVal.getItem(1).matrix.a, 10);
+        
+        // Mouse scroll down, zoom out
+        if(evt.deltaY > 0) {
+            zoomSVGObjectOnLocation(chartbody, 1 - zoomfactor, 1 - zoomfactor, coord.x, coord.y);   // Zoom the body out by the zoom factor, centered on the mouse
+            zoomSVGObjectOnLocation(headerbar, 1 - zoomfactor, 1 - zoomfactor, coord.x, 30);    // Zoom the header out by the zoom factor, centered on the mouse x and the top of the header
+            var newxscale = parseFloat(chartbody.transform.baseVal.getItem(1).matrix.a, 10);   // Have to get these here so its after any adustment            
+
+
+            // If the zoom factor is greater than 1 keep the ysale at 1 and move region texts to compensate for the header length shrinkage
+            if(newxscale > 1) {
+                setScaleSVGObject(headerbar, newxscale, 1);     // Make sure the header bar is not changing in the y direction on zoom
+                counterScale(headertextsgroup, headerbar);      // Counter the xscale on the texts so they dont stretch
+                counterScale(controlsbutton, headerbar);      // Counter the xscale on the texts so they dont stretch
+                adjustRegionTextTranslates(oldxscale, newxscale);   // Adjust the X translates of the region texts to the new box centers
+                adjustRegionTexts();    // Change how much of the region is truncated based off of the new length of the boxes
+            }
             
+            // If we are passing zooming out past 1 set everything back to one just to equalize small errors
+            if(oldxscale > 1 && newxscale < 1) {
+                setScaleSVGObject(chartbody, 1, 1);
+                setScaleSVGObject(headerbar, 1, 1);
+                setScaleSVGObject(headertextsgroup, 1, 1);
+                resetRegionTextXs();
+            }
+
             // If the zoom factor is less than 1.5, hide the secondary year lines
-            if(parseInt(xscale, 10) < 1.5) {
+            if(newxscale < 1.5) {
                 makeInvisible(secondaryyearlines);
                 makeInvisible(secondaryyearlabels);
             }
         }
-        else {                  // Mouse scroll up
-            zoomSVGObjectOnLocation(chartbody, 1 + zoomfactor, coord.x, coord.y);   // Zoom the body in by the zoom factor, centered on the mouse
-            zoomSVGObjectOnLocation(headerbar, 1 + zoomfactor, coord.x, 30);     // Zoom the header in by the zoom factor, centered on the mouse x and the top of the header
-            counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible (This is done in both branches, that is necessary because on this one it has to be done before the final translate)
-            counterTranslate(controlspopup, headerbar); // Translate the controls dialogue box, in case it's visible
-            
+        // Mouse scroll up, zoom in
+        else {
+            zoomSVGObjectOnLocation(chartbody, 1 + zoomfactor, 1 + zoomfactor, coord.x, coord.y);   // Zoom the body in by the zoom factor, centered on the mouse
+            zoomSVGObjectOnLocation(headerbar, 1 + zoomfactor, 1 + zoomfactor, coord.x, 30);     // Zoom the header in by the zoom factor, centered on the mouse x and the top of the header
+            var newxscale = parseFloat(chartbody.transform.baseVal.getItem(1).matrix.a, 10);   // Have to get these here so its after any adustment
+
+            // If the zoom factor is greater than 1 keep the yscale at 1 and move the region texts to compensate for header length expansion
+            if(newxscale > 1) {
+                setScaleSVGObject(headerbar, newxscale, 1);     // Make sure the header bar is not changing in the y direction on zoom
+                counterScale(headertextsgroup, headerbar);      // Counter the xscale on the texts so they dont stretch
+                counterScale(controlsbutton, headerbar);      // Counter the xscale on the texts so they dont stretch
+                adjustRegionTextTranslates(oldxscale, newxscale);   // Adjust the X translates of the region texts to the new box centers
+                adjustRegionTexts();    // Change how much of the region is truncated based off of the new length of the boxes
+            }
+
+            // If we are passing zooming in past 1 set everything back to one just to equalize small errors
+            if(oldxscale < 1 && newxscale > 1) {
+                setScaleSVGObject(chartbody, 1, 1);
+                setScaleSVGObject(headerbar, 1, 1);
+                setScaleSVGObject(headertextsgroup, 1, 1);
+                resetRegionTextXs();
+            }
+
             // If the zoom factor is greater than 1.5, show the secondary year lines
-            if(parseInt(xscale, 10) > 1.5) {
+            if(newxscale > 1.5) {
                 makeVisible(secondaryyearlines);
                 makeVisible(secondaryyearlabels);
             }       
         }
-
+        counterScale(controlspopup, headerbar);     // Scale the controls dialogue box, in case it's visible
+        counterTranslate(controlspopup, headerbar); // Translate the controls dialogue box, in case it's visible
         adjustYearLabelFont();     // Counter the scaling of the year labels by adjusting their font
         adjustYearLabelTranslates();    // Put the year labels where they need to be after a zoom
         setYearLabelWidths();   // Adjust the year labels width to match the new length of the text

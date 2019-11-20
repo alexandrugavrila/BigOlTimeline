@@ -33,7 +33,7 @@ function setScaleSVGObject(object, x, y) {
 }
 
 
-function zoomSVGObjectOnLocation(object, zoomfactor, x, y) {
+function zoomSVGObjectOnLocation(object, zoomfactorx, zoomfactory, x, y) {
     // Zoom an object by the zoomfactor centered on x,y
 
     var transforms = object.transform.baseVal;      // Get all of the transforms on the object
@@ -41,10 +41,10 @@ function zoomSVGObjectOnLocation(object, zoomfactor, x, y) {
     var scale = transforms.getItem(1);
 
     // Multiply all transforms by the zoom factor, then correct the translate for the mouse position
-    var newtranslatex = (translate.matrix.e * zoomfactor) + ((1 - zoomfactor) * x);
-    var newtranslatey = (translate.matrix.f * zoomfactor) + ((1 - zoomfactor) * y);
-    var newscalex = scale.matrix.a * zoomfactor;
-    var newscaley = scale.matrix.d * zoomfactor;
+    var newtranslatex = (translate.matrix.e * zoomfactorx) + ((1 - zoomfactorx) * x);
+    var newtranslatey = (translate.matrix.f * zoomfactory) + ((1 - zoomfactory) * y);
+    var newscalex = scale.matrix.a * zoomfactorx;
+    var newscaley = scale.matrix.d * zoomfactory;
     translate.setTranslate(newtranslatex, newtranslatey);
     scale.setScale(newscalex, newscaley);
 }
@@ -95,6 +95,24 @@ function makeInvisible(object) {
     // Make an object invisible
 
     object.setAttributeNS(null, 'visibility', 'hidden');    // Make the object invisible
+}
+
+
+function makeVisibleIfInvisible(object) {
+    // If the object is invisible, make it visible
+    
+    if(object.getAttributeNS(null, 'visibility') == 'hidden') {
+        object.setAttributeNS(null, 'visibility', 'visible');
+    }
+}
+
+
+function makeInvisibileIfVisible(object) {
+    // If an object is visible, make it invisible
+
+    if(object.getAttributeNS(null, 'visibility') == 'visible') {
+        object.setAttributeNS(null, 'hidden');
+    }
 }
 
 
@@ -267,10 +285,17 @@ function formatBodyTransforms() {
 
 function formatHeaderTransforms() {
     // Format the transforms on all of the objects in the header that will be transformed
-    objects = [headerbar, headertooltip, controlspopup]
+    objects = [headerbar, headertooltip, controlspopup, headertexts, headertextsgroup, controlsbutton];
     
     for(var i = 0; i < objects.length; i++) {
-        formatTransforms(objects[i]);
+        if(objects[i].length) {
+            for(var j = 0; j < objects[i].length; j++) {
+                formatTransforms(objects[i][j]);
+            }
+        }
+        else {
+            formatTransforms(objects[i]);
+        }
     }
 }
 
@@ -350,25 +375,26 @@ function adjustControlsAnimations() {
     formatTransforms(headerbar);        // Put blank transforms on the header to avoid checking for them
     formatTransforms(controlspopup);    // Put blank transforms on the controls popup to avoid checking for them
 
-    var headere = parseInt(headerbar.transform.baseVal.getItem(0).matrix.e, 10);
-    var headerf = parseInt(headerbar.transform.baseVal.getItem(0).matrix.f, 10);
-    var headera = headerbar.transform.baseVal.getItem(1).matrix.a;
-    var headerd = headerbar.transform.baseVal.getItem(1).matrix.d;
-    
-    var popupx = parseInt(controlspopupbox.getAttributeNS(null, 'x'), 10);
-    var popupy = parseInt(controlspopupbox.getAttributeNS(null, 'y'), 10);
-    var popupheight = parseInt(controlspopupbox.getAttributeNS(null, 'height'), 10);
-    var popupwidth = parseInt(controlspopupbox.getAttributeNS(null, 'width'), 10);
-    
-    var x = (popupx - headere) * (1 / headera);
-    var y = (popupy - headerf) * (1 / headerd)
-    var height = popupheight * (1 / headera);
-    var width = popupwidth * (1 / headerd);
+    var headere = parseInt(headerbar.transform.baseVal.getItem(0).matrix.e, 10);    // The x translate of the headerbar as an int
+    var headerf = parseInt(headerbar.transform.baseVal.getItem(0).matrix.f, 10);    // The y translate of the headerbar as an int
+    var headera = headerbar.transform.baseVal.getItem(1).matrix.a;  // The x scale of the headerbar
+    var headerd = headerbar.transform.baseVal.getItem(1).matrix.d;  // The y scale of the headerbar
+    var bodyd = chartbody.transform.baseVal.getItem(1).matrix.d;    // The y scale of the chartbody
 
-    controlsanimationx.setAttributeNS(null, 'to', x);
-    controlsanimationy.setAttributeNS(null, 'to', y);
-    controlsanimationheight.setAttributeNS(null, 'to', height);
-    controlsanimationwidth.setAttributeNS(null, 'to', width);
+    var popupx = parseInt(controlspopupbox.getAttributeNS(null, 'x'), 10);  // The x parameter of the animation as an int
+    var popupy = parseInt(controlspopupbox.getAttributeNS(null, 'y'), 10);  // The y parameter of the animation as an int
+    var popupheight = parseInt(controlspopupbox.getAttributeNS(null, 'height'), 10);    // The height parameter of the animation as an int
+    var popupwidth = parseInt(controlspopupbox.getAttributeNS(null, 'width'), 10);      // The width parameter of the animation as an int
+    
+    var x = (popupx - headere) * (1 / headera);     // The new x is the old x adjusted for the translate and then the x scale of the header
+    var y = (popupy - headerf) * (1 / headerd);     // The new y is the old y adjusted for the translate and then the y scale of the header
+    var height = popupheight * (1 / headera);   // The new height is the standard height divided by the x scale of the header
+    var width = popupwidth * (1 / bodyd);   // The new width is the standard width divided by the y scale of the chart body, can't use the header y scale because its no longer scaling higher than 1
+
+    controlsanimationx.setAttributeNS(null, 'to', x);   // Set the animation x
+    controlsanimationy.setAttributeNS(null, 'to', y);   // Set the animation y
+    controlsanimationheight.setAttributeNS(null, 'to', height);     // Set the animation height
+    controlsanimationwidth.setAttributeNS(null, 'to', width);   // Set the animation width
 }
 
 
@@ -409,4 +435,48 @@ function adjustYearLabelFont() {
     newsizes = syearlabeldefaultfontsize * (1 / yscale);
     pyearlabelstyle.style.fontSize = newsizep.toString() + "px"
     syearlabelstyle.style.fontSize = newsizes.toString() + "px"
+}
+
+
+function adjustRegionTextTranslates(oldxscale, newxscale) {
+    // Adjust the region texts, and the controls button text to be in the center of their boxes
+
+    var centerdifference = (regionboxwidth * newxscale) - (regionboxwidth * oldxscale);     // Find the diference in the center of the boxes caused by the new scale
+
+    // For every header text, move it to the new center of the box
+    for(var i = 0; i < headertexts.length; i++) {
+        xlevel = parseInt(headertexts[i].getAttributeNS(null, 'data-xlevel'), 10);  // The boxes place on the bar left to right
+        translate = centerdifference * (xlevel + 0.5)
+        translateSVGObject(headertexts[i], translate, 0);
+    }
+}
+
+
+function adjustRegionTexts() {
+    // Adjust how much of the region text is truncated to compensate for the changing
+    // region box width
+
+    for(var i = 0; i < headertexts.length; i++) {
+        fulltext = headertexts[i].getAttributeNS(null, 'data-region-name');
+        boxwidth = regionboxwidth * headerbar.transform.baseVal.getItem(1).matrix.a;
+        headertexts[i].textContent = fulltext;
+        textlength = headertexts[i].getComputedTextLength();
+        
+        j = headertexts[i].textContent.length;
+        while(headertexts[i].getComputedTextLength() > boxwidth - 5){
+            headertexts[i].textContent = fulltext.substring(0,j) + '...';
+            j -= 1;
+        }
+    }
+    makeVisibleIfInvisible(headertextsgroup);
+}
+
+
+function resetRegionTextXs() {
+    // Reset the x level of each box to its starting value
+
+    // For every header text, set its x value to its original
+    for(var i = 0; i < headertexts.length; i++) {
+        setTranslateSVGObject(headertexts[i], 0, 0);
+    }
 }

@@ -359,7 +359,8 @@ def insertChartRegions(html_lines, params, regions):
     """ Inserts the x-axis headings for the chart """
 
     # Create an SVG rect for every region in the chart
-    svg_list = []
+    boxes_svg_list = []
+    texts_svg_list = []
     for region in regions:
         x = regionSwitch(region) * params['bar_width']
         y = 0
@@ -367,18 +368,21 @@ def insertChartRegions(html_lines, params, regions):
         rx, ry = None, None
         if params['header_rx']: rx = params['header_rx']
         if params['header_ry']: ry = params['header_ry']
-        data_dict = {'data-tooltip-text': str(region)}
+        box_data_dict = {'data-region-name': str(region)}
+        text_data_dict = {'data-xlevel': str(regions.index(region) + 1),
+                          'data-region-name': str(region)}
         style_dict = None
-        box_tag = createSVGRect(['regionbox'], x, y, width, height, rx, ry, data_dict, style_dict)
-        svg_list.append(box_tag)
+        box_tag = createSVGRect(['regionbox'], x, y, width, height, rx, ry, box_data_dict, style_dict)
+        boxes_svg_list.append(box_tag)
 
         x = x + (params['bar_width'] / 2)  # Center x on middle of box width
         y = int(params['header_length'] / 2)  # Center y on middle of box height
-        name_tag = createSVGText(['regiontext'], None, x, y, 'middle', 'middle', None, None, truncateText(region, 12))
-        svg_list.append(name_tag)
+        name_tag = createSVGText(['regiontext'], None, x, y, 'middle', 'middle', text_data_dict, None, region)
+        texts_svg_list.append(name_tag)
 
     # Add the proper indentation to every line and insert it into the html lines
-    new_html_lines = addIndent(html_lines, 'headerbar', svg_list)
+    new_html_lines = addIndent(html_lines, 'regionboxes', boxes_svg_list)
+    new_html_lines = addIndent(new_html_lines, 'regiontexts', texts_svg_list)
     return new_html_lines
 
 

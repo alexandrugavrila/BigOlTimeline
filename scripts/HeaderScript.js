@@ -1,9 +1,13 @@
 /* VARIABLE DECLARATIONS */
+
 var headersvg = document.getElementById('headersvg');
 
 // Header Elements
 var headerbar = document.getElementById('headerbar');
-var headers = document.getElementsByClassName('regionbox');
+var headerboxes = document.getElementsByClassName('regionbox');
+var headertexts = document.getElementsByClassName('regiontext');
+var headerboxesgroup = document.getElementById('regionboxes');
+var headertextsgroup = document.getElementById('regiontexts');
 
 // Header tooltip elements
 var headertooltip = document.getElementById('headertooltip');
@@ -25,13 +29,18 @@ var controlsanimationwidth = document.getElementById('controlsanimationwidth');
 var controlsanimationrect = document.getElementById('controlsanimationrect');
 var controlspopup = document.getElementById('controlspopup');
 
+
+// Global Variables
+var regionboxwidth = headerboxes[0].getAttributeNS(null, 'width');
+
 /* SCRIPT */
 
-formatHeaderTransforms();
+formatHeaderTransforms();   // Add blank transforms to all of the elements that may need transforming
+adjustRegionTexts();    // Truncate all of the region header texts properly
 
-for (var i = 0; i < headers.length; i++) {
-    headers[i].addEventListener('mousemove', showHeaderTooltip);
-    headers[i].addEventListener('mouseout', hideHeaderTooltip);
+for (var i = 0; i < headerboxes.length; i++) {
+    headerboxes[i].addEventListener('mousemove', showHeaderTooltip);
+    headerboxes[i].addEventListener('mouseout', hideHeaderTooltip);
 }
 controlsbutton.addEventListener('mouseover', controlsButtonMouseOver);
 controlsbutton.addEventListener('mouseout', controlsButtonMouseOut);

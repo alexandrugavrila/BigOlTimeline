@@ -28,7 +28,9 @@
       <w>pyearline</w>
       <w>pyearlines</w>
       <w>regionbox</w>
+      <w>regionboxes</w>
       <w>regiontext</w>
+      <w>regiontexts</w>
       <w>secondaryyearlabels</w>
       <w>secondaryyearline</w>
       <w>secondaryyearlines</w>
@@ -44,6 +46,7 @@
       <w>timelineyearlines</w>
       <w>timelineyears</w>
       <w>vert</w>
+      <w>xlevel</w>
       <w>xlsx</w>
       <w>yearlabel</w>
       <w>yearlabelbackground</w>
