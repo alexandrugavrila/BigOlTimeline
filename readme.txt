@@ -56,6 +56,6 @@ Thoughts
 Temp power centers:
 	Power		 		Temp center 				Ideal center
 	Mongols		 		European Steppe				?
-	Achaemenid Persia	Thrace						Iran
-	Byzantine Empire	Thrace						Constantinople
-	Ottoman Empire		Thrace						Constantinople
+	Achaemenid Persia	Eastern Mediterranean		Iran
+	Byzantine Empire	Eastern Mediterranean		Constantinople
+	Ottoman Empire		Eastern Mediterranean		Constantinople

@@ -323,7 +323,7 @@ function setYearLabelWidths() {
 function hideBorders() {
     // Set the visibility of all borders on the headertooltip map to hidden
 
-    var regionborders = document.getElementsByClassName('regionborder');
+    var regionborders = document.getElementById('borders').getElementsByTagName('path');
     for(var i = 0; i < regionborders.length; i++){
         regionborders[i].setAttributeNS(null, 'visibility', 'hidden');
     }
@@ -337,33 +337,44 @@ function getMapViewBox(border) {
 
     switch(border) {
         case 'irelandborder': 
-            viewboxgroup = 'westerneurope';
+            viewboxgroup = 'Weurope';
             break;
         case 'scotlandborder': 
-            viewboxgroup = 'westerneurope';
+            viewboxgroup = 'Weurope';
             break;
         case 'britanniaborder': 
-            viewboxgroup = 'westerneurope';
+            viewboxgroup = 'Weurope';
             break;
         case 'skandinaviaborder':
-            viewboxgroup = 'northerneurope';
+            viewboxgroup = 'Neurope';
+            break;
+        case 'germaniaborder':
+            viewboxgroup = 'Weurope';
             break;
         case 'galliaborder':
-            viewboxgroup = 'westerneurope';
+            viewboxgroup = 'Weurope';
             break;
         case 'hispaniaborder':
-            viewboxgroup = 'westerneurope';
+            viewboxgroup = 'Weurope';
             break;
         case 'italiaborder':
-            viewboxgroup = 'westerneurope';
+            viewboxgroup = 'Weuropee';
+            break;
+        case 'adriaticcoastborder':
+            viewboxgroup = 'SEeurope';
+            break;
+        case 'easternmediterraneanborder':
+            viewboxgroup = 'SEeurope';
             break;
     }
 
     switch(viewboxgroup) {
-        case 'westerneurope':
+        case 'Weurope':
             return '1035 460 270 200';
-        case 'northerneurope':
-            return '1100 330 405 300';       
+        case 'Neurope':
+            return '1100 330 405 300';
+        case 'SEeurope':
+            return '1200 500 150 150';    
     }
 }
 

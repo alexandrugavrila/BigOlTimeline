@@ -31,7 +31,7 @@ def makeYearBC(year_str):
 def readFile(path):
     """ Reads a file from a path into a list of lines """
 
-    with open(path) as in_file:
+    with open(path, 'r') as in_file:
         lines = in_file.readlines()
     return lines
 
@@ -60,8 +60,8 @@ def regionSwitch(region):
         'Hispania': 10,
         'Italia': 11,
         'North Africa': 12,
-        'Greece': 13,
-        'Thrace': 14
+        'Adriatic Coast': 13,
+        'Eastern Mediterranean': 14
     }[region]
 
 
@@ -102,7 +102,11 @@ def powerColorSwitchRGB(power):
         'Numidia': '(137,43,42)',
         'Macedonia': '(0,255,255)',
         'Greece': '(6,99,169)',
-        'Achaemenid Persia': '(255,0,0)'
+        'Achaemenid Persia': '(255,0,0)',
+        'Austria-Hungary': '(0, 88, 1)',
+        'East Francia': '(255, 203, 29)',
+        'Hungary': '(215, 29, 50)',
+        'Yugoslavia': '(1, 56, 157)',
     }[power]
 
 
@@ -467,7 +471,7 @@ if __name__ == "__main__":
     }
 
     regions_list = ['Ireland', 'Scotland', 'Britannia', 'Skandinavia', 'European Steppe', 'Poland', 'Dacia', 'Germania',
-                    'Gallia', 'Hispania', 'Italia', 'North Africa', 'Greece', 'Thrace']
+                    'Gallia', 'Hispania', 'Italia', 'North Africa', 'Adriatic Coast', 'Eastern Mediterranean']
 
     base_html_lines = readFile(base_HTML_path)                                               # Get the HTML template
     result_html_lines = insertChartBody(BOT_data_path, base_html_lines,)                     # Insert the chart body svg tags to the correct place
