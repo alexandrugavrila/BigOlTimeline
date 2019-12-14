@@ -1,0 +1,19 @@
+Tool Functions
+
+    Excel
+        Insert Table Column/Row Above/Left
+            Highlight entire column or row, ctrl-numpad +
+        Delete Table Column/Row
+            Highlight entire column or row, ctrl-numpad -
+    Inkscape
+        Copy and Paste Style
+            Ctrl-C object with target style
+            Ctrl-Shift-V object to apply style
+
+        Bring Object to front or back
+            PgUp move up 1 z-level
+            Home: move to top
+            PgDn: move down 1 z-level
+            End: move to bottom
+
+    

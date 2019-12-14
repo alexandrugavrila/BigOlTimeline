@@ -1,0 +1,8 @@
+Tool Functions
+
+    Inkscape
+        Bring Object to front or back
+            PgUp move up 1 z-level
+            Home: move to top
+            PgDn: move down 1 z-level
+            End: move to bottom

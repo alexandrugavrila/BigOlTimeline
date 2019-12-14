@@ -198,7 +198,7 @@ function setAnimationDirectionFlag(animations, direction) {
 function counterScale(object, parent) {
     // Counter a scale transform on an element applied to it by it's parent group
 
-    formatTransforms(parent);    // Put blank transforms on the header to avoid checking for them
+    formatTransforms(parent);    // Put blank transforms on the parent to avoid checking for them
 
     newa = 1 / parent.transform.baseVal.getItem(1).matrix.a;   // Get the inverse of the x scale
     newd = 1 / parent.transform.baseVal.getItem(1).matrix.d;   // Get the inverse of the y scale
@@ -247,23 +247,108 @@ function getParentSVG(object) {
 }
 
 
-/* BOT FUNCTIONS */
+function simulateEvent(element, eventName) {
+    // Simulate an HTML or mouse event on the element. Takes element and eventName as an argument,
+    // and has an optional third argument that is a dictionary of options. Options in that dictionary
+    // overwrite defaultOptionsn using extendDict
 
-function getMousePositionBody(evt) {
-    // Return the x and y of the mouse in the body viewbox
+    var defaultOptions = {
+        bubbles: true,
+        cancelable: true,
+        button: 0,
+        pointerX: 0,
+        pointerY: 0,
+        clientX: 0,
+        clientY: 0,
+        deltaX: 0,
+        deltaY: 0,
+        deltaZ: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+        metaKey: false,
+    }
 
-    var CTM = bodysvg.getScreenCTM();
-    return{
-        x: (evt.clientX - CTM.e) / CTM.a,
-        y: (evt.clientY - CTM.f) / CTM.d
-    };
+    var eventMatchers = {
+        'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+        'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/,
+        'WheelEvents': /^(?:wheel)$/
+    }
+
+    var options = extend(defaultOptions, arguments[2] || {});
+    var event, eventType = null;
+
+    // Make sure only a valid event is triggered by checking against the list in eventMatchers. If nothing matches throw a syntax error
+    for (var name in eventMatchers)
+    {
+        if (eventMatchers[name].test(eventName)) { eventType = name; break; }
+    }
+    if (!eventType)
+        throw new SyntaxError('Only HTMLEvents, MouseEvents, and WheelEvents interfaces are supported');
+
+    // Create the new event
+    if (eventType == 'HTMLEvents') {  // If it's an HTMLEvent initialize with bubbles and canccelable property
+        event = new Event(eventName, options);
+    }
+    else if(eventType == 'MouseEvents') {   // If it's a mouse event initialize with all of the mouse properties
+        event = new MouseEvent(eventName, options);
+    }
+    else if(eventType == 'WheelEvents') {   // If it's a wheel event initialize with all of the wheel properties
+        event = new WheelEvent(eventName, options);
+    }
+
+    element.dispatchEvent(event);   // Execute Event
 }
 
 
-function getMousePositionHeader(evt) {
-    // Return the x and y of the mouse in the header viewbox
+function extend(destination, source) {
+    // Replace dictionary values in the destination with the defined values in the source
+    
+    for (var key in source)
+        if(destination[key] != undefined)
+            destination[key] = source[key];
+    return destination;
+}
 
-    var CTM = headersvg.getScreenCTM();
+
+
+/* BOT FUNCTIONS */
+
+function initializeChart() {
+    formatBodyTransforms();   // Add blank transforms to all of the bpdy elements that may need transforming
+    formatHeaderTransforms();   // Add blank transforms to all of the header elements that may need transforming
+    setYearLabelWidths();   // Set the year label boxes to match the text length
+    adjustRegionTexts();    // Truncate all of the region header texts properly
+
+    coord = getMousePositionSVG(new WheelEvent('wheel'), bodysvg);  // Get the screen coordinate of the mouse event from where I want it to fire on the svg
+    for(var i = 0; i < 10; i ++) {    // Run a mouse scroll out event 15 times to initialize the chart as zoomed out
+        simulateEvent(bodysvg, 'wheel', {clientX: -coord.x + 100, clientY: -coord.y, deltaY: 1, altKey: true});
+    }
+    cookies = document.cookie.split(';')
+    for(i in cookies) {
+        if(cookies[i].includes('showcontrols')) {
+            values=cookies[i].split('=');
+            if(values[1] == 'true') {
+                controlspopup.setAttributeNS(null, 'display', 'inline');
+                setAnimationDirectionFlag(controlsanimations, 'backward');
+            }else{
+                controlspopup.setAttributeNS(null, 'display', 'none');
+                makeVisible(controlscheckmark);
+                setAnimationDirectionFlag(controlsanimations, 'forward');
+            }
+        }
+    }
+
+    makeVisible(bodysvg);
+    makeVisible(headersvg);
+    makeVisible(headertextsgroup);
+}
+
+
+function getMousePositionSVG(evt, svg) {
+    // Return the x and y of the mouse in the body viewbox
+
+    var CTM = svg.getScreenCTM();
     return{
         x: (evt.clientX - CTM.e) / CTM.a,
         y: (evt.clientY - CTM.f) / CTM.d
@@ -274,8 +359,7 @@ function getMousePositionHeader(evt) {
 function formatBodyTransforms() {
     // Format the transforms on all of the objects in the body that will be transformed
 
-    objects = [chartbody, powertooltip, yeartooltip, controlspopup, 
-               bodyselectionrect, yearlabels]
+    objects = [chartbody, powertooltip, yeartooltip, bodyselectionrect, yearlabels]
 
     for(var i = 0; i < objects.length; i++) {
         formatTransforms(objects[i]);
@@ -320,62 +404,21 @@ function setYearLabelWidths() {
 }
 
 
-function hideBorders() {
-    // Set the visibility of all borders on the headertooltip map to hidden
-
-    var regionborders = document.getElementById('borders').getElementsByTagName('path');
-    for(var i = 0; i < regionborders.length; i++){
-        regionborders[i].setAttributeNS(null, 'visibility', 'hidden');
+function launchControlAnimations() {
+    adjustControlsAnimations();     // Adjust the controls animation so it goes to where the popup is
+    addAnimationEndListeners(controlsanimations, controlsAnimationEnd);     // Add listeners for the end of the animations
+    if(controlsanimations[0].getAttributeNS(null, 'data-direction') == 'forward') {     // If the animation is going to run forward
+        makeVisible(controlsanimationrect);                                             // Make the animation rectangle invisible
+        executeAnimations(controlsanimations);                                          // Run the controls button animations
+    } 
+    else {                                              // If the controls popup is visible
+        controlspopup.setAttributeNS(null, 'display', 'none');  // Hide the popup before the animation starts
+        makeVisible(controlsanimationrect);                     // Make the animation rectangle visible
+        executeAnimationsBackwards(controlsanimations);         // Run the controlsbutton animations in reverse
+        
     }
-}
-
-
-function getMapViewBox(border) {
-    // A series of switches to put the border in a group and set the group to a viewbox
-
-    var viewboxgroup;
-
-    switch(border) {
-        case 'irelandborder': 
-            viewboxgroup = 'Weurope';
-            break;
-        case 'scotlandborder': 
-            viewboxgroup = 'Weurope';
-            break;
-        case 'britanniaborder': 
-            viewboxgroup = 'Weurope';
-            break;
-        case 'skandinaviaborder':
-            viewboxgroup = 'Neurope';
-            break;
-        case 'germaniaborder':
-            viewboxgroup = 'Weurope';
-            break;
-        case 'galliaborder':
-            viewboxgroup = 'Weurope';
-            break;
-        case 'hispaniaborder':
-            viewboxgroup = 'Weurope';
-            break;
-        case 'italiaborder':
-            viewboxgroup = 'Weuropee';
-            break;
-        case 'adriaticcoastborder':
-            viewboxgroup = 'SEeurope';
-            break;
-        case 'easternmediterraneanborder':
-            viewboxgroup = 'SEeurope';
-            break;
-    }
-
-    switch(viewboxgroup) {
-        case 'Weurope':
-            return '1035 460 270 200';
-        case 'Neurope':
-            return '1100 330 405 300';
-        case 'SEeurope':
-            return '1200 500 150 150';    
-    }
+    counterScale(controlspopup, headerbar);     // Counter the scale transform on the popup so it's always the same size
+    counterTranslate(controlspopup, headerbar); // Counter the translate transform on the popup so it's always in the same place
 }
 
 
@@ -479,7 +522,6 @@ function adjustRegionTexts() {
             j -= 1;
         }
     }
-    makeVisibleIfInvisible(headertextsgroup);
 }
 
 
@@ -491,3 +533,82 @@ function resetRegionTextXs() {
         setTranslateSVGObject(headertexts[i], 0, 0);
     }
 }
+
+
+function hideBorders() {
+    // Set the visibility of all borders on the headertooltip map to hidden
+
+    var regionborders = document.getElementById('borders').getElementsByTagName('path');
+    for(var i = 0; i < regionborders.length; i++){
+        regionborders[i].setAttributeNS(null, 'visibility', 'hidden');
+    }
+}
+
+
+function getMapViewBox(border) {
+    // A series of switches to put the border in a group and set the group to a viewbox
+
+    var viewboxgroup;
+
+    switch(border) {
+        case 'irelandborder': 
+            viewboxgroup = 'Weurope';
+            break;
+        case 'scotlandborder': 
+            viewboxgroup = 'Weurope';
+            break;
+        case 'britanniaborder': 
+            viewboxgroup = 'Weurope';
+            break;
+        case 'skandinaviaborder':
+            viewboxgroup = 'Neurope';
+            break;
+        case 'balticsborder':
+            viewboxgroup = 'Neurope';
+            break;
+        case 'europeansteppeborder':
+            viewboxgroup = 'Eeurope';
+            break;
+        case 'polandborder':
+            viewboxgroup = 'Eeurope';
+            break;
+        case 'daciaborder':
+            viewboxgroup = 'Eeurope';
+            break;
+        case 'germaniaborder':
+            viewboxgroup = 'Weurope';
+            break;
+        case 'galliaborder':
+            viewboxgroup = 'Weurope';
+            break;
+        case 'hispaniaborder':
+            viewboxgroup = 'Weurope';
+            break;
+        case 'italiaborder':
+            viewboxgroup = 'Weurope';
+            break;
+        case 'northafricaborder':
+            viewboxgroup = 'SWeurope';
+            break;
+        case 'adriaticcoastborder':
+            viewboxgroup = 'SEeurope';
+            break;
+        case 'easternmediterraneanborder':
+            viewboxgroup = 'SEeurope';
+            break;
+    }
+
+    switch(viewboxgroup) {
+        case 'Weurope':
+            return '1035 460 270 200';
+        case 'Neurope':
+            return '1100 330 405 300';
+        case 'SEeurope':
+            return '1200 500 150 150';
+        case 'Eeurope':
+            return '1170 460 250 200';
+        case 'SWeurope':
+            return '1045 500 270 200';
+    }
+}
+

@@ -1,5 +1,6 @@
 /* HEADER EVENTS */
 
+
 function showHeaderTooltip(evt) {
     headertooltip.setAttributeNS(null, 'visibility', 'visible');          // Make the tooltip visible
     headertooltipmap.setAttributeNS(null, 'visibility', 'visible');       // Make the tooltip map visible
@@ -20,7 +21,7 @@ function showHeaderTooltip(evt) {
 
     tooltiptransform = tooltiptransforms.getItem(0);                      // Get the first element on the tooltip transform list, which we know to be a translate
     tooltipmaptransform = tooltipmaptransforms.getItem(0);                // Get the first element on the tooltipmap transform list, which we know to be a translate
-    var coord = getMousePositionHeader(evt);                              // Get the mouse position of the mousemove event
+    var coord = getMousePositionSVG(evt, headersvg);                              // Get the mouse position of the mousemove event
     tooltiptransform.setTranslate(coord.x + 25, coord.y + 10);            // Change the position of the tooltip to 25 pixels left and 10 pixels down from the pointer
     tooltipmaptransform.setTranslate(coord.x + 35, coord.y + 40);         // Change the position of the tooltip map to 35 pixels left and 40 pixels down from the pointer
 
@@ -30,51 +31,73 @@ function showHeaderTooltip(evt) {
     headertooltipmapsvg.setAttributeNS(null, 'viewBox', getMapViewBox(tarborder));                               // Set the viewbox to what is specified in getviewbox per region
 }
 
+
 function hideHeaderTooltip() {
     headertooltip.setAttributeNS(null, 'visibility', 'hidden');
     headertooltipmap.setAttributeNS(null, 'visibility', 'hidden');
     hideBorders();
 }
 
+//Controls Button
+
 function controlsButtonMouseOver() {
     controlsbuttonbox.classList.remove('buttonbox');
     controlsbuttonbox.classList.add('buttonboxhover');
 }
+
 
 function controlsButtonMouseOut() {
     controlsbuttonbox.classList.remove('buttonboxhover');
     controlsbuttonbox.classList.add('buttonbox');
 }
 
+
 function controlsButtonMouseDown() {
     controlsbuttonbox.classList.remove('buttonboxhover');
     controlsbuttonbox.classList.add('buttonboxclick');
 }
 
+
 function controlsButtonMouseUp() {
     controlsbuttonbox.classList.remove('buttonboxclick');
     controlsbuttonbox.classList.add('buttonboxhover');
 
-    adjustControlsAnimations();     // Adjust the controls animation so it goes to where the popup is
-    addAnimationEndListeners(controlsanimations, controlsAnimationEnd);     // Add listeners for the end of the animations
-    if(controlsanimations[0].getAttributeNS(null, 'data-direction') == 'forward') {     // If the animation is going to run forward
-        makeVisible(controlsanimationrect);                                             // Make the animation rectangle invisible
-        executeAnimations(controlsanimations);                                          // Run the controls button animations
-    } 
-    else {                                              // If the controls popup is visible
-        makeInvisible(controlspopup);                       // Hide the popup before the animation starts
-        makeVisible(controlsanimationrect);                 // Make the animation rectangle visible
-        executeAnimationsBackwards(controlsanimations);     // Run the controlsbutton animations in reverse
-        
-    }
-    counterScale(controlspopup, headerbar);     // Counter the scale transform on the popup so it's always the same size
-    counterTranslate(controlspopup, headerbar); // Counter the translate transform on the popup so it's always in the same place
+    launchControlAnimations();
 }
+
+// Controls Minimize Button
+
+function controlsMinimizeButtonMouseOver() {
+    controlsminimizebuttonbox.classList.remove('buttonbox');
+    controlsminimizebuttonbox.classList.add('buttonboxhover');
+}
+
+
+function controlsMinimizeButtonMouseOut() {
+    controlsminimizebuttonbox.classList.remove('buttonboxhover');
+    controlsminimizebuttonbox.classList.add('buttonbox');
+}
+
+
+function controlsMinimizeButtonMouseDown() {
+    controlsminimizebuttonbox.classList.remove('buttonboxhover');
+    controlsminimizebuttonbox.classList.add('buttonboxclick');
+}
+
+
+function controlsMinimizeButtonMouseUp() {
+    controlsminimizebuttonbox.classList.remove('buttonboxclick');
+    controlsminimizebuttonbox.classList.add('buttonboxhover');
+
+    launchControlAnimations();
+}
+
+//Controls Animation
 
 function controlsAnimationEnd(evt) {
     if(evt.target.classList.contains('finalanimation')) {   // If this is the last animation
         if(evt.target.getAttributeNS(null, 'data-direction') == 'forward') {    // If the animation ran forward
-            makeVisible(controlspopup);                                             // Make the popup visible
+            controlspopup.setAttributeNS(null, 'display', 'inline');                  // Make the popup visible
             makeInvisible(controlsanimationrect);                                   // Make the animation rectangle invisible
             setAnimationDirectionFlag(controlsanimations, 'backward');              // Change all of the direction flags on the controls animations to backward
         }
@@ -87,7 +110,34 @@ function controlsAnimationEnd(evt) {
 }
 
 
+function controlsCheckBoxMouseOut() {
+    if(controlscheckboxrect.classList.contains('checkboxclick')){
+        controlsCheckBoxMouseUp();
+    }
+}
+
+
+function controlsCheckBoxMouseDown() {
+    controlscheckboxrect.classList.remove('checkbox');
+    controlscheckboxrect.classList.add('checkboxclick');
+}
+
+
+function controlsCheckBoxMouseUp() {
+    controlscheckboxrect.classList.remove('checkboxclick');
+    controlscheckboxrect.classList.add('checkbox');
+    toggleVisibility(controlscheckmark);
+    if(controlscheckmark.getAttributeNS(null, 'visibility') == 'visible') {
+        document.cookie = "showcontrols=false; Secure; SameSite=Strict";
+    }
+    else {
+        document.cookie = "showcontrols=true; Secure; SameSite=Strict";
+    }
+}
+
+
 /* BODY EVENTS */
+
 
 function powerMouseOverEffects() {
     this.parentElement.appendChild(this);		// Bring the group to the front
@@ -106,11 +156,12 @@ function powerMouseOverEffects() {
     makeVisible(yeartooltip);  // Set the year tooltip to visible, as hovering over the box counts as a mouseout
 }
 
+
 function powerRectMouseMoveEffects(evt) {
     powertooltip.setAttributeNS(null, 'visibility', 'visible');          // Make the tooltip visible
     powertooltip.parentElement.appendChild(powertooltip);                // Bring the tooltip to the front
 
-    var coord = getMousePositionBody(evt);                               // Get the mouse position of the mousemove event
+    var coord = getMousePositionSVG(evt, bodysvg);                               // Get the mouse position of the mousemove event
     setTranslateSVGObject(powertooltip, coord.x + 15, coord.y + 15);     // Change the position of the tooltip to 10 pixels left and 40 pixels down from the pointer
 
     powertooltippower.textContent = this.parentElement.getAttributeNS(null, 'data-power-name');   // Change first line of tooltip text to be the full power name
@@ -125,6 +176,7 @@ function powerRectMouseMoveEffects(evt) {
         powertooltiprects[i].setAttributeNS(null, 'width', longesttext + 8)
     }
 }
+
 
 function powerMouseOutEffects() {
     this.classList.remove('powergrouphover');	// Remove the dilate image filter
@@ -141,12 +193,15 @@ function powerMouseOutEffects() {
     powertitle.classList.add('powertitle');
 }
 
+
 function powerRectMouseOutEffects() {
     powertooltip.setAttributeNS(null, 'visibility', 'hidden');           // Make the tooltip invisible
 }
 
+// Chart Body Events
+
 function chartBodyMouseDown(evt) {
-    var coord = getMousePositionBody(evt);       // Get the position of the click event
+    var coord = getMousePositionSVG(evt, bodysvg);       // Get the position of the click event
     bodyclick.x = coord.x;                       // Save the x of the click globally
     bodyclick.y = coord.y;                       // Save the y of the click globally
 
@@ -168,12 +223,14 @@ function chartBodyMouseDown(evt) {
     evt.preventDefault();   // To stop from highlighting elements on click and drag
 }
 
+
 function chartBodyMouseEnter() {
     yeartooltip.setAttributeNS(null, 'visibility', 'visible');
 }
 
+
 function chartBodyMouseMove(evt) {
-    var coord = getMousePositionBody(evt);  // Get the mouse position in the SVG
+    var coord = getMousePositionSVG(evt, bodysvg);  // Get the mouse position in the SVG
     var pt1 = bodysvg.createSVGPoint();     // Create an empty point
     pt1.x = coord.x;                        // Set the point x to the mouse x
     pt1.y = coord.y;                        // Set the point y to the mouse y
@@ -195,60 +252,16 @@ function chartBodyMouseMove(evt) {
     yeartooltip.getElementsByTagName('rect')[0].setAttributeNS(null, 'width', textlength + 8);   // Set the tooltip to be the length of the text plus a bit
 }
 
+
 function chartBodyMouseOut() {
     yeartooltip.setAttributeNS(null, 'visibility', 'hidden');
 }
 
-function selectionMouseUp() {
-    bodyselectrectgroup.setAttributeNS(null, 'visibility', 'hidden');
-
-    bodysvg.removeEventListener('mousemove', selectionMouseMove);       // Remove the mousemove tracking for selection
-    bodysvg.removeEventListener('mouseup', selectionMouseUp);           // Remove the mouseup listener for selection
-}
-
-function selectionMouseMove(evt) {
-    var coord = getMousePositionBody(evt);
-    var boxparams = {     // Get the width and height of the box by subtracting the transform values from the current mouse coordinates
-        width: coord.x - bodyclick.x,
-        height: coord.y - bodyclick.y
-    };
-    
-    if (boxparams.width < 0 && boxparams.height >= 0) {          // If just the width is negative
-        setTranslateSVGObject(bodyselectrectgroup, coord.x, bodyclick.y);
-        boxparams.width = Math.abs(coord.x - bodyclick.x);
-    }
-    else if (boxparams.width >= 0 && boxparams.height < 0) {     // If just the height is negative
-        setTranslateSVGObject(bodyselectrectgroup, bodyclick.x, coord.y);
-        boxparams.height = Math.abs(coord.y - bodyclick.y);
-    }
-    else if (boxparams.width < 0 && boxparams.height < 0) {     // If both are negative
-        setTranslateSVGObject(bodyselectrectgroup, coord.x, coord.y);
-        boxparams.width = Math.abs(coord.x - bodyclick.x);
-        boxparams.height = Math.abs(coord.y - bodyclick.y);
-    }
-
-    bodyselectrect.setAttributeNS(null, 'width', boxparams.width);      // Set the selection rectangle width
-    bodyselectrect.setAttributeNS(null, 'height', boxparams.height);    // Set the selection rectangle height
-    evt.preventDefault();
-}
-
-function chartPanMouseUp() {
-    bodysvg.removeEventListener('mousemove', chartPanMouseMove);
-    bodysvg.removeEventListener('mouseup', chartPanMouseUp);
-    bodysvg.removeEventListener('mouseout', chartPanMouseUp);
-}
-
-function chartPanMouseMove(evt) {
-    translateSVGObject(chartbody, evt.movementX, evt.movementY);    // Translate the chart body by dx and dy
-    translateSVGObject(headerbar, evt.movementX, 0);    // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
-    counterTranslate(controlspopup, headerbar);     // Keeps the controls dialogue box centered if panning while it's open
-    
-    adjustYearLabelTranslates();    // Keep the year labels where they need to be after a pan
-}
 
 function chartBodyMouseWheel(evt) {
-    var coord = getMousePositionBody(evt);
 
+    var coord = getMousePositionSVG(evt, bodysvg);
+    
     if(evt.altKey) {
         var oldxscale = parseFloat(chartbody.transform.baseVal.getItem(1).matrix.a, 10);
         
@@ -330,4 +343,60 @@ function chartBodyMouseWheel(evt) {
         setTranslateSVGObject(headerbar, currX, headerHeight - (headerHeight * currScaleY));   // Set the header down by how much it has shrunk so there is no white space between it and the graph
     }
 }
+
+// Selection Box Events
+
+function selectionMouseUp() {
+    bodyselectrectgroup.setAttributeNS(null, 'visibility', 'hidden');
+
+    bodysvg.removeEventListener('mousemove', selectionMouseMove);       // Remove the mousemove tracking for selection
+    bodysvg.removeEventListener('mouseup', selectionMouseUp);           // Remove the mouseup listener for selection
+}
+
+
+function selectionMouseMove(evt) {
+    var coord = getMousePositionSVG(evt, bodysvg);
+    var boxparams = {     // Get the width and height of the box by subtracting the transform values from the current mouse coordinates
+        width: coord.x - bodyclick.x,
+        height: coord.y - bodyclick.y
+    };
+    
+    if (boxparams.width < 0 && boxparams.height >= 0) {          // If just the width is negative
+        setTranslateSVGObject(bodyselectrectgroup, coord.x, bodyclick.y);
+        boxparams.width = Math.abs(coord.x - bodyclick.x);
+    }
+    else if (boxparams.width >= 0 && boxparams.height < 0) {     // If just the height is negative
+        setTranslateSVGObject(bodyselectrectgroup, bodyclick.x, coord.y);
+        boxparams.height = Math.abs(coord.y - bodyclick.y);
+    }
+    else if (boxparams.width < 0 && boxparams.height < 0) {     // If both are negative
+        setTranslateSVGObject(bodyselectrectgroup, coord.x, coord.y);
+        boxparams.width = Math.abs(coord.x - bodyclick.x);
+        boxparams.height = Math.abs(coord.y - bodyclick.y);
+    }
+
+    bodyselectrect.setAttributeNS(null, 'width', boxparams.width);      // Set the selection rectangle width
+    bodyselectrect.setAttributeNS(null, 'height', boxparams.height);    // Set the selection rectangle height
+    evt.preventDefault();
+}
+
+
+// Chart Pan Events
+
+function chartPanMouseUp() {
+    bodysvg.removeEventListener('mousemove', chartPanMouseMove);
+    bodysvg.removeEventListener('mouseup', chartPanMouseUp);
+    bodysvg.removeEventListener('mouseout', chartPanMouseUp);
+}
+
+
+function chartPanMouseMove(evt) {
+    translateSVGObject(chartbody, evt.movementX, evt.movementY);    // Translate the chart body by dx and dy
+    translateSVGObject(headerbar, evt.movementX, 0);    // Translate the chart header by dy (headerregions defined in BOTHeaderScripts.js)
+    counterTranslate(controlspopup, headerbar);     // Keeps the controls dialogue box centered if panning while it's open
+    
+    adjustYearLabelTranslates();    // Keep the year labels where they need to be after a pan
+}
+
+
 

@@ -52,16 +52,17 @@ def regionSwitch(region):
         'Scotland': 2,
         'Britannia': 3,
         'Skandinavia': 4,
-        'European Steppe': 5,
-        'Poland': 6,
-        'Dacia': 7,
-        'Germania': 8,
-        'Gallia': 9,
-        'Hispania': 10,
-        'Italia': 11,
-        'North Africa': 12,
-        'Adriatic Coast': 13,
-        'Eastern Mediterranean': 14
+        'Baltics': 5,
+        'European Steppe': 6,
+        'Poland': 7,
+        'Dacia': 8,
+        'Germania': 9,
+        'Gallia': 10,
+        'Hispania': 11,
+        'Italia': 12,
+        'North Africa': 13,
+        'Adriatic Coast': 14,
+        'Eastern Mediterranean': 15
     }[region]
 
 
@@ -107,6 +108,11 @@ def powerColorSwitchRGB(power):
         'East Francia': '(255, 203, 29)',
         'Hungary': '(215, 29, 50)',
         'Yugoslavia': '(1, 56, 157)',
+        'Austria': '(240, 65, 97)',
+        'Khazars': '(93, 188, 210)',
+        'Knights of the Sword': '(213, 42, 29)',
+        'Teutonic Knights': '(255, 200, 3)',
+        'Lithuania': '(33, 124, 89)',
     }[power]
 
 
@@ -452,7 +458,7 @@ def insertChartYears(html_lines, params, regions):
 if __name__ == "__main__":
     BOT_data_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\BigOlTimeline_Data.xlsx'
     base_HTML_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\blankBOT.html'
-    tar_HTML_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\BOT.html'
+    tar_HTML_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\index.html'
 
     chart_params = {
         'bar_width': 100,               # The width of every bar in the chart in pixels
@@ -463,14 +469,14 @@ if __name__ == "__main__":
         'header_length': 30,            # Length of the regions header
         'curr_year': 2019,              # Current year
         'header_font_size': 15,         # Font size of the header labels
-        'body_font_size': 15,           # Size of text in the chart body-
+        'body_font_size': 15,           # Size of text in the chart body
         'body_rx': None,                # Rounding of chart body corners
         'body_ry': None,                # Rounding of chart body corners
         'header_rx': None,              # Rounding of chart header corners
         'header_ry': None,              # Rounding of chart header corners
     }
 
-    regions_list = ['Ireland', 'Scotland', 'Britannia', 'Skandinavia', 'European Steppe', 'Poland', 'Dacia', 'Germania',
+    regions_list = ['Ireland', 'Scotland', 'Britannia', 'Skandinavia', 'European Steppe', 'Baltics', 'Poland', 'Dacia', 'Germania',
                     'Gallia', 'Hispania', 'Italia', 'North Africa', 'Adriatic Coast', 'Eastern Mediterranean']
 
     base_html_lines = readFile(base_HTML_path)                                               # Get the HTML template

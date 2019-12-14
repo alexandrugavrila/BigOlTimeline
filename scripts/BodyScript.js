@@ -42,9 +42,6 @@ var syearlabeldefaultfontsize = parseFloat(syearlabelstyle.style.fontSize.match(
 
 /* SCRIPT */
 
-formatBodyTransforms();
-setYearLabelWidths();
-
 for(var i = 0; i < powergroups.length; i++) {
     powergroups[i].addEventListener('mouseover', powerMouseOverEffects);
     powergroups[i].addEventListener('mouseout', powerMouseOutEffects);
@@ -54,3 +51,5 @@ bodysvg.addEventListener('wheel', chartBodyMouseWheel);
 bodysvg.addEventListener('mouseenter', chartBodyMouseEnter);
 bodysvg.addEventListener('mousemove', chartBodyMouseMove);
 bodysvg.addEventListener('mouseout', chartBodyMouseOut);
+
+initializeChart();

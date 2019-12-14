@@ -6,6 +6,11 @@
     margin-top: -35px;
     margin-left: -130px; }
 
+#chart {
+    position: absolute;
+    top: 100px;
+    left: 5%;}
+
 /* To make the region header sticky */
 #headerdiv {
     position: sticky;

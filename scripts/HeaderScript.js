@@ -28,15 +28,16 @@ var controlsanimationheight = document.getElementById('controlsanimationheight')
 var controlsanimationwidth = document.getElementById('controlsanimationwidth');
 var controlsanimationrect = document.getElementById('controlsanimationrect');
 var controlspopup = document.getElementById('controlspopup');
+var controlscheckbox = document.getElementById('controlscheckbox');
+var controlscheckboxrect = document.getElementById('controlscheckboxrect');
+var controlscheckmark = document.getElementById('controlscheckmark');
+var controlscheckboxtext = document.getElementById('controlscheckboxtext');
 
 
 // Global Variables
 var regionboxwidth = headerboxes[0].getAttributeNS(null, 'width');
 
 /* SCRIPT */
-
-formatHeaderTransforms();   // Add blank transforms to all of the elements that may need transforming
-adjustRegionTexts();    // Truncate all of the region header texts properly
 
 for (var i = 0; i < headerboxes.length; i++) {
     headerboxes[i].addEventListener('mousemove', showHeaderTooltip);
@@ -46,3 +47,10 @@ controlsbutton.addEventListener('mouseover', controlsButtonMouseOver);
 controlsbutton.addEventListener('mouseout', controlsButtonMouseOut);
 controlsbutton.addEventListener('mousedown', controlsButtonMouseDown);
 controlsbutton.addEventListener('mouseup', controlsButtonMouseUp);
+controlsminimizebutton.addEventListener('mouseover', controlsMinimizeButtonMouseOver);
+controlsminimizebutton.addEventListener('mouseout', controlsMinimizeButtonMouseOut);
+controlsminimizebutton.addEventListener('mousedown', controlsMinimizeButtonMouseDown);
+controlsminimizebutton.addEventListener('mouseup', controlsMinimizeButtonMouseUp);
+controlscheckbox.addEventListener('mouseout', controlsCheckBoxMouseOut);
+controlscheckbox.addEventListener('mousedown', controlsCheckBoxMouseDown);
+controlscheckbox.addEventListener('mouseup', controlsCheckBoxMouseUp);
