@@ -96,7 +96,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="svgelements" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="BOT_Python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -108,7 +108,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/svgelements.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -141,10 +141,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.generateHTML" />
+        <item itemvalue="Python.svgelements" />
         <item itemvalue="Python.WriteSVG" />
         <item itemvalue="Python.TieraZ" />
         <item itemvalue="Python.useradmin" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>

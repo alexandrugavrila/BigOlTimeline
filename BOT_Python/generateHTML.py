@@ -67,6 +67,28 @@ def regionSwitch(region):
     }[region]
 
 
+def inverseRegionSwitch(xlevel):
+    """ A bank of every chart column mapped to what region is represented there """
+
+    return {
+        1: 'Ireland',
+        2: 'Scotland',
+        3: 'Britannia',
+        4: 'Skandinavia',
+        5: 'Baltics',
+        6: 'European Steppe',
+        7: 'Poland',
+        8: 'Dacia',
+        9: 'Germania',
+        10: 'Gallia',
+        11: 'Hispania',
+        12: 'Italia',
+        13: 'North Africa',
+        14: 'Adriatic Coast',
+        15: 'Eastern Mediterranean'
+    }[xlevel]
+
+
 def powerColorSwitchRGB(power):
     """ A bank of all the powers in the chart matched to its color in RGB format
          no default, throws error if it is called with something that isn't an entry """
@@ -182,7 +204,6 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
     """ Turns the list of dictionaries into a list of SVG rectangle element tags """
 
     body_svg_list = []
-    text_svg_list = []
     last_power = ''
     last_region = ''            # Track region changes in case the name of a power needs to be put in something other than the first iteration
     iteration = 1               # Track what iteration of a powers control we're on in the current region, reset to 1 when the region changes
@@ -199,7 +220,8 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
         if params['body_ry']: ry = params['body_ry']
         box_data_dict = {'data-start-year': makeYearBC(str(dp['Start'])),
                          'data-end-year': makeYearBC(str(dp['End'])),
-                         'data-region': curr_region}
+                         'data-region': curr_region,
+                         'data-is-center': 'false'}
         style_dict = {'fill:rgb': powerColorSwitchRGB(curr_power)}
 
         group_data_dict = {'data-power-name': curr_power}
@@ -214,39 +236,48 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
         if curr_power != last_power:
             power_group_str = str(dp['Power']).lower().replace(" ", "") + 'group'
             if last_power == '':                                                                         # If its the first region just add the opening group tag
-                svg_tag = svgelements.SVGOpenGroup(power_group_str, ['powergroup'], None, group_data_dict, None, None).createTag()
+                svg_tag = svgelements.OpenGroup(power_group_str, ['powergroup'], 'visible', group_data_dict, None, None, None, None).createTag()
             elif curr_power == 'None':                                                                   # If the region is None add a closing group tag and then the opening group tag without the filter
                 body_svg_list.append('</g>')
-                svg_tag = svgelements.SVGOpenGroup(power_group_str, None, None, group_data_dict, None, None).createTag()
+                svg_tag = svgelements.OpenGroup(power_group_str, None, 'visible', group_data_dict, None, None, None, None).createTag()
             else:                                                                                        # If it's not the first region or none add the region title, the closing group tag, then the opening group tag
-                for tag in text_svg_list:                                                                   # Add the chart body titles to the group
-                    body_svg_list.append(tag)
-                text_svg_list = []                                                                          # Rest the list of text for the next power group
                 body_svg_list.append('</g>')                                                                # Add the closing group tag
-                svg_tag = svgelements.SVGOpenGroup(power_group_str, ['powergroup'], None, group_data_dict, None, None).createTag()       # Add the next opening group tag
+                svg_tag = svgelements.OpenGroup(power_group_str, ['powergroup'], 'visible', group_data_dict, None, None, None, None).createTag()       # Add the next opening group tag
             body_svg_list.append(svg_tag)
 
-        if curr_power == 'None':
-            svg_tag = svgelements.SVGRect(None, class_list, None, box_data_dict, style_dict,
-                                          x, y, params['bar_width'], bar_height, rx, ry).createTag()
-        else:
-            svg_tag = svgelements.SVGRect(None, class_list, None, box_data_dict, style_dict,
-                                          x, y, params['bar_width'], bar_height, rx, ry).createTag()
-        body_svg_list.append(svg_tag)
-
-        # If the current block is the center block, and it is the correct iteration, create the power title text tag
+        # If the current block is the center block, and it is the correct iteration, create the power title text tag and the box with the data-is-center set to true
+        group_name = curr_power + curr_region   # Name the group the power concatenated with that region
+        if iteration > 1: group_name += str(iteration)  # If there are multiple rects for the same power in the same region add the iteration
+        body_svg_list.append(svgelements.OpenGroup(group_name, None, None, None, None, None, ['translate(0 0)'], None).createTag())     # Add an opening group tag
         if centers_df_dict[dp['Power']]['Center'] == curr_region and iteration == centers_df_dict[dp['Power']]['Iteration']:
+
+            box_data_dict['data-is-center'] = 'true'
+            body_svg_list.append(svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
+                                                  x, y, params['bar_width'], bar_height, rx, ry).createTag())
+            box_data_dict['data-is-center'] = 'false'
+
             title_x = int(x + (params['bar_width'] / 2))
             title_y = int(y + (params['header_length'] / 2))
             if bar_height > (2 * params['body_font_size']):         # If the bar is big enough to display the text
-                text_svg_list.append(svgelements.SVGText(None, ['powertitle'], None, None, None, title_x, title_y, 'middle', 'middle', truncateText(curr_power, 11)).createTag())
+                body_svg_list.append(svgelements.Text(None, ['powertitle'], None, None, None,
+                                                      title_x, title_y, 'middle', 'middle', truncateText(curr_power, 11)).createTag())  # Create the text tag and put it in the group that is added after all of the rectangles
             else:
-                text_svg_list.append(svgelements.SVGText(None, ['powertitle'], 'hidden', None, None, title_x, title_y, 'middle', 'middle', truncateText(curr_power, 11)).createTag())
+                body_svg_list.append(svgelements.Text(None, ['powertitle'], 'hidden', None, None,
+                                                      title_x, title_y, 'middle', 'middle', truncateText(curr_power, 11)).createTag())  # Create the text tag and put it in the group that is added after all of the rectangles
+        else:   # If it is not the center, create a normal box
+            if curr_power == 'None':
+                body_svg_list.append(svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
+                                                      x, y, params['bar_width'], bar_height, rx, ry).createTag())
+            else:
+                body_svg_list.append(svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
+                                                      x, y, params['bar_width'], bar_height, rx, ry).createTag())
+        body_svg_list.append(svgelements.AnimateTransform(None, ['powerfocusanimation'], None, None, None,
+                                                          'transform', 'XML', 'translate', '0 0', '0 0', '1s', 'indefinite', 'forward', 'freeze').createTag())
+        body_svg_list.append('</g>')
+
         last_power = curr_power
         last_region = curr_region
 
-    for tag in text_svg_list:  # Add the last entries to the list
-        body_svg_list.append(tag)
     body_svg_list.append('</g>')  # Close the final group
     return body_svg_list
 
@@ -271,8 +302,7 @@ def insertChartRegions(html_lines, params, regions):
     """ Inserts the x-axis headings for the chart """
 
     # Create an SVG rect for every region in the chart
-    boxes_svg_list = []
-    texts_svg_list = []
+    svg_list = []
     for region in regions:
         x = regionSwitch(region) * params['bar_width']
         y = 0
@@ -281,22 +311,27 @@ def insertChartRegions(html_lines, params, regions):
         if params['header_rx']: rx = params['header_rx']
         if params['header_ry']: ry = params['header_ry']
         box_data_dict = {'data-region-name': str(region)}
-        text_data_dict = {'data-xlevel': str(regions.index(region) + 1),
+        text_data_dict = {'data-xlevel': str(regionSwitch(region) + 1),
                           'data-region-name': str(region)}
         style_dict = None
-        box_tag = svgelements.SVGRect(None, ['regionbox'], None, box_data_dict, style_dict,
-                                      x, y, width, height, rx, ry).createTag()
-        boxes_svg_list.append(box_tag)
+
+        svg_list.append(svgelements.OpenGroup(str(region) + 'region', ['regiongroup'], None, None, None,
+                                              None, ['translate(0 0)'], 'inline').createTag())  # Add the opening group tag for the power box
+        svg_list.append(svgelements.Rect(None, ['regionbox'], None, box_data_dict, style_dict,
+                                         x, y, width, height, rx, ry).createTag())  # Add the power tag
 
         x = x + (params['bar_width'] / 2)  # Center x on middle of box width
         y = int(params['header_length'] / 2)  # Center y on middle of box height
-        name_tag = svgelements.SVGText(None, ['regiontext'], None, text_data_dict, None,
-                                       x, y, 'middle', 'middle',  region).createTag()
-        texts_svg_list.append(name_tag)
+        svg_list.append(svgelements.Text(None, ['regiontext'], None, text_data_dict, None,
+                                         x, y, 'middle', 'middle', region).createTag())     # Add the region text
+        svg_list.append(svgelements.Line(None, ['regionline'], 'invisible', text_data_dict, None,
+                                         x, 0, x, params['header_length']).createTag())     # Add the center line on each box, invisible, so the text has a center anchor to adjust to
+        svg_list.append(svgelements.AnimateTransform(None, ['regionfocusanimation'], None, None, None,
+                                                     'transform', 'XML', 'translate', '0 0', '0 0', '1s', 'indefinite', 'forward', 'freeze').createTag())   # Add the animation for the header groups to move
+        svg_list.append('</g>')
 
     # Add the proper indentation to every line and insert it into the html lines
-    new_html_lines = addIndent(html_lines, 'regionboxes', boxes_svg_list)
-    new_html_lines = addIndent(new_html_lines, 'regiontexts', texts_svg_list)
+    new_html_lines = addIndent(html_lines, 'regions', svg_list)
     return new_html_lines
 
 
@@ -319,7 +354,7 @@ def insertChartYears(html_lines, params, regions):
     x2 = vert_line_level
     y2 = chart_height
     line_type = 'chartspine'
-    format_svg_list.append(svgelements.SVGLine(None, [line_type], None, None, None, x1, y1, x2, y2).createTag())   # Draw the chart spine
+    format_svg_list.append(svgelements.Line(None, [line_type], None, None, None, x1, y1, x2, y2).createTag())   # Draw the chart spine
 
     # Parameters for the primary year label
     p_label_height = 20
@@ -338,22 +373,22 @@ def insertChartYears(html_lines, params, regions):
             p_label_x = x1 + 1
             p_label_y = y1 - 5
 
-            primary_lines_svg_list.append(svgelements.SVGLine(None, ['pyearline'], None, None, None,
-                                                              x1, y1, x2, y2).createTag())  # Draw a primary year line
-            p_year_labels_svg_list.append(svgelements.SVGRect(None, ['yearlabelbackground'], None, None, None,
-                                                              p_label_x, p_label_y, p_label_width, p_label_height, None, None).createTag())
-            p_year_labels_svg_list.append(svgelements.SVGText(None, ['pyearlabel'], None, None, None,
-                                                              x1 + 5, y1, 'Left', 'Middle', year_level - params['bottom_date']).createTag())
+            primary_lines_svg_list.append(svgelements.Line(None, ['pyearline'], None, None, None,
+                                                           x1, y1, x2, y2).createTag())  # Draw a primary year line
+            p_year_labels_svg_list.append(svgelements.Rect(None, ['yearlabelbackground'], None, None, None,
+                                                           p_label_x, p_label_y, p_label_width, p_label_height, None, None).createTag())
+            p_year_labels_svg_list.append(svgelements.Text(None, ['pyearlabel'], None, None, None,
+                                                           x1 + 5, y1, 'Left', 'Middle', year_level - params['bottom_date']).createTag())
         else:
             s_label_x = x1 + 1
             s_label_y = y1 - 5
 
-            secondary_lines_svg_list.append(svgelements.SVGLine(None, ['syearline'], None, None, None,
-                                                                x1, y1, x2, y2).createTag())  # Draw a secondary year line
-            s_year_labels_svg_list.append(svgelements.SVGRect(None, ['yearlabelbackground'], None, None, None,
-                                                              s_label_x, s_label_y, s_label_width, s_label_height, None, None).createTag())
-            s_year_labels_svg_list.append(svgelements.SVGText(None, ['syearlabel'], None, None, None,
-                                                              x1 + 3, y1, 'Left', 'Middle', year_level - params['bottom_date']).createTag())
+            secondary_lines_svg_list.append(svgelements.Line(None, ['syearline'], None, None, None,
+                                                             x1, y1, x2, y2).createTag())  # Draw a secondary year line
+            s_year_labels_svg_list.append(svgelements.Rect(None, ['yearlabelbackground'], None, None, None,
+                                                           s_label_x, s_label_y, s_label_width, s_label_height, None, None).createTag())
+            s_year_labels_svg_list.append(svgelements.Text(None, ['syearlabel'], None, None, None,
+                                                           x1 + 3, y1, 'Left', 'Middle', year_level - params['bottom_date']).createTag())
         year_level += params['secondary_year_spacing']
 
     # Add the proper indentation to every line and insert it into the html lines

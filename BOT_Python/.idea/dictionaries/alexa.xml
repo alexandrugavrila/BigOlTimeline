@@ -2,6 +2,7 @@
   <dictionary name="alexa">
     <words>
       <w>achaemenid</w>
+      <w>anim</w>
       <w>avars</w>
       <w>baltics</w>
       <w>centuryline</w>
@@ -18,6 +19,7 @@
       <w>kievan</w>
       <w>numidia</w>
       <w>ostragoths</w>
+      <w>powerfocusanimation</w>
       <w>powergroup</w>
       <w>powerrect</w>
       <w>powertext</w>
@@ -30,8 +32,12 @@
       <w>pyearlabels</w>
       <w>pyearline</w>
       <w>pyearlines</w>
+      <w>rects</w>
       <w>regionbox</w>
       <w>regionboxes</w>
+      <w>regionfocusanimation</w>
+      <w>regiongroup</w>
+      <w>regionline</w>
       <w>regiontext</w>
       <w>regiontexts</w>
       <w>secondaryyearlabels</w>
@@ -50,6 +56,7 @@
       <w>timelineyears</w>
       <w>vert</w>
       <w>xlevel</w>
+      <w>xlink</w>
       <w>xlsx</w>
       <w>yearlabel</w>
       <w>yearlabelbackground</w>

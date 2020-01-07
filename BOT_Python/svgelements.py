@@ -1,5 +1,5 @@
 
-class SVGBase:
+class Base:
     def __init__(self, id_str, class_list, visibility, data_dict, style_dict):
         self.id_str = id_str
         self.class_list = class_list
@@ -8,7 +8,7 @@ class SVGBase:
         self.style_dict = style_dict
 
 
-class SVGRect(SVGBase):
+class Rect(Base):
     def __init__(self, id_str, class_list, visibility, data_dict, style_dict, x, y, width, height, rx, ry):
         super().__init__(id_str, class_list, visibility, data_dict, style_dict)
         self.x = x
@@ -47,7 +47,7 @@ class SVGRect(SVGBase):
         return rect_tag
 
 
-class SVGLine(SVGBase):
+class Line(Base):
     def __init__(self, id_str, class_list, visibility, data_dict, style_dict, x1, y1, x2, y2):
         super().__init__(id_str, class_list, visibility, data_dict, style_dict)
         self.x1 = x1
@@ -82,7 +82,7 @@ class SVGLine(SVGBase):
         return line_tag
 
 
-class SVGText(SVGBase):
+class Text(Base):
     def __init__(self, id_str, class_list, visibility, data_dict, style_dict, x, y, anchor, alignment, content):
         super().__init__(id_str, class_list, visibility, data_dict, style_dict)
         self.x = x
@@ -123,10 +123,12 @@ class SVGText(SVGBase):
         return text_tag
 
 
-class SVGOpenGroup(SVGBase):
-    def __init__(self, id_str, class_list, visibility, data_dict, style_dict, filter_string):
+class OpenGroup(Base):
+    def __init__(self, id_str, class_list, visibility, data_dict, style_dict, filter_string, transform_list, display):
         super().__init__(id_str, class_list, visibility, data_dict, style_dict)
         self.filter_string = filter_string
+        self.transform_list = transform_list
+        self.display = display
 
     def createTag(self):
         """ Create an opening group tag """
@@ -141,7 +143,59 @@ class SVGOpenGroup(SVGBase):
         if self.data_dict:
             for data in self.data_dict:
                 g_tag += ' ' + data + '="' + self.data_dict[data] + '"'
+        if self.visibility: g_tag += ' visibility="' + self.visibility + '"'
         if self.filter_string: g_tag += ' filter="' + self.filter_string + '"'
+        if self.transform_list:
+            g_tag += ' transform="'
+            for transform in self.transform_list:
+                g_tag += transform + ' '  # Add the class and a space
+            g_tag = g_tag[:-1] + '"'  # Remove the last space and replace it with a double quote
+        if self.display: g_tag += ' display="' + self.display + '"'
         g_tag += '>'
 
         return g_tag
+
+
+class AnimateTransform(Base):
+    def __init__(self, id_str, class_list, visibility, data_dict, style_dict,
+                 attribute_name, attribute_type, type_param, from_param, to_param, dur, begin, direction, fill):
+        super().__init__(id_str, class_list, visibility, data_dict, style_dict)
+        self.attribute_name = attribute_name
+        self.attribute_type = attribute_type
+        self.type_param = type_param
+        self.from_param = from_param
+        self.to_param = to_param
+        self.dur = dur
+        self.begin = begin
+        self.direction = direction
+        self.fill = fill
+
+    def createTag(self):
+        anim_tag = '<animateTransform'
+        if self.id_str: anim_tag += ' id="' + self.id_str + '"'
+        if self.class_list:  # There are classes to add
+            anim_tag += ' class="'  # Initialize the class tag
+            for class_str in self.class_list:  # for every class to add
+                anim_tag += class_str + ' '  # Add the class and a space
+            anim_tag = anim_tag[:-1] + '"'  # Remove the last space and replace it with a double quote
+        if self.data_dict:
+            for data in self.data_dict:
+                anim_tag += ' ' + data + '="' + self.data_dict[data] + '"'
+        if self.style_dict:
+            anim_tag += ' style="'
+            for style in self.style_dict:
+                anim_tag += style + self.style_dict[style] + ';'
+            anim_tag += '"'
+
+        anim_tag += ' attributeName="' + str(self.attribute_name) + '"'
+        anim_tag += ' attributeType="' + str(self.attribute_type) + '"'
+        anim_tag += ' type="' + str(self.type_param) + '"'
+        anim_tag += ' from="' + str(self.from_param) + '"'
+        anim_tag += ' to="' + str(self.to_param) + '"'
+        anim_tag += ' dur="' + str(self.dur) + '"'
+        anim_tag += ' begin="' + str(self.begin) + '"'
+        anim_tag += ' data-direction="' + str(self.direction) + '"'
+        if self.fill: anim_tag += ' fill="' + str(self.fill) + '"'
+        anim_tag += '/>'
+
+        return anim_tag

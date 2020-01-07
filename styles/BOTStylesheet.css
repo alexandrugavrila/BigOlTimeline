@@ -1,4 +1,8 @@
-/* To make the controls popup centered */
+
+h1 {
+   font-family: Arial; 
+}
+
 .centered {
     position: fixed;
     top: 50%;

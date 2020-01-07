@@ -1,5 +1,16 @@
+Programming Languages
+    Javascript
+        Array
+            Add to beginning: array.push()
+            Add to end:       array.unshift()
+
 Tool Functions
 
+    VisualStudio
+        Fold all
+            Ctrl-K-0
+        Unfold all
+            Ctrl-K-J
     Excel
         Insert Table Column/Row Above/Left
             Highlight entire column or row, ctrl-numpad +

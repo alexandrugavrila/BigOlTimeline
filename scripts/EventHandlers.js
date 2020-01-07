@@ -8,20 +8,10 @@ function showHeaderTooltip(evt) {
 
     var tooltiptransforms = headertooltip.transform.baseVal;              // Get all of the transforms on the tooltip element
     var tooltipmaptransforms = headertooltipmap.transform.baseVal;        // Get all of the transforms on the tooltip map element
-    if (tooltiptransforms.length === 0 || tooltiptransforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {         // If the first transform isn't a translate add one
-        var translate = headersvg.createSVGTransform();                                                                                   // Create empty SVG transform
-        translate.setTranslate(0, 0);                                                                                               // Make it transform by 0
-        headertooltip.transform.baseVal.insertItemBefore(translate, 0)                                                                    // Add the translate to the transform list
-    }
-    if (tooltipmaptransforms.length === 0 || tooltipmaptransforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {   // If the first transform isn't a translate add one
-        var translate = headersvg.createSVGTransform();                                                                                   // Create empty SVG transform
-        translate.setTranslate(0, 0);                                                                                               // Make it transform by 0
-        headertooltipmap.transform.baseVal.insertItemBefore(translate, 0)                                                                 // Add the translate to the transform list
-    }
 
     tooltiptransform = tooltiptransforms.getItem(0);                      // Get the first element on the tooltip transform list, which we know to be a translate
     tooltipmaptransform = tooltipmaptransforms.getItem(0);                // Get the first element on the tooltipmap transform list, which we know to be a translate
-    var coord = getMousePositionSVG(evt, headersvg);                              // Get the mouse position of the mousemove event
+    var coord = getMousePositionSVG(evt, headersvg);                      // Get the mouse position of the mousemove event
     tooltiptransform.setTranslate(coord.x + 25, coord.y + 10);            // Change the position of the tooltip to 25 pixels left and 10 pixels down from the pointer
     tooltipmaptransform.setTranslate(coord.x + 35, coord.y + 40);         // Change the position of the tooltip map to 35 pixels left and 40 pixels down from the pointer
 
@@ -38,7 +28,7 @@ function hideHeaderTooltip() {
     hideBorders();
 }
 
-//Controls Button
+// Controls Button
 
 function controlsButtonMouseOver() {
     controlsbuttonbox.classList.remove('buttonbox');
@@ -92,16 +82,17 @@ function controlsMinimizeButtonMouseUp() {
     launchControlAnimations();
 }
 
-//Controls Animation
+// Controls Animation
 
 function controlsAnimationEnd(evt) {
     if(evt.target.classList.contains('finalanimation')) {   // If this is the last animation
         if(evt.target.getAttributeNS(null, 'data-direction') == 'forward') {    // If the animation ran forward
-            controlspopup.setAttributeNS(null, 'display', 'inline');                  // Make the popup visible
+            controlspopup.setAttributeNS(null, 'display', 'inline');                // Make the popup visible
             makeInvisible(controlsanimationrect);                                   // Make the animation rectangle invisible
             setAnimationDirectionFlag(controlsanimations, 'backward');              // Change all of the direction flags on the controls animations to backward
         }
         else {
+            makeInvisible(controlsanimationrect);
             setAnimationDirectionFlag(controlsanimations, 'forward');               // Change all of the direction flags on the controls animations to forward
         }
     }
@@ -152,7 +143,7 @@ function powerMouseOverEffects() {
     var powertitle = this.getElementsByClassName('powertitle')[0];
     powertitle.classList.remove('powertitle');
     powertitle.classList.add('selectedtitle');
-    timelinebody.appendChild(powertitle);
+    this.parentElement.appendChild(powertitle);
     makeVisible(yeartooltip);  // Set the year tooltip to visible, as hovering over the box counts as a mouseout
 }
 
@@ -196,6 +187,130 @@ function powerMouseOutEffects() {
 
 function powerRectMouseOutEffects() {
     powertooltip.setAttributeNS(null, 'visibility', 'hidden');           // Make the tooltip invisible
+}
+
+
+function powerDblclick(evt) {
+    // When a power box is double clicked, make all other powers invisible and bring all of the rectangles 
+    // for that group together with an animation in the group. Do the same thing with the header bar. All
+    // columns that contain an entry for that power should be brought together, all others made invisible.
+    // If a group is already focused in, do all these things in reverse.
+
+    if(focusgroup == null) {    // If there was no currently focused group
+        var currgroup = this.getAttributeNS(null, 'id');  // The name of the selected group
+        focusgroup = currgroup;
+        var currregions = []    // The list of regions that have the current power
+        var rects = this.getElementsByTagName('rect')   // The rectangle elements of the power group
+        for(var i = 0; i < powergroups.length; i++) {   // Set all other powers to invisible
+            if(powergroups[i].getAttributeNS(null, 'id') != currgroup){     // If the group is not the focus group
+                makeInvisible(powergroups[i])   // Set the group to invisible
+                focusinvis.push(powergroups[i]) // Add the group to the invisible items list
+            }
+        }
+
+        var centerpower
+        // Get the center group for the power, and build a list of all the regions the power inhabits
+        for(var i = 0; i < rects.length; i++) { 
+            currregions.push(document.getElementById(rects[i].getAttributeNS(null, 'data-region') + 'region'))  // Add the region of the box to the current regions list
+            if(rects[i].getAttributeNS(null, 'data-is-center') == 'true'){  // If this is the center block
+                centerpower = rects[i]  // Assign it to centerpower
+            }
+        }
+        var centerX = parseInt(centerpower.getAttributeNS(null, 'x'))   // Get the x value of the center region
+        for(region of headerregions) {  // For all of the regions in the headerbar
+            if(!currregions.includes(region)){   // If the region is not in the current region list
+                region.setAttributeNS(null, 'display', 'none'); // Set the group to not be displayed
+                focusdisplay.push(region);  // Add the group to the not displayed items list
+            }
+        }
+
+        // Create a list for the powers on each side of the center
+        var leftfrompower = []
+        var rightfrompower = []
+        var leftfromregion = []
+        var rightfromregion = []
+
+        for(var i = 0; i < rects.length; i++) { 
+            var rectX = parseInt(rects[i].getAttributeNS(null, 'x'))
+            if(rectX == centerX) {  // If the current box is the center ignore it
+                continue;
+            } else if(rectX < centerX) {     // If the current box is left of the center
+                leftfrompower.push(rects[i])    // Put the rectangle at the end of the left from list
+                leftfromregion.push(document.getElementById(rects[i].getAttributeNS(null, 'data-region') + 'region'))    // Put the region at the end of the left from list
+            } else if (rectX > centerX) {    // If the current box is right of the center
+                rightfrompower.push(rects[i])   // Put the rectangle at the end of the right from list
+                rightfromregion.push(document.getElementById(rects[i].getAttributeNS(null, 'data-region') + 'region'))    // Put the region at the end of the right from list
+            }
+        }
+
+        // Generate the coordinates for the most compact grouping
+        var leftto = []
+        var rightto = []
+        for(var i = 0; i < leftfrompower.length; i++) {
+            leftto.unshift(centerX - (barwidth * (i + 1)))
+        }
+        for(var i = 0; i < rightfrompower.length; i++) {
+            rightto.push(centerX + (barwidth * (i + 1)))
+        }
+
+        var to = leftto.concat(rightto)     // Put the left and right to lists together
+        var frompowers = leftfrompower.concat(rightfrompower)   // Put the left and right from power lists together
+        var fromregions = leftfromregion.concat(rightfromregion)  // Put the left and right from region lists together
+        
+        // Adjust the animations
+        for(var i = 0; i < frompowers.length; i++) {
+            if(frompowers[i].getAttributeNS(null, 'x') != to[i]) {  // If the from and to x values are not the same
+                distance = to[i] - frompowers[i].getAttributeNS(null, 'x');  // The distance to move is the destination - the current x
+                
+                poweranimation = frompowers[i].parentElement.getElementsByClassName('powerfocusanimation')[0];    // Get the power animation from the group
+                regionanimation = fromregions[i].getElementsByClassName('regionfocusanimation')[0];  // Get the region animation from the group
+                poweranimation.setAttributeNS(null, 'to', distance.toString() + ' 0');   // Set the to attribute of the power animation to the distance
+                regionanimation.setAttributeNS(null, 'to', distance.toString() + ' 0');  // Set the to attribute of the region animation to the distance
+                poweranimation.setAttributeNS(null, 'fill', 'freeze');      // Set the fill property of the power animation to freeze on a forward animation
+                regionanimation.setAttributeNS(null, 'fill', 'freeze');     // Set the fill property of the region animation to freeze on a forward animation
+                focusanimations.push(poweranimation, regionanimation);
+            }
+            if(focusanimations.length) {
+                executeAnimations(focusanimations);
+            }
+        }
+    } else {    // If there was a currently focused group
+        focusgroup = null;  // Set the focus group to nothing
+        if(focusanimations.length) {   // If there were animations launched
+            for(animation of focusanimations) { // For all of the animations that launched to focus
+                animation.setAttributeNS(null, 'fill', 'none'); // Set their fill property to none because they are running in reverse. Otherwise when an unrelated animation triggers they will revert the freeze of the forward animation
+            }
+
+            addAnimationEndListeners(focusanimations[0], focusAnimationEnd);     // Add an end listener to a focusanimation so we don't sent things to visible till it ends
+            executeAnimationsBackwards(focusanimations);  // Run the animation backwards
+        } else {  // If there were no unconnected boxes
+            for(el of focusinvis) { // Make all of the invisible elements visible
+                makeVisible(el);
+            }
+            for(el of focusdisplay) {   // Display all of the nondisplayed elements
+                el.setAttributeNS(null, 'display', 'inline');
+            }
+            
+            focusanimations = [];   // Empty the focus animation list
+            focusinvis = [];    // Empty the invisible elements list
+            focusdisplay = [];  // Empty the nondisplayed elements list
+        }
+    }
+}
+
+
+function focusAnimationEnd(evt) {
+    for(el of focusinvis) { // Make all of the invisible elements visible
+        makeVisible(el)
+    }
+    for(el of focusdisplay) {   // Display all of the nondisplayed elements
+        el.setAttributeNS(null, 'display', 'inline')
+    }
+    focusgroup = null;  // Set the focus group to nothing
+    focusanimations = [];   // Empty the focus animation list
+    focusinvis = [];    // Empty the invisible elements list
+    focusdisplay = [];  // Empty the nondisplayed elements list
+    evt.target.removeEventListener('endEvent', focusAnimationEnd);  // Remove the end event
 }
 
 // Chart Body Events
@@ -261,7 +376,8 @@ function chartBodyMouseOut() {
 function chartBodyMouseWheel(evt) {
 
     var coord = getMousePositionSVG(evt, bodysvg);
-    
+    oldcenter = getOffset(headercenterlines[0]).left
+
     if(evt.altKey) {
         var oldxscale = parseFloat(chartbody.transform.baseVal.getItem(1).matrix.a, 10);
         
@@ -275,9 +391,9 @@ function chartBodyMouseWheel(evt) {
             // If the zoom factor is greater than 1 keep the ysale at 1 and move region texts to compensate for the header length shrinkage
             if(newxscale > 1) {
                 setScaleSVGObject(headerbar, newxscale, 1);     // Make sure the header bar is not changing in the y direction on zoom
-                counterScale(headertextsgroup, headerbar);      // Counter the xscale on the texts so they dont stretch
+                counterScale(headertexts, headerbar);      // Counter the xscale on the texts so they dont stretch
                 counterScale(controlsbutton, headerbar);      // Counter the xscale on the texts so they dont stretch
-                adjustRegionTextTranslates(oldxscale, newxscale);   // Adjust the X translates of the region texts to the new box centers
+                adjustRegionTextTranslates();   // Adjust the X translates of the region texts to the new box centers
                 adjustRegionTexts();    // Change how much of the region is truncated based off of the new length of the boxes
             }
             
@@ -285,7 +401,7 @@ function chartBodyMouseWheel(evt) {
             if(oldxscale > 1 && newxscale < 1) {
                 setScaleSVGObject(chartbody, 1, 1);
                 setScaleSVGObject(headerbar, 1, 1);
-                setScaleSVGObject(headertextsgroup, 1, 1);
+                setScaleSVGObject(headertexts, 1, 1);
                 resetRegionTextXs();
             }
 
@@ -304,9 +420,9 @@ function chartBodyMouseWheel(evt) {
             // If the zoom factor is greater than 1 keep the yscale at 1 and move the region texts to compensate for header length expansion
             if(newxscale > 1) {
                 setScaleSVGObject(headerbar, newxscale, 1);     // Make sure the header bar is not changing in the y direction on zoom
-                counterScale(headertextsgroup, headerbar);      // Counter the xscale on the texts so they dont stretch
-                counterScale(controlsbutton, headerbar);      // Counter the xscale on the texts so they dont stretch
-                adjustRegionTextTranslates(oldxscale, newxscale);   // Adjust the X translates of the region texts to the new box centers
+                counterScale(headertexts, headerbar);      // Counter the xscale on the texts so they dont stretch
+                counterScale(controlsbutton, headerbar);      // Counter the xscale on the control button so it doesn't stretch
+                adjustRegionTextTranslates();   // Adjust the X translates of the region texts to the new box centers
                 adjustRegionTexts();    // Change how much of the region is truncated based off of the new length of the boxes
             }
 
@@ -314,7 +430,7 @@ function chartBodyMouseWheel(evt) {
             if(oldxscale < 1 && newxscale > 1) {
                 setScaleSVGObject(chartbody, 1, 1);
                 setScaleSVGObject(headerbar, 1, 1);
-                setScaleSVGObject(headertextsgroup, 1, 1);
+                setScaleSVGObject(headertexts, 1, 1);
                 resetRegionTextXs();
             }
 

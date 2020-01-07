@@ -15,21 +15,27 @@ function translateSVGObject(object, x, y) {
 
 function setTranslateSVGObject(object, x, y) {
     // Set the translate transform of the object to x and y
-    
-    var transforms = object.transform.baseVal;      // Get all of the transforms on the object
-    var translate = transforms.getItem(0);          // Get the first element on the transform list, which we know to be a translate
-
-    translate.setTranslate(x, y);             // Change the position of object to the pointer
+    if(object.length){
+        for(var i = 0; i < object.length; i++) {
+            object[i].transform.baseVal.getItem(0).setTranslate(x, y);
+        }
+    }
+    else {
+        object.transform.baseVal.getItem(0).setTranslate(x, y);             // Change the position of object to the pointer
+    }
 }
-
 
 function setScaleSVGObject(object, x, y) {
     // Set the scale transform of an object to x and y
 
-    var transforms = object.transform.baseVal;      // Get all of the transforms on the object
-    var scale = transforms.getItem(1);              // Get the second element on the transform list, which we know to be a scale
-
-    scale.setScale(x, y);             // Set the scale transform to x and y
+    if(object.length) {
+        for(var i = 0; i < object.length; i++) {
+            object[i].transform.baseVal.getItem(1).setScale(x, y);
+        }
+    }
+    else {
+        object.transform.baseVal.getItem(1).setScale(x, y);             // Set the scale transform to x and y
+    }
 }
 
 
@@ -85,16 +91,29 @@ function toggleVisibility(object) {
 
 
 function makeVisible(object) {
-    // Make an object visible
+    // Make an object or array of objects visible
 
-    object.setAttributeNS(null, 'visibility', 'visible');   // Make the object visible
+    if(object.length){
+        for(var i = 0; i < object.length; i++) {
+            object[i].setAttributeNS(null, 'visibility', 'visible');   // Make the object visible
+        }
+    }
+    else {
+        object.setAttributeNS(null, 'visibility', 'visible');   // Make the object visible
+    }
 }
 
 
 function makeInvisible(object) {
-    // Make an object invisible
-
-    object.setAttributeNS(null, 'visibility', 'hidden');    // Make the object invisible
+    // Make an object pr array of objects invisible
+    if(object.length){
+        for(var i = 0; i < object.length; i++) {
+            object[i].setAttributeNS(null, 'visibility', 'hidden');    // Make the object invisible
+        }
+    }
+    else {
+        object.setAttributeNS(null, 'visibility', 'hidden');   // Make the object visible
+    }
 }
 
 
@@ -196,13 +215,22 @@ function setAnimationDirectionFlag(animations, direction) {
 
 
 function counterScale(object, parent) {
-    // Counter a scale transform on an element applied to it by it's parent group
+    // Counter a scale transform on an element or array of elements applied to it by it's parent group
 
     formatTransforms(parent);    // Put blank transforms on the parent to avoid checking for them
 
     newa = 1 / parent.transform.baseVal.getItem(1).matrix.a;   // Get the inverse of the x scale
     newd = 1 / parent.transform.baseVal.getItem(1).matrix.d;   // Get the inverse of the y scale
-    setScaleSVGObject(object, newa, newd);    // Set the scale to the inverse values
+
+    if(object.length) {
+        for(var i = 0; i < object.length; i++) {
+            setScaleSVGObject(object[i], newa, newd);    // Set the scale to the inverse values
+        }
+    }
+    else {
+        setScaleSVGObject(object, newa, newd);    // Set the scale to the inverse values
+
+    }
 }
 
 
@@ -212,9 +240,15 @@ function counterTranslate(object, parent) {
     parente = parent.transform.baseVal.getItem(0).matrix.e;   // Get the inverse of the x transalte
     parentf = parent.transform.baseVal.getItem(0).matrix.f;   // Get the inverse of the y translate
     
-    setTranslateSVGObject(object, -parente * newa, -parentf * newd);  // Adjust the translate for the parent element's new CTM, this essentially just keeps it in place.
+    if(object.length) {
+        for(var i = 0; i < object.length; i++) {
+            setTranslateSVGObject(object[i], -parente * newa, -parentf * newd);  // Adjust the translate for the parent element's new CTM, this essentially just keeps it in place.
+        }
+    }
+    else {
+        setTranslateSVGObject(object, -parente * newa, -parentf * newd);  // Adjust the translate for the parent element's new CTM, this essentially just keeps it in place.
+    }
 }
-
 
 /* GENERAL HELPER FUNCTIONS */
 
@@ -311,6 +345,15 @@ function extend(destination, source) {
 }
 
 
+function getOffset(element) {
+    // Get the absolute screen position of an element
+
+    var bound = element.getBoundingClientRect()
+    scrollLeft = window.pageXOffset
+    scrollTop = window.pageYOffset
+    return{ top: bound.top + scrollTop, left: bound.left + scrollLeft }
+}
+
 
 /* BOT FUNCTIONS */
 
@@ -318,7 +361,7 @@ function initializeChart() {
     formatBodyTransforms();   // Add blank transforms to all of the bpdy elements that may need transforming
     formatHeaderTransforms();   // Add blank transforms to all of the header elements that may need transforming
     setYearLabelWidths();   // Set the year label boxes to match the text length
-    adjustRegionTexts();    // Truncate all of the region header texts properly
+    adjustRegionTexts();    // Truncate all of the region header texts properly, have to do this afterwards or getcomputertextlength doesnt work
 
     coord = getMousePositionSVG(new WheelEvent('wheel'), bodysvg);  // Get the screen coordinate of the mouse event from where I want it to fire on the svg
     for(var i = 0; i < 10; i ++) {    // Run a mouse scroll out event 15 times to initialize the chart as zoomed out
@@ -339,9 +382,14 @@ function initializeChart() {
         }
     }
 
-    makeVisible(bodysvg);
-    makeVisible(headersvg);
-    makeVisible(headertextsgroup);
+    // Once everything is set up propery display the header and body
+    // bodysvg.setAttributeNS(null, 'display', 'inline');
+    // headersvg.setAttributeNS(null, 'display', 'inline');
+
+
+    makeVisible(bodysvg)
+    makeVisible(headersvg)
+    
 }
 
 
@@ -369,7 +417,7 @@ function formatBodyTransforms() {
 
 function formatHeaderTransforms() {
     // Format the transforms on all of the objects in the header that will be transformed
-    objects = [headerbar, headertooltip, controlspopup, headertexts, headertextsgroup, controlsbutton];
+    objects = [headerbar, headertooltip, headertooltipmap, controlspopup, headertexts, controlsbutton];
     
     for(var i = 0; i < objects.length; i++) {
         if(objects[i].length) {
@@ -415,7 +463,6 @@ function launchControlAnimations() {
         controlspopup.setAttributeNS(null, 'display', 'none');  // Hide the popup before the animation starts
         makeVisible(controlsanimationrect);                     // Make the animation rectangle visible
         executeAnimationsBackwards(controlsanimations);         // Run the controlsbutton animations in reverse
-        
     }
     counterScale(controlspopup, headerbar);     // Counter the scale transform on the popup so it's always the same size
     counterTranslate(controlspopup, headerbar); // Counter the translate transform on the popup so it's always in the same place
@@ -492,16 +539,26 @@ function adjustYearLabelFont() {
 }
 
 
-function adjustRegionTextTranslates(oldxscale, newxscale) {
-    // Adjust the region texts, and the controls button text to be in the center of their boxes
+function adjustRegionTextTranslates() {
+    // Adjust the region texts to be in the center of their boxes
+    // Uses the current CTM matrix of the texts and the CTM matrix of the center line object to adjust the
+    //   translate of the texts, according to the formula
+    //   e2 = x(a1-a2) + e1 
+    //   where the centerline is subscript 2, and the text is subscript 1
+    // This equation was calculated from the CTM matrix equations
 
-    var centerdifference = (regionboxwidth * newxscale) - (regionboxwidth * oldxscale);     // Find the diference in the center of the boxes caused by the new scale
-
-    // For every header text, move it to the new center of the box
-    for(var i = 0; i < headertexts.length; i++) {
+    for(var i = 0; i < headertexts.length; i++) {   // For every header text
         xlevel = parseInt(headertexts[i].getAttributeNS(null, 'data-xlevel'), 10);  // The boxes place on the bar left to right
-        translate = centerdifference * (xlevel + 0.5)
-        translateSVGObject(headertexts[i], translate, 0);
+        x = parseInt(headertexts[i].getAttributeNS(null, 'x'))  // The untransformed x level 
+        a1 = headercenterlines[i].getCTM().a    // The a value of the centerline CTM
+        a2 = headertexts[i].getCTM().a          // The a value of the text CTM
+        e1 = headercenterlines[i].getCTM().e    // The e value of the centerline CTM
+        
+        setTranslateSVGObject(headertexts[i], 0, 0)     // Set the translate to 0 so we can get all the other transforms acting on it
+        basee2 = headertexts[i].getCTM().e  // The e of the CTM without the texts own translate
+        tare2 = (x * (a1 - a2)) + e1    // The target e of the texts CTM according to the matrix formula
+        translate = (tare2 - basee2) / a1   // The translate is the target - the current translates, divided by the scale
+        setTranslateSVGObject(headertexts[i], translate, 0);    // Set the translate
     }
 }
 

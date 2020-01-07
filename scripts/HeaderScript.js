@@ -4,10 +4,11 @@ var headersvg = document.getElementById('headersvg');
 
 // Header Elements
 var headerbar = document.getElementById('headerbar');
+var headerregions = document.getElementsByClassName('regiongroup')
 var headerboxes = document.getElementsByClassName('regionbox');
 var headertexts = document.getElementsByClassName('regiontext');
 var headerboxesgroup = document.getElementById('regionboxes');
-var headertextsgroup = document.getElementById('regiontexts');
+var headercenterlines = document.getElementsByClassName('regionline');
 
 // Header tooltip elements
 var headertooltip = document.getElementById('headertooltip');
@@ -36,6 +37,7 @@ var controlscheckboxtext = document.getElementById('controlscheckboxtext');
 
 // Global Variables
 var regionboxwidth = headerboxes[0].getAttributeNS(null, 'width');
+var oldcenter = getOffset(headercenterlines[0]).left
 
 /* SCRIPT */
 
