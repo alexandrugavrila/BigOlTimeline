@@ -247,14 +247,23 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
 
         # If the current block is the center block, and it is the correct iteration, create the power title text tag and the box with the data-is-center set to true
         group_name = curr_power + curr_region   # Name the group the power concatenated with that region
-        if iteration > 1: group_name += str(iteration)  # If there are multiple rects for the same power in the same region add the iteration
+        if iteration > 1:
+            if centers_df_dict[dp['Power']]['Center'] == curr_region and iteration == centers_df_dict[dp['Power']]['Iteration']:  # If this box is correct iteration and region to be the center
+                box_data_dict['data-is-center'] = 'true'    # Set the dict to show this is the center
+                body_svg_list.insert(len(body_svg_list) - 2, svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
+                                                                              x, y, params['bar_width'], bar_height, rx, ry).createTag())
+                box_data_dict['data-is-center'] = 'false'   # Reset the dict
+            else:
+                body_svg_list.insert(len(body_svg_list) - 2, svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
+                                                                              x, y, params['bar_width'], bar_height, rx, ry).createTag())
+            continue
         body_svg_list.append(svgelements.OpenGroup(group_name, None, None, None, None, None, ['translate(0 0)'], None).createTag())     # Add an opening group tag
-        if centers_df_dict[dp['Power']]['Center'] == curr_region and iteration == centers_df_dict[dp['Power']]['Iteration']:
+        if centers_df_dict[dp['Power']]['Center'] == curr_region and iteration == centers_df_dict[dp['Power']]['Iteration']:    # If this box is correct iteration and region to be the center
 
-            box_data_dict['data-is-center'] = 'true'
+            box_data_dict['data-is-center'] = 'true'    # Set the dict to show this is the center
             body_svg_list.append(svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
                                                   x, y, params['bar_width'], bar_height, rx, ry).createTag())
-            box_data_dict['data-is-center'] = 'false'
+            box_data_dict['data-is-center'] = 'false'   # Reset the dict
 
             title_x = int(x + (params['bar_width'] / 2))
             title_y = int(y + (params['header_length'] / 2))

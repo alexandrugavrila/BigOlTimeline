@@ -154,8 +154,7 @@ function powerRectMouseMoveEffects(evt) {
 
     var coord = getMousePositionSVG(evt, bodysvg);                               // Get the mouse position of the mousemove event
     setTranslateSVGObject(powertooltip, coord.x + 15, coord.y + 15);     // Change the position of the tooltip to 10 pixels left and 40 pixels down from the pointer
-
-    powertooltippower.textContent = this.parentElement.getAttributeNS(null, 'data-power-name');   // Change first line of tooltip text to be the full power name
+    powertooltippower.textContent = this.parentElement.parentElement.getAttributeNS(null, 'data-power-name');   // Change first line of tooltip text to be the full power name
     powertooltipregion.textContent = this.getAttributeNS(null, 'data-region');      // Change the second line of tooltip text to be the region
     var startyear = this.getAttributeNS(null, 'data-start-year');                   // Get the start year
     var endyear = this.getAttributeNS(null, 'data-end-year');                       // Get the end year
@@ -234,7 +233,9 @@ function powerDblclick(evt) {
             var rectX = parseInt(rects[i].getAttributeNS(null, 'x'))
             if(rectX == centerX) {  // If the current box is the center ignore it
                 continue;
-            } else if(rectX < centerX) {     // If the current box is left of the center
+            } else if (rects[i-1] && rects[i].getAttributeNS(null, 'data-region') == rects[i-1].getAttributeNS(null, 'data-region')) {  // If this is not the first item in the list and the current box is in the same region as the previous box, skip it
+                continue;
+            } else if (rectX < centerX) {     // If the current box is left of the center
                 leftfrompower.push(rects[i])    // Put the rectangle at the end of the left from list
                 leftfromregion.push(document.getElementById(rects[i].getAttributeNS(null, 'data-region') + 'region'))    // Put the region at the end of the left from list
             } else if (rectX > centerX) {    // If the current box is right of the center
@@ -256,7 +257,6 @@ function powerDblclick(evt) {
         var to = leftto.concat(rightto)     // Put the left and right to lists together
         var frompowers = leftfrompower.concat(rightfrompower)   // Put the left and right from power lists together
         var fromregions = leftfromregion.concat(rightfromregion)  // Put the left and right from region lists together
-        
         // Adjust the animations
         for(var i = 0; i < frompowers.length; i++) {
             if(frompowers[i].getAttributeNS(null, 'x') != to[i]) {  // If the from and to x values are not the same

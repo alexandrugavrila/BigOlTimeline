@@ -4,6 +4,16 @@ Programming Languages
             Add to beginning: array.push()
             Add to end:       array.unshift()
 
+Concepts
+    CTM
+        Object on webpages are controlled with a current transform matrix. Transformations cascade as they are
+        applied to groups above the element, the CTM is the result of all those transformations.
+        If (x1, y1) is a pixel in the untransformed object, and (x2, y2) is where that pixel end up after being 
+        worked on by the CTM, the way (x2, y2) is calculated is with
+            [a c e][x1]   [x2]
+            [b d f][y1] = [y2]
+            [0 0 1][ 1]   [ 1]
+
 Tool Functions
 
     VisualStudio
