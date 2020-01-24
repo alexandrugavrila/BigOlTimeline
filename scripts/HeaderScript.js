@@ -13,8 +13,8 @@ var headercenterlines = document.getElementsByClassName('regionline');
 // Header tooltip elements
 var headertooltip = document.getElementById('headertooltip');
 var headertooltiptext = document.getElementById('headertooltiptext');
-var headertooltipmap = document.getElementById('headertooltipmap');             // Get the group container for the map
-var headertooltipmapsvg = document.getElementById('headertooltipmapsvg');       // Get the actual map svg
+var headertooltipmap = document.getElementById('headertooltipmap');     // Get the group container for the map
+var headertooltipmapobject = document.getElementById('headertooltipmapobject');
 
 // Controls elements
 var controlsbutton = document.getElementById('controlsbutton');

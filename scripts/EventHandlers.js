@@ -18,7 +18,7 @@ function showHeaderTooltip(evt) {
     headertooltiptext.textContent = selectedregion.getAttributeNS(null, 'data-region-name');        // Change tooltip text to be the region
     var tarborder = headertooltiptext.textContent.replace(/ /g,'').toLowerCase().concat('border');    // The id of the target border is going to be the region, lowercase, without spaces, plus 'border'
     document.getElementById(tarborder).setAttributeNS(null, 'visibility', 'visible');           // Set the target border to visible
-    headertooltipmapsvg.setAttributeNS(null, 'viewBox', getMapViewBox(tarborder));                               // Set the viewbox to what is specified in getviewbox per region
+    headertooltipmapsvg.setAttributeNS(null, 'viewBox', getMapViewBox(tarborder));      // Set the viewbox to what is specified in getviewbox per region
 }
 
 
