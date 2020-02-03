@@ -39,9 +39,11 @@ var zoomfactor = 0.075;                 // The amount the zoomSVGObject function
 var bodyclick = { x: 0, y: 0 };         // Saves the location of a click on the body svg
 var pyearlabeldefaultfontsize = parseFloat(pyearlabelstyle.style.fontSize.match(/\d+(?:\.\d+)?/g), 10); // Pull the number out of the font-size parameter of the primary year label style
 var syearlabeldefaultfontsize = parseFloat(syearlabelstyle.style.fontSize.match(/\d+(?:\.\d+)?/g), 10); // Pull the number out of the font-size parameter of the secondary year label style
+
 var focusgroup = null;  // The current focus
-var focusanimations = [];   // A list of animations that need to be run backwards to undo the current focus
-var focusinvis = [];    // A list of elements made invisible by the current focus group
+var focustranslateanimations = [];   // A list of animations that need to be run backwards to undo the current focus
+var focusopacityanimations = [];
+var focusinvis = [];
 var focusdisplay = [];  // A list of elements that are not displayed because of the current focus group
 
 /* SCRIPT */

@@ -135,6 +135,32 @@ function makeInvisibileIfVisible(object) {
 }
 
 
+function displayInline(object) {
+    // Set an object or array of objects to be displayed
+    if(object.length){
+        for(var i = 0; i < object.length; i++) {
+            object[i].setAttributeNS(null, 'display', 'inline');    // Make the object invisible
+        }
+    }
+    else {
+        object.setAttributeNS(null, 'display', 'inline');   // Make the object visible
+    }
+}
+
+
+function displayNone(object) {
+    // Set an object or array of objects to not be displayed
+    if(object.length){
+        for(var i = 0; i < object.length; i++) {
+            object[i].setAttributeNS(null, 'display', 'none');    // Make the object invisible
+        }
+    }
+    else {
+        object.setAttributeNS(null, 'display', 'none');   // Make the object visible
+    }
+}
+
+
 /* ANIMATION FUNCTIONS */
 
 
@@ -669,3 +695,11 @@ function getMapViewBox(border) {
     }
 }
 
+
+function resetFocusState() {
+    focusgroup = null;  // Set the focus group to nothing
+    focustransparencyanimations = [];   // Empty the focus animation list
+    focusopacityanimations = []; // Empty the opacity animation list
+    focusinvis = [];    // Empty the invisible elements list
+    focusdisplay = [];  // Empty the nondisplayed elements list
+}

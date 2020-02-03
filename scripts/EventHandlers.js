@@ -178,7 +178,13 @@ function powerMouseOutEffects() {
     }
 
     var powertitle = timelinebody.getElementsByClassName('selectedtitle')[0];
-    this.appendChild(powertitle);
+    for(group of this.getElementsByTagName('g')){
+        for(rect of group.getElementsByTagName('rect')) {
+            if(rect.getAttributeNS(null, 'data-is-center') == 'true') {
+                group.appendChild(powertitle);
+            }
+        }
+    }
     powertitle.classList.remove('selectedtitle');
     powertitle.classList.add('powertitle');
 }
@@ -200,6 +206,8 @@ function powerDblclick(evt) {
         focusgroup = currgroup;
         var currregions = []    // The list of regions that have the current power
         var rects = this.getElementsByTagName('rect')   // The rectangle elements of the power group
+        
+        
         for(var i = 0; i < powergroups.length; i++) {   // Set all other powers to invisible
             if(powergroups[i].getAttributeNS(null, 'id') != currgroup){     // If the group is not the focus group
                 makeInvisible(powergroups[i])   // Set the group to invisible
@@ -207,18 +215,20 @@ function powerDblclick(evt) {
             }
         }
 
-        var centerpower
         // Get the center group for the power, and build a list of all the regions the power inhabits
+        var centerpower
         for(var i = 0; i < rects.length; i++) { 
             currregions.push(document.getElementById(rects[i].getAttributeNS(null, 'data-region') + 'region'))  // Add the region of the box to the current regions list
             if(rects[i].getAttributeNS(null, 'data-is-center') == 'true'){  // If this is the center block
                 centerpower = rects[i]  // Assign it to centerpower
             }
         }
+
+        // Set all the regions that don't contain the focus group to not be displayed
         var centerX = parseInt(centerpower.getAttributeNS(null, 'x'))   // Get the x value of the center region
         for(region of headerregions) {  // For all of the regions in the headerbar
             if(!currregions.includes(region)){   // If the region is not in the current region list
-                region.setAttributeNS(null, 'display', 'none'); // Set the group to not be displayed
+                displayNone(region); // Set the group to not be displayed
                 focusdisplay.push(region);  // Add the group to the not displayed items list
             }
         }
@@ -228,7 +238,6 @@ function powerDblclick(evt) {
         var rightfrompower = []
         var leftfromregion = []
         var rightfromregion = []
-
         for(var i = 0; i < rects.length; i++) { 
             var rectX = parseInt(rects[i].getAttributeNS(null, 'x'))
             if(rectX == centerX) {  // If the current box is the center ignore it
@@ -254,44 +263,41 @@ function powerDblclick(evt) {
             rightto.push(centerX + (barwidth * (i + 1)))
         }
 
+        // Adjust the translate animations
         var to = leftto.concat(rightto)     // Put the left and right to lists together
         var frompowers = leftfrompower.concat(rightfrompower)   // Put the left and right from power lists together
         var fromregions = leftfromregion.concat(rightfromregion)  // Put the left and right from region lists together
-        // Adjust the animations
         for(var i = 0; i < frompowers.length; i++) {
             if(frompowers[i].getAttributeNS(null, 'x') != to[i]) {  // If the from and to x values are not the same
                 distance = to[i] - frompowers[i].getAttributeNS(null, 'x');  // The distance to move is the destination - the current x
                 
-                poweranimation = frompowers[i].parentElement.getElementsByClassName('powerfocusanimation')[0];    // Get the power animation from the group
-                regionanimation = fromregions[i].getElementsByClassName('regionfocusanimation')[0];  // Get the region animation from the group
+                poweranimation = frompowers[i].parentElement.getElementsByClassName('powerfocusanimationtranslate')[0];    // Get the power animation from the group
+                regionanimation = fromregions[i].getElementsByClassName('regionfocusanimationtranslate')[0];  // Get the region animation from the group
                 poweranimation.setAttributeNS(null, 'to', distance.toString() + ' 0');   // Set the to attribute of the power animation to the distance
                 regionanimation.setAttributeNS(null, 'to', distance.toString() + ' 0');  // Set the to attribute of the region animation to the distance
                 poweranimation.setAttributeNS(null, 'fill', 'freeze');      // Set the fill property of the power animation to freeze on a forward animation
                 regionanimation.setAttributeNS(null, 'fill', 'freeze');     // Set the fill property of the region animation to freeze on a forward animation
-                focusanimations.push(poweranimation, regionanimation);
+                focustranslateanimations.push(poweranimation, regionanimation);
             }
-            if(focusanimations.length) {
-                executeAnimations(focusanimations);
+            if(focustranslateanimations.length) {
+                executeAnimations(focustranslateanimations);
             }
         }
-    } else {    // If there was a currently focused group
+    } 
+    else {    // If there was a currently focused group
         focusgroup = null;  // Set the focus group to nothing
-        if(focusanimations.length) {   // If there were animations launched
-            for(animation of focusanimations) { // For all of the animations that launched to focus
+        if(focustranslateanimations.length) {   // If there were animations launched
+            for(animation of focustranslateanimations) { // For all of the animations that launched to focus
                 animation.setAttributeNS(null, 'fill', 'none'); // Set their fill property to none because they are running in reverse. Otherwise when an unrelated animation triggers they will revert the freeze of the forward animation
             }
 
-            addAnimationEndListeners(focusanimations[0], focusAnimationEnd);     // Add an end listener to a focusanimation so we don't sent things to visible till it ends
-            executeAnimationsBackwards(focusanimations);  // Run the animation backwards
+            addAnimationEndListeners(focustranslateanimations[0], focusAnimationEnd);     // Add an end listener to a focusanimation so we don't sent things to visible till it ends
+            executeAnimationsBackwards(focustranslateanimations);  // Run the animation backwards
         } else {  // If there were no unconnected boxes
-            for(el of focusinvis) { // Make all of the invisible elements visible
-                makeVisible(el);
-            }
-            for(el of focusdisplay) {   // Display all of the nondisplayed elements
-                el.setAttributeNS(null, 'display', 'inline');
-            }
+            makeVisible(focusinvis);    // Make all of the invisible elements visible
+            displayInline(focusdisplay) // Display all of the nondisplayed elements
             
-            focusanimations = [];   // Empty the focus animation list
+            focustranslateanimations = [];   // Empty the focus animation list
             focusinvis = [];    // Empty the invisible elements list
             focusdisplay = [];  // Empty the nondisplayed elements list
         }
@@ -307,7 +313,7 @@ function focusAnimationEnd(evt) {
         el.setAttributeNS(null, 'display', 'inline')
     }
     focusgroup = null;  // Set the focus group to nothing
-    focusanimations = [];   // Empty the focus animation list
+    focustranslateanimations = [];   // Empty the focus animation list
     focusinvis = [];    // Empty the invisible elements list
     focusdisplay = [];  // Empty the nondisplayed elements list
     evt.target.removeEventListener('endEvent', focusAnimationEnd);  // Remove the end event
