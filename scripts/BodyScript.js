@@ -44,7 +44,8 @@ var focusgroup = null;  // The current focus
 var focustranslateanimations = [];   // A list of animations that need to be run backwards to undo the current focus
 var focusopacityanimations = [];
 var focusinvis = [];
-var focusdisplay = [];  // A list of elements that are not displayed because of the current focus group
+var focusdisplayregions = [];  // A list of elements that are not displayed because of the current focus group
+var focusdisplayrects = [];    // A list of power rectangles that are not displayed because of the current focus group
 
 /* SCRIPT */
 

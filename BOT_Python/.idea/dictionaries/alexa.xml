@@ -20,6 +20,8 @@
       <w>numidia</w>
       <w>ostragoths</w>
       <w>powerfocusanimation</w>
+      <w>powerfocusanimationopacity</w>
+      <w>powerfocusanimationtranslate</w>
       <w>powergroup</w>
       <w>powerrect</w>
       <w>powertext</w>
@@ -36,6 +38,8 @@
       <w>regionbox</w>
       <w>regionboxes</w>
       <w>regionfocusanimation</w>
+      <w>regionfocusanimationopacity</w>
+      <w>regionfocusanimationtranslate</w>
       <w>regiongroup</w>
       <w>regionline</w>
       <w>regiontext</w>

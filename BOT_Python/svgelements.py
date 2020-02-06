@@ -156,7 +156,7 @@ class OpenGroup(Base):
         return g_tag
 
 
-class AnimateTransform(Base):
+class Animate(Base):
     def __init__(self, id_str, class_list, visibility, data_dict, style_dict,
                  attribute_name, attribute_type, type_param, from_param, to_param, dur, begin, direction, fill):
         super().__init__(id_str, class_list, visibility, data_dict, style_dict)
@@ -171,7 +171,9 @@ class AnimateTransform(Base):
         self.fill = fill
 
     def createTag(self):
-        anim_tag = '<animateTransform'
+        if self.attribute_name == 'transform': anim_tag = '<animateTransform'
+        else: anim_tag = '<animate'
+
         if self.id_str: anim_tag += ' id="' + self.id_str + '"'
         if self.class_list:  # There are classes to add
             anim_tag += ' class="'  # Initialize the class tag
@@ -187,14 +189,14 @@ class AnimateTransform(Base):
                 anim_tag += style + self.style_dict[style] + ';'
             anim_tag += '"'
 
-        anim_tag += ' attributeName="' + str(self.attribute_name) + '"'
-        anim_tag += ' attributeType="' + str(self.attribute_type) + '"'
-        anim_tag += ' type="' + str(self.type_param) + '"'
-        anim_tag += ' from="' + str(self.from_param) + '"'
-        anim_tag += ' to="' + str(self.to_param) + '"'
-        anim_tag += ' dur="' + str(self.dur) + '"'
-        anim_tag += ' begin="' + str(self.begin) + '"'
-        anim_tag += ' data-direction="' + str(self.direction) + '"'
+        if self.attribute_name: anim_tag += ' attributeName="' + str(self.attribute_name) + '"'
+        if self.attribute_type: anim_tag += ' attributeType="' + str(self.attribute_type) + '"'
+        if self.type_param: anim_tag += ' type="' + str(self.type_param) + '"'
+        if self.from_param: anim_tag += ' from="' + str(self.from_param) + '"'
+        if self.to_param: anim_tag += ' to="' + str(self.to_param) + '"'
+        if self.dur: anim_tag += ' dur="' + str(self.dur) + '"'
+        if self.begin: anim_tag += ' begin="' + str(self.begin) + '"'
+        if self.direction: anim_tag += ' data-direction="' + str(self.direction) + '"'
         if self.fill: anim_tag += ' fill="' + str(self.fill) + '"'
         anim_tag += '/>'
 

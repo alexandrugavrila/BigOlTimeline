@@ -171,18 +171,16 @@ function powerRectMouseMoveEffects(evt) {
 function powerMouseOutEffects() {
     this.classList.remove('powergrouphover');	// Remove the dilate image filter
     
-    var powergrouprects = this.getElementsByTagName('rect');                                // Get a list of every rectangle in the group
-    for (var i = 0; i < powergrouprects.length; i++) {                                      // Remove the mouse move and mouse out event listeners from every rectangle
+    var powergrouprects = this.getElementsByTagName('rect');    // Get a list of every rectangle in the group
+    for (var i = 0; i < powergrouprects.length; i++) {  // Remove the mouse move and mouse out event listeners from every rectangle
         powergrouprects[i].removeEventListener('mousemove', powerRectMouseMoveEffects);
         powergrouprects[i].removeEventListener('mouseout', powerRectMouseOutEffects);
     }
 
-    var powertitle = timelinebody.getElementsByClassName('selectedtitle')[0];
-    for(group of this.getElementsByTagName('g')){
-        for(rect of group.getElementsByTagName('rect')) {
-            if(rect.getAttributeNS(null, 'data-is-center') == 'true') {
-                group.appendChild(powertitle);
-            }
+    var powertitle = timelinebody.getElementsByClassName('selectedtitle')[0];   // Grt the title of the selected group
+    for(group of this.getElementsByTagName('g')) {  // For every region group of the power
+        if(group.getElementsByTagName('rect')[0].getAttributeNS(null, 'data-is-center') == 'true') {    // If the rectangle in this group is the center, this is where the title goes
+            group.appendChild(powertitle);  // Put the title in the group
         }
     }
     powertitle.classList.remove('selectedtitle');
@@ -206,14 +204,6 @@ function powerDblclick(evt) {
         focusgroup = currgroup;
         var currregions = []    // The list of regions that have the current power
         var rects = this.getElementsByTagName('rect')   // The rectangle elements of the power group
-        
-        
-        for(var i = 0; i < powergroups.length; i++) {   // Set all other powers to invisible
-            if(powergroups[i].getAttributeNS(null, 'id') != currgroup){     // If the group is not the focus group
-                makeInvisible(powergroups[i])   // Set the group to invisible
-                focusinvis.push(powergroups[i]) // Add the group to the invisible items list
-            }
-        }
 
         // Get the center group for the power, and build a list of all the regions the power inhabits
         var centerpower
@@ -229,7 +219,7 @@ function powerDblclick(evt) {
         for(region of headerregions) {  // For all of the regions in the headerbar
             if(!currregions.includes(region)){   // If the region is not in the current region list
                 displayNone(region); // Set the group to not be displayed
-                focusdisplay.push(region);  // Add the group to the not displayed items list
+                focusdisplayregions.push(region);  // Add the group to the not displayed items list
             }
         }
 
@@ -279,44 +269,64 @@ function powerDblclick(evt) {
                 regionanimation.setAttributeNS(null, 'fill', 'freeze');     // Set the fill property of the region animation to freeze on a forward animation
                 focustranslateanimations.push(poweranimation, regionanimation);
             }
-            if(focustranslateanimations.length) {
-                executeAnimations(focustranslateanimations);
+        }
+
+        // Gather all of the opacity animations and add them to the focus opacity animations list
+        for(var i = 0; i < powergroups.length; i++) {   // Set all other powers to invisible
+            if(powergroups[i].getAttributeNS(null, 'id') != focusgroup){     // If the group is not the focus group
+                for(group of powergroups[i].getElementsByTagName('g')) {
+                    opacityanimation = group.getElementsByClassName('powerfocusanimationopacity')[0];
+                    opacityanimation.setAttributeNS(null, 'fill', 'freeze');
+                    opacityanimation.addEventListener('endEvent', opacityFocusAnimationForwardEnd);
+                    focusopacityanimations.push(opacityanimation);
+                }
             }
         }
+
+        if(focustranslateanimations.length) {executeAnimations(focustranslateanimations);}  // If there are translate animations run them
+        if(focusopacityanimations.length) {executeAnimations(focusopacityanimations);}  // If there are opacity animations run them
     } 
     else {    // If there was a currently focused group
-        focusgroup = null;  // Set the focus group to nothing
         if(focustranslateanimations.length) {   // If there were animations launched
-            for(animation of focustranslateanimations) { // For all of the animations that launched to focus
-                animation.setAttributeNS(null, 'fill', 'none'); // Set their fill property to none because they are running in reverse. Otherwise when an unrelated animation triggers they will revert the freeze of the forward animation
-            }
-
-            addAnimationEndListeners(focustranslateanimations[0], focusAnimationEnd);     // Add an end listener to a focusanimation so we don't sent things to visible till it ends
+            setFillNone(focustranslateanimations)   // Set their fill property to none because they are running in reverse. Otherwise when an unrelated animation triggers they will revert the freeze of the forward animation
+            addAnimationEndListeners(focustranslateanimations[0], translateFocusAnimationEnd);     // Add an end listener to a focusanimation so we don't sent things to visible till it ends
             executeAnimationsBackwards(focustranslateanimations);  // Run the animation backwards
-        } else {  // If there were no unconnected boxes
-            makeVisible(focusinvis);    // Make all of the invisible elements visible
-            displayInline(focusdisplay) // Display all of the nondisplayed elements
             
-            focustranslateanimations = [];   // Empty the focus animation list
-            focusinvis = [];    // Empty the invisible elements list
-            focusdisplay = [];  // Empty the nondisplayed elements list
+            addAnimationEndListeners(focusopacityanimations[0], opacityFocusAnimationBackwardEnd);
+            displayInline(focusdisplayrects);
+            setFillNone(focusopacityanimations);
+            executeAnimationsBackwards(focusopacityanimations);
+
+        } else {  // If there were no unconnected boxes
+            if(focusinvis.length) {makeVisible(focusinvis);}        // Make all of the invisible elements visible
+            if(focusdisplayregions.length) {displayInline(focusdisplayregions);}  // Display all of the nondisplayed elements
+            
+            addAnimationEndListeners(focusopacityanimations[0], opacityFocusAnimationBackwardEnd);
+            displayInline(focusdisplayrects);
+            setFillNone(focusopacityanimations);
+            executeAnimationsBackwards(focusopacityanimations);
+            
+            resetFocusState();
         }
     }
 }
 
 
-function focusAnimationEnd(evt) {
-    for(el of focusinvis) { // Make all of the invisible elements visible
-        makeVisible(el)
-    }
-    for(el of focusdisplay) {   // Display all of the nondisplayed elements
-        el.setAttributeNS(null, 'display', 'inline')
-    }
-    focusgroup = null;  // Set the focus group to nothing
-    focustranslateanimations = [];   // Empty the focus animation list
-    focusinvis = [];    // Empty the invisible elements list
-    focusdisplay = [];  // Empty the nondisplayed elements list
-    evt.target.removeEventListener('endEvent', focusAnimationEnd);  // Remove the end event
+function translateFocusAnimationEnd(evt) {
+    if(focusinvis.length) {makeVisible(focusinvis);}        // Make all of the invisible elements visible
+    if(focusdisplayregions.length) {displayInline(focusdisplayregions);}  // Display all of the nondisplayed elements
+    resetFocusState();
+    evt.target.removeEventListener('endEvent', translateFocusAnimationEnd);  // Remove the end event
+}
+
+function opacityFocusAnimationForwardEnd(evt) {
+    displayNone(this.parentElement);
+    focusdisplayrects.push(this.parentElement);
+    evt.target.removeEventListener('endEvent', opacityFocusAnimationForwardEnd);
+}
+
+function opacityFocusAnimationBackwardEnd(evt) {
+
 }
 
 // Chart Body Events

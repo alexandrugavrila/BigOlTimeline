@@ -280,8 +280,10 @@ def createChartBodySvgList(body_df_dict, centers_df_dict, params):
             else:
                 body_svg_list.append(svgelements.Rect(None, class_list, None, box_data_dict, style_dict,
                                                       x, y, params['bar_width'], bar_height, rx, ry).createTag())
-        body_svg_list.append(svgelements.AnimateTransform(None, ['powerfocusanimation'], None, None, None,
-                                                          'transform', 'XML', 'translate', '0 0', '0 0', '1s', 'indefinite', 'forward', 'freeze').createTag())
+        body_svg_list.append(svgelements.Animate(None, ['powerfocusanimationtranslate'], None, None, None,
+                                                 'transform', 'XML', 'translate', '0 0', '0 0', '0.75s', 'indefinite', 'forward', 'none').createTag())
+        body_svg_list.append(svgelements.Animate(None, ['powerfocusanimationopacity'], None, None, None,
+                                                 'opacity', 'XML', 'translate', '1', '0', '0.75s', 'indefinite', 'forward', 'none').createTag())
         body_svg_list.append('</g>')
 
         last_power = curr_power
@@ -335,8 +337,10 @@ def insertChartRegions(html_lines, params, regions):
                                          x, y, 'middle', 'middle', region).createTag())     # Add the region text
         svg_list.append(svgelements.Line(None, ['regionline'], 'invisible', text_data_dict, None,
                                          x, 0, x, params['header_length']).createTag())     # Add the center line on each box, invisible, so the text has a center anchor to adjust to
-        svg_list.append(svgelements.AnimateTransform(None, ['regionfocusanimation'], None, None, None,
-                                                     'transform', 'XML', 'translate', '0 0', '0 0', '1s', 'indefinite', 'forward', 'freeze').createTag())   # Add the animation for the header groups to move
+        svg_list.append(svgelements.Animate(None, ['regionfocusanimationtranslate'], None, None, None,
+                                            'transform', 'XML', 'translate', '0 0', '0 0', '0.75s', 'indefinite', 'forward', 'none').createTag())   # Add the animation for the header groups to move
+        svg_list.append(svgelements.Animate(None, ['regionfocusanimationopacity'], None, None, None,
+                                            'opacity', 'XML', 'translate', '0 0', '0 0', '0.75s', 'indefinite', 'forward', 'none').createTag())   # Add the animation for the header groups to fade
         svg_list.append('</g>')
 
     # Add the proper indentation to every line and insert it into the html lines
@@ -410,7 +414,7 @@ def insertChartYears(html_lines, params, regions):
 
 
 if __name__ == "__main__":
-    BOT_data_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\BigOlTimeline_Data.xlsx'
+    BOT_data_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\data\BigOlTimeline_Data.xlsx'
     base_HTML_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\blankBOT.html'
     tar_HTML_path = r'C:\Users\alexa\Desktop\Personal\BigOlTimeline\index.html'
 

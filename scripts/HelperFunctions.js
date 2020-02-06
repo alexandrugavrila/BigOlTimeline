@@ -93,8 +93,8 @@ function toggleVisibility(object) {
 function makeVisible(object) {
     // Make an object or array of objects visible
 
-    if(object.length){
-        for(var i = 0; i < object.length; i++) {
+    if(object.length){  // If it is an array
+        for(var i = 0; i < object.length; i++) {    // For every object in the array
             object[i].setAttributeNS(null, 'visibility', 'visible');   // Make the object visible
         }
     }
@@ -106,8 +106,9 @@ function makeVisible(object) {
 
 function makeInvisible(object) {
     // Make an object pr array of objects invisible
-    if(object.length){
-        for(var i = 0; i < object.length; i++) {
+
+    if(object.length){  // If it is an array
+        for(var i = 0; i < object.length; i++) {    // For every object in the array
             object[i].setAttributeNS(null, 'visibility', 'hidden');    // Make the object invisible
         }
     }
@@ -137,26 +138,55 @@ function makeInvisibileIfVisible(object) {
 
 function displayInline(object) {
     // Set an object or array of objects to be displayed
-    if(object.length){
-        for(var i = 0; i < object.length; i++) {
-            object[i].setAttributeNS(null, 'display', 'inline');    // Make the object invisible
+
+    if(object.length){  // If it is an array
+        for(var i = 0; i < object.length; i++) {    // For every object in the array
+            object[i].setAttributeNS(null, 'display', 'inline');    // Set the display to inline
         }
     }
     else {
-        object.setAttributeNS(null, 'display', 'inline');   // Make the object visible
+        object.setAttributeNS(null, 'display', 'inline');   // Set the display to inline
     }
 }
 
 
 function displayNone(object) {
     // Set an object or array of objects to not be displayed
-    if(object.length){
-        for(var i = 0; i < object.length; i++) {
-            object[i].setAttributeNS(null, 'display', 'none');    // Make the object invisible
+
+    if(object.length){  // If it is an array
+        for(var i = 0; i < object.length; i++) {    // For every object in the array
+            object[i].setAttributeNS(null, 'display', 'none');    // Set the display to none
         }
     }
     else {
-        object.setAttributeNS(null, 'display', 'none');   // Make the object visible
+        object.setAttributeNS(null, 'display', 'none');   // Set the display to none
+    }
+}
+
+
+function setFillFreeze(object) {
+    // Set an animation or array of animations to freeze on end
+
+    if(object.length){  // If it is an array
+        for(var i = 0; i < object.length; i++) {    // For every object in the array
+            object[i].setAttributeNS(null, 'fill', 'freeze');    // Set the fill to freeze
+        }
+    }
+    else {
+        object.setAttributeNS(null, 'fill', 'freeze');   // Set the fill to freeze
+    }
+}
+
+function setFillNone(object) {
+    // Set an animation or array of animations to reveryt on end
+
+    if(object.length){  // If it is an array
+        for(var i = 0; i < object.length; i++) {    // For every object in the array
+            object[i].setAttributeNS(null, 'fill', 'none');    // Set the fill to none
+        }
+    }
+    else {
+        object.setAttributeNS(null, 'fill', 'none');   // Set the fill to none
     }
 }
 
@@ -182,10 +212,10 @@ function executeAnimationsBackwards(animations) {
     // Execute animations in reverse and reset parameters
 
     if (animations.length) {    // If it is a list of animations
-        for (var i = 0; i < animations.length; i++) {   // For all of the animations
-            reverseAnimation(animations[i]);                                // Reverse it
-            animations[i].addEventListener('endEvent', reverseAnimation) ;  // Add an event at the end to switch it back
-            animations[i].beginElement();                                   // Execute the animation
+        for (animation of animations) {   // For all of the animations
+            reverseAnimation(animation);                                // Reverse it
+            animation.addEventListener('endEvent', reverseAnimation) ;  // Add an event at the end to switch it back
+            animation.beginElement();                                   // Execute the animation
         }
     }
     else {      // If it is a single animation
@@ -198,14 +228,16 @@ function executeAnimationsBackwards(animations) {
 
 function reverseAnimation(animation){
     // Reverse an animation, either an animation being passed or from an event
-    
+
     if (event.type == 'endEvent') {    // If triggered at the end of an animation
         var animation = event.target;       // Replace animation with the event 
     }
+
     var to = animation.getAttributeNS(null, 'to');      // Store the to value
     var from = animation.getAttributeNS(null, 'from');  // Store the from value
     animation.setAttributeNS(null, 'to', from);         // Swap to and from
     animation.setAttributeNS(null, 'from', to);         // Swap from and to
+    
     if (event.type == 'endEvent') {     // If triggered at the end of an animation 
         animation.removeEventListener('endEvent', reverseAnimation);    // Remove the event listener
     }
@@ -698,8 +730,9 @@ function getMapViewBox(border) {
 
 function resetFocusState() {
     focusgroup = null;  // Set the focus group to nothing
-    focustransparencyanimations = [];   // Empty the focus animation list
-    focusopacityanimations = []; // Empty the opacity animation list
-    focusinvis = [];    // Empty the invisible elements list
-    focusdisplay = [];  // Empty the nondisplayed elements list
+    focustranslateanimations.length = 0;   // Empty the focus translate animation list
+    focusopacityanimations.length = 0;  // Empty the focus opacity animation list
+    focusinvis.length = 0;    // Empty the invisible elements list
+    focusdisplayregions.length = 0;   // Empty the nondisplayed regions list
+    focusdisplayrects.length = 0;     // Empty the nondisplayed rects list
 }
