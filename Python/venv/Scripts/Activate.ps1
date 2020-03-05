@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="C:\Users\alexa\Desktop\Personal\BigOlTimeline\Python\venv"
+$env:VIRTUAL_ENV="C:\_Code\Projects\Personal\BigOlTimeline\Python\venv"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name

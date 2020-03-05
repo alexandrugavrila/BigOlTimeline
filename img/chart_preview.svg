@@ -1,0 +1,969 @@
+			<svg id="bodysvg" width="1500" height="7000" viewbox="0 0 1500 7000" visibility="hidden">
+				
+				<defs>
+					<filter id="powerborder">
+						<feMorphology operator="erode" in="SourceAlpha" radius="4" result="dilated_alpha_outer" />
+						<feMorphology operator="erode" in="SourceAlpha" radius="0" result="dilated_alpha_inner" />
+						<feComposite operator="xor" in="dilated_alpha_outer"  in2="dilated_alpha_inner" result="outline" />
+						<feComposite operator="over" in="outline" in2="SourceGraphic" result="output" />
+					</filter>
+			
+					<filter id="powerhover">
+						<feMorphology operator="dilate" in="SourceGraphic" radius="6" result="outer" />
+						<feMorphology operator="dilate" in="SourceGraphic" radius="2" result="inner" />
+						<feComposite operator="xor" in="inner" in2="outer" result="outline_color" />
+						<feColorMatrix in="outline_color" type="matrix"
+						values="0 0 0 0 0
+								0 0 0 0 0
+								0 0 0 0 0
+								0 0 0 1 0" result="outline"/>
+						<feComposite operator="over" in="outline" in2="outer" result="output" />
+					</filter>
+				</defs>
+				
+				<g id="chartbody">
+					<g id="timelineyearlines">
+						<line class="chartspine" x1="10" y1="0" x2="10" y2="3019" />
+						<g id="pyearlines">
+							<line class="pyearline" x1="10" y1="0" x2="1600" y2="0" />
+							<line class="pyearline" x1="10" y1="100" x2="1600" y2="100" />
+							<line class="pyearline" x1="10" y1="200" x2="1600" y2="200" />
+							<line class="pyearline" x1="10" y1="300" x2="1600" y2="300" />
+							<line class="pyearline" x1="10" y1="400" x2="1600" y2="400" />
+							<line class="pyearline" x1="10" y1="500" x2="1600" y2="500" />
+							<line class="pyearline" x1="10" y1="600" x2="1600" y2="600" />
+							<line class="pyearline" x1="10" y1="700" x2="1600" y2="700" />
+							<line class="pyearline" x1="10" y1="800" x2="1600" y2="800" />
+							<line class="pyearline" x1="10" y1="900" x2="1600" y2="900" />
+							<line class="pyearline" x1="10" y1="1000" x2="1600" y2="1000" />
+							<line class="pyearline" x1="10" y1="1100" x2="1600" y2="1100" />
+							<line class="pyearline" x1="10" y1="1200" x2="1600" y2="1200" />
+							<line class="pyearline" x1="10" y1="1300" x2="1600" y2="1300" />
+							<line class="pyearline" x1="10" y1="1400" x2="1600" y2="1400" />
+							<line class="pyearline" x1="10" y1="1500" x2="1600" y2="1500" />
+							<line class="pyearline" x1="10" y1="1600" x2="1600" y2="1600" />
+							<line class="pyearline" x1="10" y1="1700" x2="1600" y2="1700" />
+							<line class="pyearline" x1="10" y1="1800" x2="1600" y2="1800" />
+							<line class="pyearline" x1="10" y1="1900" x2="1600" y2="1900" />
+							<line class="pyearline" x1="10" y1="2000" x2="1600" y2="2000" />
+							<line class="pyearline" x1="10" y1="2100" x2="1600" y2="2100" />
+							<line class="pyearline" x1="10" y1="2200" x2="1600" y2="2200" />
+							<line class="pyearline" x1="10" y1="2300" x2="1600" y2="2300" />
+							<line class="pyearline" x1="10" y1="2400" x2="1600" y2="2400" />
+							<line class="pyearline" x1="10" y1="2500" x2="1600" y2="2500" />
+							<line class="pyearline" x1="10" y1="2600" x2="1600" y2="2600" />
+							<line class="pyearline" x1="10" y1="2700" x2="1600" y2="2700" />
+							<line class="pyearline" x1="10" y1="2800" x2="1600" y2="2800" />
+							<line class="pyearline" x1="10" y1="2900" x2="1600" y2="2900" />
+							<line class="pyearline" x1="10" y1="3000" x2="1600" y2="3000" />
+						</g>
+						<g id="syearlines" visibility="hidden">
+							<line class="syearline" x1="10" y1="20" x2="1600" y2="20" />
+							<line class="syearline" x1="10" y1="40" x2="1600" y2="40" />
+							<line class="syearline" x1="10" y1="60" x2="1600" y2="60" />
+							<line class="syearline" x1="10" y1="80" x2="1600" y2="80" />
+							<line class="syearline" x1="10" y1="120" x2="1600" y2="120" />
+							<line class="syearline" x1="10" y1="140" x2="1600" y2="140" />
+							<line class="syearline" x1="10" y1="160" x2="1600" y2="160" />
+							<line class="syearline" x1="10" y1="180" x2="1600" y2="180" />
+							<line class="syearline" x1="10" y1="220" x2="1600" y2="220" />
+							<line class="syearline" x1="10" y1="240" x2="1600" y2="240" />
+							<line class="syearline" x1="10" y1="260" x2="1600" y2="260" />
+							<line class="syearline" x1="10" y1="280" x2="1600" y2="280" />
+							<line class="syearline" x1="10" y1="320" x2="1600" y2="320" />
+							<line class="syearline" x1="10" y1="340" x2="1600" y2="340" />
+							<line class="syearline" x1="10" y1="360" x2="1600" y2="360" />
+							<line class="syearline" x1="10" y1="380" x2="1600" y2="380" />
+							<line class="syearline" x1="10" y1="420" x2="1600" y2="420" />
+							<line class="syearline" x1="10" y1="440" x2="1600" y2="440" />
+							<line class="syearline" x1="10" y1="460" x2="1600" y2="460" />
+							<line class="syearline" x1="10" y1="480" x2="1600" y2="480" />
+							<line class="syearline" x1="10" y1="520" x2="1600" y2="520" />
+							<line class="syearline" x1="10" y1="540" x2="1600" y2="540" />
+							<line class="syearline" x1="10" y1="560" x2="1600" y2="560" />
+							<line class="syearline" x1="10" y1="580" x2="1600" y2="580" />
+							<line class="syearline" x1="10" y1="620" x2="1600" y2="620" />
+							<line class="syearline" x1="10" y1="640" x2="1600" y2="640" />
+							<line class="syearline" x1="10" y1="660" x2="1600" y2="660" />
+							<line class="syearline" x1="10" y1="680" x2="1600" y2="680" />
+							<line class="syearline" x1="10" y1="720" x2="1600" y2="720" />
+							<line class="syearline" x1="10" y1="740" x2="1600" y2="740" />
+							<line class="syearline" x1="10" y1="760" x2="1600" y2="760" />
+							<line class="syearline" x1="10" y1="780" x2="1600" y2="780" />
+							<line class="syearline" x1="10" y1="820" x2="1600" y2="820" />
+							<line class="syearline" x1="10" y1="840" x2="1600" y2="840" />
+							<line class="syearline" x1="10" y1="860" x2="1600" y2="860" />
+							<line class="syearline" x1="10" y1="880" x2="1600" y2="880" />
+							<line class="syearline" x1="10" y1="920" x2="1600" y2="920" />
+							<line class="syearline" x1="10" y1="940" x2="1600" y2="940" />
+							<line class="syearline" x1="10" y1="960" x2="1600" y2="960" />
+							<line class="syearline" x1="10" y1="980" x2="1600" y2="980" />
+							<line class="syearline" x1="10" y1="1020" x2="1600" y2="1020" />
+							<line class="syearline" x1="10" y1="1040" x2="1600" y2="1040" />
+							<line class="syearline" x1="10" y1="1060" x2="1600" y2="1060" />
+							<line class="syearline" x1="10" y1="1080" x2="1600" y2="1080" />
+							<line class="syearline" x1="10" y1="1120" x2="1600" y2="1120" />
+							<line class="syearline" x1="10" y1="1140" x2="1600" y2="1140" />
+							<line class="syearline" x1="10" y1="1160" x2="1600" y2="1160" />
+							<line class="syearline" x1="10" y1="1180" x2="1600" y2="1180" />
+							<line class="syearline" x1="10" y1="1220" x2="1600" y2="1220" />
+							<line class="syearline" x1="10" y1="1240" x2="1600" y2="1240" />
+							<line class="syearline" x1="10" y1="1260" x2="1600" y2="1260" />
+							<line class="syearline" x1="10" y1="1280" x2="1600" y2="1280" />
+							<line class="syearline" x1="10" y1="1320" x2="1600" y2="1320" />
+							<line class="syearline" x1="10" y1="1340" x2="1600" y2="1340" />
+							<line class="syearline" x1="10" y1="1360" x2="1600" y2="1360" />
+							<line class="syearline" x1="10" y1="1380" x2="1600" y2="1380" />
+							<line class="syearline" x1="10" y1="1420" x2="1600" y2="1420" />
+							<line class="syearline" x1="10" y1="1440" x2="1600" y2="1440" />
+							<line class="syearline" x1="10" y1="1460" x2="1600" y2="1460" />
+							<line class="syearline" x1="10" y1="1480" x2="1600" y2="1480" />
+							<line class="syearline" x1="10" y1="1520" x2="1600" y2="1520" />
+							<line class="syearline" x1="10" y1="1540" x2="1600" y2="1540" />
+							<line class="syearline" x1="10" y1="1560" x2="1600" y2="1560" />
+							<line class="syearline" x1="10" y1="1580" x2="1600" y2="1580" />
+							<line class="syearline" x1="10" y1="1620" x2="1600" y2="1620" />
+							<line class="syearline" x1="10" y1="1640" x2="1600" y2="1640" />
+							<line class="syearline" x1="10" y1="1660" x2="1600" y2="1660" />
+							<line class="syearline" x1="10" y1="1680" x2="1600" y2="1680" />
+							<line class="syearline" x1="10" y1="1720" x2="1600" y2="1720" />
+							<line class="syearline" x1="10" y1="1740" x2="1600" y2="1740" />
+							<line class="syearline" x1="10" y1="1760" x2="1600" y2="1760" />
+							<line class="syearline" x1="10" y1="1780" x2="1600" y2="1780" />
+							<line class="syearline" x1="10" y1="1820" x2="1600" y2="1820" />
+							<line class="syearline" x1="10" y1="1840" x2="1600" y2="1840" />
+							<line class="syearline" x1="10" y1="1860" x2="1600" y2="1860" />
+							<line class="syearline" x1="10" y1="1880" x2="1600" y2="1880" />
+							<line class="syearline" x1="10" y1="1920" x2="1600" y2="1920" />
+							<line class="syearline" x1="10" y1="1940" x2="1600" y2="1940" />
+							<line class="syearline" x1="10" y1="1960" x2="1600" y2="1960" />
+							<line class="syearline" x1="10" y1="1980" x2="1600" y2="1980" />
+							<line class="syearline" x1="10" y1="2020" x2="1600" y2="2020" />
+							<line class="syearline" x1="10" y1="2040" x2="1600" y2="2040" />
+							<line class="syearline" x1="10" y1="2060" x2="1600" y2="2060" />
+							<line class="syearline" x1="10" y1="2080" x2="1600" y2="2080" />
+							<line class="syearline" x1="10" y1="2120" x2="1600" y2="2120" />
+							<line class="syearline" x1="10" y1="2140" x2="1600" y2="2140" />
+							<line class="syearline" x1="10" y1="2160" x2="1600" y2="2160" />
+							<line class="syearline" x1="10" y1="2180" x2="1600" y2="2180" />
+							<line class="syearline" x1="10" y1="2220" x2="1600" y2="2220" />
+							<line class="syearline" x1="10" y1="2240" x2="1600" y2="2240" />
+							<line class="syearline" x1="10" y1="2260" x2="1600" y2="2260" />
+							<line class="syearline" x1="10" y1="2280" x2="1600" y2="2280" />
+							<line class="syearline" x1="10" y1="2320" x2="1600" y2="2320" />
+							<line class="syearline" x1="10" y1="2340" x2="1600" y2="2340" />
+							<line class="syearline" x1="10" y1="2360" x2="1600" y2="2360" />
+							<line class="syearline" x1="10" y1="2380" x2="1600" y2="2380" />
+							<line class="syearline" x1="10" y1="2420" x2="1600" y2="2420" />
+							<line class="syearline" x1="10" y1="2440" x2="1600" y2="2440" />
+							<line class="syearline" x1="10" y1="2460" x2="1600" y2="2460" />
+							<line class="syearline" x1="10" y1="2480" x2="1600" y2="2480" />
+							<line class="syearline" x1="10" y1="2520" x2="1600" y2="2520" />
+							<line class="syearline" x1="10" y1="2540" x2="1600" y2="2540" />
+							<line class="syearline" x1="10" y1="2560" x2="1600" y2="2560" />
+							<line class="syearline" x1="10" y1="2580" x2="1600" y2="2580" />
+							<line class="syearline" x1="10" y1="2620" x2="1600" y2="2620" />
+							<line class="syearline" x1="10" y1="2640" x2="1600" y2="2640" />
+							<line class="syearline" x1="10" y1="2660" x2="1600" y2="2660" />
+							<line class="syearline" x1="10" y1="2680" x2="1600" y2="2680" />
+							<line class="syearline" x1="10" y1="2720" x2="1600" y2="2720" />
+							<line class="syearline" x1="10" y1="2740" x2="1600" y2="2740" />
+							<line class="syearline" x1="10" y1="2760" x2="1600" y2="2760" />
+							<line class="syearline" x1="10" y1="2780" x2="1600" y2="2780" />
+							<line class="syearline" x1="10" y1="2820" x2="1600" y2="2820" />
+							<line class="syearline" x1="10" y1="2840" x2="1600" y2="2840" />
+							<line class="syearline" x1="10" y1="2860" x2="1600" y2="2860" />
+							<line class="syearline" x1="10" y1="2880" x2="1600" y2="2880" />
+							<line class="syearline" x1="10" y1="2920" x2="1600" y2="2920" />
+							<line class="syearline" x1="10" y1="2940" x2="1600" y2="2940" />
+							<line class="syearline" x1="10" y1="2960" x2="1600" y2="2960" />
+							<line class="syearline" x1="10" y1="2980" x2="1600" y2="2980" />
+						</g>
+					</g>
+					<g id="timelineyearlabels">
+						<g id="pyearlabels">
+							<rect class="yearlabelbackground" x="11" y="-5" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="0" text-anchor="Left" alignment-baseline="Middle">-1000</text>
+							<rect class="yearlabelbackground" x="11" y="95" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="100" text-anchor="Left" alignment-baseline="Middle">-900</text>
+							<rect class="yearlabelbackground" x="11" y="195" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="200" text-anchor="Left" alignment-baseline="Middle">-800</text>
+							<rect class="yearlabelbackground" x="11" y="295" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="300" text-anchor="Left" alignment-baseline="Middle">-700</text>
+							<rect class="yearlabelbackground" x="11" y="395" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="400" text-anchor="Left" alignment-baseline="Middle">-600</text>
+							<rect class="yearlabelbackground" x="11" y="495" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="500" text-anchor="Left" alignment-baseline="Middle">-500</text>
+							<rect class="yearlabelbackground" x="11" y="595" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="600" text-anchor="Left" alignment-baseline="Middle">-400</text>
+							<rect class="yearlabelbackground" x="11" y="695" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="700" text-anchor="Left" alignment-baseline="Middle">-300</text>
+							<rect class="yearlabelbackground" x="11" y="795" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="800" text-anchor="Left" alignment-baseline="Middle">-200</text>
+							<rect class="yearlabelbackground" x="11" y="895" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="900" text-anchor="Left" alignment-baseline="Middle">-100</text>
+							<rect class="yearlabelbackground" x="11" y="995" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1000" text-anchor="Left" alignment-baseline="Middle">0</text>
+							<rect class="yearlabelbackground" x="11" y="1095" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1100" text-anchor="Left" alignment-baseline="Middle">100</text>
+							<rect class="yearlabelbackground" x="11" y="1195" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1200" text-anchor="Left" alignment-baseline="Middle">200</text>
+							<rect class="yearlabelbackground" x="11" y="1295" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1300" text-anchor="Left" alignment-baseline="Middle">300</text>
+							<rect class="yearlabelbackground" x="11" y="1395" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1400" text-anchor="Left" alignment-baseline="Middle">400</text>
+							<rect class="yearlabelbackground" x="11" y="1495" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1500" text-anchor="Left" alignment-baseline="Middle">500</text>
+							<rect class="yearlabelbackground" x="11" y="1595" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1600" text-anchor="Left" alignment-baseline="Middle">600</text>
+							<rect class="yearlabelbackground" x="11" y="1695" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1700" text-anchor="Left" alignment-baseline="Middle">700</text>
+							<rect class="yearlabelbackground" x="11" y="1795" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1800" text-anchor="Left" alignment-baseline="Middle">800</text>
+							<rect class="yearlabelbackground" x="11" y="1895" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="1900" text-anchor="Left" alignment-baseline="Middle">900</text>
+							<rect class="yearlabelbackground" x="11" y="1995" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2000" text-anchor="Left" alignment-baseline="Middle">1000</text>
+							<rect class="yearlabelbackground" x="11" y="2095" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2100" text-anchor="Left" alignment-baseline="Middle">1100</text>
+							<rect class="yearlabelbackground" x="11" y="2195" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2200" text-anchor="Left" alignment-baseline="Middle">1200</text>
+							<rect class="yearlabelbackground" x="11" y="2295" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2300" text-anchor="Left" alignment-baseline="Middle">1300</text>
+							<rect class="yearlabelbackground" x="11" y="2395" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2400" text-anchor="Left" alignment-baseline="Middle">1400</text>
+							<rect class="yearlabelbackground" x="11" y="2495" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2500" text-anchor="Left" alignment-baseline="Middle">1500</text>
+							<rect class="yearlabelbackground" x="11" y="2595" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2600" text-anchor="Left" alignment-baseline="Middle">1600</text>
+							<rect class="yearlabelbackground" x="11" y="2695" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2700" text-anchor="Left" alignment-baseline="Middle">1700</text>
+							<rect class="yearlabelbackground" x="11" y="2795" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2800" text-anchor="Left" alignment-baseline="Middle">1800</text>
+							<rect class="yearlabelbackground" x="11" y="2895" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="2900" text-anchor="Left" alignment-baseline="Middle">1900</text>
+							<rect class="yearlabelbackground" x="11" y="2995" width="32" height="20" />
+							<text class="pyearlabel" x="15" y="3000" text-anchor="Left" alignment-baseline="Middle">2000</text>
+						</g>
+						<g id="syearlabels" visibility="hidden">
+							<rect class="yearlabelbackground" x="11" y="15" width="25" height="10" />
+							<text class="syearlabel" x="13" y="20" text-anchor="Left" alignment-baseline="Middle">-980</text>
+							<rect class="yearlabelbackground" x="11" y="35" width="25" height="10" />
+							<text class="syearlabel" x="13" y="40" text-anchor="Left" alignment-baseline="Middle">-960</text>
+							<rect class="yearlabelbackground" x="11" y="55" width="25" height="10" />
+							<text class="syearlabel" x="13" y="60" text-anchor="Left" alignment-baseline="Middle">-940</text>
+							<rect class="yearlabelbackground" x="11" y="75" width="25" height="10" />
+							<text class="syearlabel" x="13" y="80" text-anchor="Left" alignment-baseline="Middle">-920</text>
+							<rect class="yearlabelbackground" x="11" y="115" width="25" height="10" />
+							<text class="syearlabel" x="13" y="120" text-anchor="Left" alignment-baseline="Middle">-880</text>
+							<rect class="yearlabelbackground" x="11" y="135" width="25" height="10" />
+							<text class="syearlabel" x="13" y="140" text-anchor="Left" alignment-baseline="Middle">-860</text>
+							<rect class="yearlabelbackground" x="11" y="155" width="25" height="10" />
+							<text class="syearlabel" x="13" y="160" text-anchor="Left" alignment-baseline="Middle">-840</text>
+							<rect class="yearlabelbackground" x="11" y="175" width="25" height="10" />
+							<text class="syearlabel" x="13" y="180" text-anchor="Left" alignment-baseline="Middle">-820</text>
+							<rect class="yearlabelbackground" x="11" y="215" width="25" height="10" />
+							<text class="syearlabel" x="13" y="220" text-anchor="Left" alignment-baseline="Middle">-780</text>
+							<rect class="yearlabelbackground" x="11" y="235" width="25" height="10" />
+							<text class="syearlabel" x="13" y="240" text-anchor="Left" alignment-baseline="Middle">-760</text>
+							<rect class="yearlabelbackground" x="11" y="255" width="25" height="10" />
+							<text class="syearlabel" x="13" y="260" text-anchor="Left" alignment-baseline="Middle">-740</text>
+							<rect class="yearlabelbackground" x="11" y="275" width="25" height="10" />
+							<text class="syearlabel" x="13" y="280" text-anchor="Left" alignment-baseline="Middle">-720</text>
+							<rect class="yearlabelbackground" x="11" y="315" width="25" height="10" />
+							<text class="syearlabel" x="13" y="320" text-anchor="Left" alignment-baseline="Middle">-680</text>
+							<rect class="yearlabelbackground" x="11" y="335" width="25" height="10" />
+							<text class="syearlabel" x="13" y="340" text-anchor="Left" alignment-baseline="Middle">-660</text>
+							<rect class="yearlabelbackground" x="11" y="355" width="25" height="10" />
+							<text class="syearlabel" x="13" y="360" text-anchor="Left" alignment-baseline="Middle">-640</text>
+							<rect class="yearlabelbackground" x="11" y="375" width="25" height="10" />
+							<text class="syearlabel" x="13" y="380" text-anchor="Left" alignment-baseline="Middle">-620</text>
+							<rect class="yearlabelbackground" x="11" y="415" width="25" height="10" />
+							<text class="syearlabel" x="13" y="420" text-anchor="Left" alignment-baseline="Middle">-580</text>
+							<rect class="yearlabelbackground" x="11" y="435" width="25" height="10" />
+							<text class="syearlabel" x="13" y="440" text-anchor="Left" alignment-baseline="Middle">-560</text>
+							<rect class="yearlabelbackground" x="11" y="455" width="25" height="10" />
+							<text class="syearlabel" x="13" y="460" text-anchor="Left" alignment-baseline="Middle">-540</text>
+							<rect class="yearlabelbackground" x="11" y="475" width="25" height="10" />
+							<text class="syearlabel" x="13" y="480" text-anchor="Left" alignment-baseline="Middle">-520</text>
+							<rect class="yearlabelbackground" x="11" y="515" width="25" height="10" />
+							<text class="syearlabel" x="13" y="520" text-anchor="Left" alignment-baseline="Middle">-480</text>
+							<rect class="yearlabelbackground" x="11" y="535" width="25" height="10" />
+							<text class="syearlabel" x="13" y="540" text-anchor="Left" alignment-baseline="Middle">-460</text>
+							<rect class="yearlabelbackground" x="11" y="555" width="25" height="10" />
+							<text class="syearlabel" x="13" y="560" text-anchor="Left" alignment-baseline="Middle">-440</text>
+							<rect class="yearlabelbackground" x="11" y="575" width="25" height="10" />
+							<text class="syearlabel" x="13" y="580" text-anchor="Left" alignment-baseline="Middle">-420</text>
+							<rect class="yearlabelbackground" x="11" y="615" width="25" height="10" />
+							<text class="syearlabel" x="13" y="620" text-anchor="Left" alignment-baseline="Middle">-380</text>
+							<rect class="yearlabelbackground" x="11" y="635" width="25" height="10" />
+							<text class="syearlabel" x="13" y="640" text-anchor="Left" alignment-baseline="Middle">-360</text>
+							<rect class="yearlabelbackground" x="11" y="655" width="25" height="10" />
+							<text class="syearlabel" x="13" y="660" text-anchor="Left" alignment-baseline="Middle">-340</text>
+							<rect class="yearlabelbackground" x="11" y="675" width="25" height="10" />
+							<text class="syearlabel" x="13" y="680" text-anchor="Left" alignment-baseline="Middle">-320</text>
+							<rect class="yearlabelbackground" x="11" y="715" width="25" height="10" />
+							<text class="syearlabel" x="13" y="720" text-anchor="Left" alignment-baseline="Middle">-280</text>
+							<rect class="yearlabelbackground" x="11" y="735" width="25" height="10" />
+							<text class="syearlabel" x="13" y="740" text-anchor="Left" alignment-baseline="Middle">-260</text>
+							<rect class="yearlabelbackground" x="11" y="755" width="25" height="10" />
+							<text class="syearlabel" x="13" y="760" text-anchor="Left" alignment-baseline="Middle">-240</text>
+							<rect class="yearlabelbackground" x="11" y="775" width="25" height="10" />
+							<text class="syearlabel" x="13" y="780" text-anchor="Left" alignment-baseline="Middle">-220</text>
+							<rect class="yearlabelbackground" x="11" y="815" width="25" height="10" />
+							<text class="syearlabel" x="13" y="820" text-anchor="Left" alignment-baseline="Middle">-180</text>
+							<rect class="yearlabelbackground" x="11" y="835" width="25" height="10" />
+							<text class="syearlabel" x="13" y="840" text-anchor="Left" alignment-baseline="Middle">-160</text>
+							<rect class="yearlabelbackground" x="11" y="855" width="25" height="10" />
+							<text class="syearlabel" x="13" y="860" text-anchor="Left" alignment-baseline="Middle">-140</text>
+							<rect class="yearlabelbackground" x="11" y="875" width="25" height="10" />
+							<text class="syearlabel" x="13" y="880" text-anchor="Left" alignment-baseline="Middle">-120</text>
+							<rect class="yearlabelbackground" x="11" y="915" width="25" height="10" />
+							<text class="syearlabel" x="13" y="920" text-anchor="Left" alignment-baseline="Middle">-80</text>
+							<rect class="yearlabelbackground" x="11" y="935" width="25" height="10" />
+							<text class="syearlabel" x="13" y="940" text-anchor="Left" alignment-baseline="Middle">-60</text>
+							<rect class="yearlabelbackground" x="11" y="955" width="25" height="10" />
+							<text class="syearlabel" x="13" y="960" text-anchor="Left" alignment-baseline="Middle">-40</text>
+							<rect class="yearlabelbackground" x="11" y="975" width="25" height="10" />
+							<text class="syearlabel" x="13" y="980" text-anchor="Left" alignment-baseline="Middle">-20</text>
+							<rect class="yearlabelbackground" x="11" y="1015" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1020" text-anchor="Left" alignment-baseline="Middle">20</text>
+							<rect class="yearlabelbackground" x="11" y="1035" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1040" text-anchor="Left" alignment-baseline="Middle">40</text>
+							<rect class="yearlabelbackground" x="11" y="1055" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1060" text-anchor="Left" alignment-baseline="Middle">60</text>
+							<rect class="yearlabelbackground" x="11" y="1075" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1080" text-anchor="Left" alignment-baseline="Middle">80</text>
+							<rect class="yearlabelbackground" x="11" y="1115" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1120" text-anchor="Left" alignment-baseline="Middle">120</text>
+							<rect class="yearlabelbackground" x="11" y="1135" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1140" text-anchor="Left" alignment-baseline="Middle">140</text>
+							<rect class="yearlabelbackground" x="11" y="1155" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1160" text-anchor="Left" alignment-baseline="Middle">160</text>
+							<rect class="yearlabelbackground" x="11" y="1175" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1180" text-anchor="Left" alignment-baseline="Middle">180</text>
+							<rect class="yearlabelbackground" x="11" y="1215" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1220" text-anchor="Left" alignment-baseline="Middle">220</text>
+							<rect class="yearlabelbackground" x="11" y="1235" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1240" text-anchor="Left" alignment-baseline="Middle">240</text>
+							<rect class="yearlabelbackground" x="11" y="1255" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1260" text-anchor="Left" alignment-baseline="Middle">260</text>
+							<rect class="yearlabelbackground" x="11" y="1275" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1280" text-anchor="Left" alignment-baseline="Middle">280</text>
+							<rect class="yearlabelbackground" x="11" y="1315" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1320" text-anchor="Left" alignment-baseline="Middle">320</text>
+							<rect class="yearlabelbackground" x="11" y="1335" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1340" text-anchor="Left" alignment-baseline="Middle">340</text>
+							<rect class="yearlabelbackground" x="11" y="1355" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1360" text-anchor="Left" alignment-baseline="Middle">360</text>
+							<rect class="yearlabelbackground" x="11" y="1375" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1380" text-anchor="Left" alignment-baseline="Middle">380</text>
+							<rect class="yearlabelbackground" x="11" y="1415" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1420" text-anchor="Left" alignment-baseline="Middle">420</text>
+							<rect class="yearlabelbackground" x="11" y="1435" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1440" text-anchor="Left" alignment-baseline="Middle">440</text>
+							<rect class="yearlabelbackground" x="11" y="1455" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1460" text-anchor="Left" alignment-baseline="Middle">460</text>
+							<rect class="yearlabelbackground" x="11" y="1475" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1480" text-anchor="Left" alignment-baseline="Middle">480</text>
+							<rect class="yearlabelbackground" x="11" y="1515" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1520" text-anchor="Left" alignment-baseline="Middle">520</text>
+							<rect class="yearlabelbackground" x="11" y="1535" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1540" text-anchor="Left" alignment-baseline="Middle">540</text>
+							<rect class="yearlabelbackground" x="11" y="1555" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1560" text-anchor="Left" alignment-baseline="Middle">560</text>
+							<rect class="yearlabelbackground" x="11" y="1575" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1580" text-anchor="Left" alignment-baseline="Middle">580</text>
+							<rect class="yearlabelbackground" x="11" y="1615" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1620" text-anchor="Left" alignment-baseline="Middle">620</text>
+							<rect class="yearlabelbackground" x="11" y="1635" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1640" text-anchor="Left" alignment-baseline="Middle">640</text>
+							<rect class="yearlabelbackground" x="11" y="1655" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1660" text-anchor="Left" alignment-baseline="Middle">660</text>
+							<rect class="yearlabelbackground" x="11" y="1675" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1680" text-anchor="Left" alignment-baseline="Middle">680</text>
+							<rect class="yearlabelbackground" x="11" y="1715" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1720" text-anchor="Left" alignment-baseline="Middle">720</text>
+							<rect class="yearlabelbackground" x="11" y="1735" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1740" text-anchor="Left" alignment-baseline="Middle">740</text>
+							<rect class="yearlabelbackground" x="11" y="1755" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1760" text-anchor="Left" alignment-baseline="Middle">760</text>
+							<rect class="yearlabelbackground" x="11" y="1775" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1780" text-anchor="Left" alignment-baseline="Middle">780</text>
+							<rect class="yearlabelbackground" x="11" y="1815" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1820" text-anchor="Left" alignment-baseline="Middle">820</text>
+							<rect class="yearlabelbackground" x="11" y="1835" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1840" text-anchor="Left" alignment-baseline="Middle">840</text>
+							<rect class="yearlabelbackground" x="11" y="1855" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1860" text-anchor="Left" alignment-baseline="Middle">860</text>
+							<rect class="yearlabelbackground" x="11" y="1875" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1880" text-anchor="Left" alignment-baseline="Middle">880</text>
+							<rect class="yearlabelbackground" x="11" y="1915" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1920" text-anchor="Left" alignment-baseline="Middle">920</text>
+							<rect class="yearlabelbackground" x="11" y="1935" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1940" text-anchor="Left" alignment-baseline="Middle">940</text>
+							<rect class="yearlabelbackground" x="11" y="1955" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1960" text-anchor="Left" alignment-baseline="Middle">960</text>
+							<rect class="yearlabelbackground" x="11" y="1975" width="25" height="10" />
+							<text class="syearlabel" x="13" y="1980" text-anchor="Left" alignment-baseline="Middle">980</text>
+							<rect class="yearlabelbackground" x="11" y="2015" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2020" text-anchor="Left" alignment-baseline="Middle">1020</text>
+							<rect class="yearlabelbackground" x="11" y="2035" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2040" text-anchor="Left" alignment-baseline="Middle">1040</text>
+							<rect class="yearlabelbackground" x="11" y="2055" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2060" text-anchor="Left" alignment-baseline="Middle">1060</text>
+							<rect class="yearlabelbackground" x="11" y="2075" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2080" text-anchor="Left" alignment-baseline="Middle">1080</text>
+							<rect class="yearlabelbackground" x="11" y="2115" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2120" text-anchor="Left" alignment-baseline="Middle">1120</text>
+							<rect class="yearlabelbackground" x="11" y="2135" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2140" text-anchor="Left" alignment-baseline="Middle">1140</text>
+							<rect class="yearlabelbackground" x="11" y="2155" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2160" text-anchor="Left" alignment-baseline="Middle">1160</text>
+							<rect class="yearlabelbackground" x="11" y="2175" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2180" text-anchor="Left" alignment-baseline="Middle">1180</text>
+							<rect class="yearlabelbackground" x="11" y="2215" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2220" text-anchor="Left" alignment-baseline="Middle">1220</text>
+							<rect class="yearlabelbackground" x="11" y="2235" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2240" text-anchor="Left" alignment-baseline="Middle">1240</text>
+							<rect class="yearlabelbackground" x="11" y="2255" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2260" text-anchor="Left" alignment-baseline="Middle">1260</text>
+							<rect class="yearlabelbackground" x="11" y="2275" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2280" text-anchor="Left" alignment-baseline="Middle">1280</text>
+							<rect class="yearlabelbackground" x="11" y="2315" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2320" text-anchor="Left" alignment-baseline="Middle">1320</text>
+							<rect class="yearlabelbackground" x="11" y="2335" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2340" text-anchor="Left" alignment-baseline="Middle">1340</text>
+							<rect class="yearlabelbackground" x="11" y="2355" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2360" text-anchor="Left" alignment-baseline="Middle">1360</text>
+							<rect class="yearlabelbackground" x="11" y="2375" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2380" text-anchor="Left" alignment-baseline="Middle">1380</text>
+							<rect class="yearlabelbackground" x="11" y="2415" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2420" text-anchor="Left" alignment-baseline="Middle">1420</text>
+							<rect class="yearlabelbackground" x="11" y="2435" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2440" text-anchor="Left" alignment-baseline="Middle">1440</text>
+							<rect class="yearlabelbackground" x="11" y="2455" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2460" text-anchor="Left" alignment-baseline="Middle">1460</text>
+							<rect class="yearlabelbackground" x="11" y="2475" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2480" text-anchor="Left" alignment-baseline="Middle">1480</text>
+							<rect class="yearlabelbackground" x="11" y="2515" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2520" text-anchor="Left" alignment-baseline="Middle">1520</text>
+							<rect class="yearlabelbackground" x="11" y="2535" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2540" text-anchor="Left" alignment-baseline="Middle">1540</text>
+							<rect class="yearlabelbackground" x="11" y="2555" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2560" text-anchor="Left" alignment-baseline="Middle">1560</text>
+							<rect class="yearlabelbackground" x="11" y="2575" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2580" text-anchor="Left" alignment-baseline="Middle">1580</text>
+							<rect class="yearlabelbackground" x="11" y="2615" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2620" text-anchor="Left" alignment-baseline="Middle">1620</text>
+							<rect class="yearlabelbackground" x="11" y="2635" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2640" text-anchor="Left" alignment-baseline="Middle">1640</text>
+							<rect class="yearlabelbackground" x="11" y="2655" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2660" text-anchor="Left" alignment-baseline="Middle">1660</text>
+							<rect class="yearlabelbackground" x="11" y="2675" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2680" text-anchor="Left" alignment-baseline="Middle">1680</text>
+							<rect class="yearlabelbackground" x="11" y="2715" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2720" text-anchor="Left" alignment-baseline="Middle">1720</text>
+							<rect class="yearlabelbackground" x="11" y="2735" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2740" text-anchor="Left" alignment-baseline="Middle">1740</text>
+							<rect class="yearlabelbackground" x="11" y="2755" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2760" text-anchor="Left" alignment-baseline="Middle">1760</text>
+							<rect class="yearlabelbackground" x="11" y="2775" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2780" text-anchor="Left" alignment-baseline="Middle">1780</text>
+							<rect class="yearlabelbackground" x="11" y="2815" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2820" text-anchor="Left" alignment-baseline="Middle">1820</text>
+							<rect class="yearlabelbackground" x="11" y="2835" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2840" text-anchor="Left" alignment-baseline="Middle">1840</text>
+							<rect class="yearlabelbackground" x="11" y="2855" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2860" text-anchor="Left" alignment-baseline="Middle">1860</text>
+							<rect class="yearlabelbackground" x="11" y="2875" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2880" text-anchor="Left" alignment-baseline="Middle">1880</text>
+							<rect class="yearlabelbackground" x="11" y="2915" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2920" text-anchor="Left" alignment-baseline="Middle">1920</text>
+							<rect class="yearlabelbackground" x="11" y="2935" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2940" text-anchor="Left" alignment-baseline="Middle">1940</text>
+							<rect class="yearlabelbackground" x="11" y="2955" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2960" text-anchor="Left" alignment-baseline="Middle">1960</text>
+							<rect class="yearlabelbackground" x="11" y="2975" width="25" height="10" />
+							<text class="syearlabel" x="13" y="2980" text-anchor="Left" alignment-baseline="Middle">1980</text>
+						</g>
+					</g>
+					<g id="timelinebody">
+						<g id="austriagroup" class="powergroup" data-power-name="Austria" visibility="visible">
+							<g id="AustriaDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="2719" width="100" height="149" data-start-year="1719" data-end-year="1868" data-region="Dacia" data-is-center="true" style="fill:rgb(240, 65, 97);" />
+								<text class="powertitle" x="850" y="2734" text-anchor="middle" alignment-baseline="middle">Austria</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="austria-hungarygroup" class="powergroup" data-power-name="Austria-Hungary" visibility="visible">
+							<g id="Austria-HungaryDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="2868" width="100" height="51" data-start-year="1868" data-end-year="1919" data-region="Dacia" data-is-center="true" style="fill:rgb(0, 88, 1);" />
+								<text class="powertitle" x="850" y="2883" text-anchor="middle" alignment-baseline="middle">Austria-H...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Austria-HungaryAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="2879" width="100" height="40" data-start-year="1879" data-end-year="1919" data-region="Adriatic Coast" data-is-center="false" style="fill:rgb(0, 88, 1);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="avarsgroup" class="powergroup" data-power-name="Avars" visibility="visible">
+							<g id="AvarsEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="1561" width="100" height="70" data-start-year="561" data-end-year="631" data-region="European Steppe" data-is-center="false" style="fill:rgb(133,255,185);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="AvarsDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="1568" width="100" height="237" data-start-year="568" data-end-year="805" data-region="Dacia" data-is-center="true" style="fill:rgb(133,255,185);" />
+								<text class="powertitle" x="850" y="1583" text-anchor="middle" alignment-baseline="middle">Avars</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="bulgariagroup" class="powergroup" data-power-name="Bulgaria" visibility="visible">
+							<g id="BulgariaEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="1632" width="100" height="38" data-start-year="632" data-end-year="670" data-region="European Steppe" data-is-center="false" style="fill:rgb(0,151,110);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="BulgariaDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="1806" width="100" height="88" data-start-year="806" data-end-year="894" data-region="Dacia" data-is-center="true" style="fill:rgb(0,151,110);" />
+								<text class="powertitle" x="850" y="1821" text-anchor="middle" alignment-baseline="middle">Bulgaria</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="BulgariaEastern Mediterranean" transform="translate(0 0)">
+								<rect class="powerrect" x="1500" y="1917" width="100" height="55" data-start-year="917" data-end-year="972" data-region="Eastern Mediterranean" data-is-center="false" style="fill:rgb(0,151,110);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="byzantineempiregroup" class="powergroup" data-power-name="Byzantine Empire" visibility="visible">
+							<g id="Byzantine EmpireItalia" transform="translate(0 0)">
+								<rect class="powerrect" x="1200" y="1554" width="100" height="18" data-start-year="554" data-end-year="572" data-region="Italia" data-is-center="false" style="fill:rgb(112,48,160);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Byzantine EmpireNorth Africa" transform="translate(0 0)">
+								<rect class="powerrect" x="1300" y="1534" width="100" height="135" data-start-year="534" data-end-year="669" data-region="North Africa" data-is-center="false" style="fill:rgb(112,48,160);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Byzantine EmpireAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="1395" width="100" height="408" data-start-year="395" data-end-year="803" data-region="Adriatic Coast" data-is-center="false" style="fill:rgb(112,48,160);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Byzantine EmpireEastern Mediterranean" transform="translate(0 0)">
+								<rect class="powerrect" x="1500" y="1395" width="100" height="522" data-start-year="395" data-end-year="917" data-region="Eastern Mediterranean" data-is-center="true" style="fill:rgb(112,48,160);" />
+								<text class="powertitle" x="1550" y="1410" text-anchor="middle" alignment-baseline="middle">Byzantine...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<rect class="powerrect" x="1500" y="2018" width="100" height="186" data-start-year="1018" data-end-year="1204" data-region="Eastern Mediterranean" data-is-center="false" style="fill:rgb(112,48,160);" />
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="carthagegroup" class="powergroup" data-power-name="Carthage" visibility="visible">
+							<g id="CarthageNorth Africa" transform="translate(0 0)">
+								<rect class="powerrect" x="1300" y="350" width="100" height="447" data-start-year="650BC" data-end-year="203BC" data-region="North Africa" data-is-center="true" style="fill:rgb(116,175,215);" />
+								<text class="powertitle" x="1350" y="365" text-anchor="middle" alignment-baseline="middle">Carthage</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="denmarkgroup" class="powergroup" data-power-name="Denmark" visibility="visible">
+							<g id="DenmarkSkandinavia" transform="translate(0 0)">
+								<rect class="powerrect" x="400" y="2398" width="100" height="125" data-start-year="1398" data-end-year="1523" data-region="Skandinavia" data-is-center="true" style="fill:rgb(169,208,142);" />
+								<text class="powertitle" x="450" y="2413" text-anchor="middle" alignment-baseline="middle">Denmark</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="eastfranciagroup" class="powergroup" data-power-name="East Francia" visibility="visible">
+							<g id="East FranciaGermania" transform="translate(0 0)">
+								<rect class="powerrect" x="900" y="1843" width="100" height="57" data-start-year="843" data-end-year="900" data-region="Germania" data-is-center="true" style="fill:rgb(255, 203, 29);" />
+								<text class="powertitle" x="950" y="1858" text-anchor="middle" alignment-baseline="middle">East Fran...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="englandgroup" class="powergroup" data-power-name="England" visibility="visible">
+							<g id="EnglandIreland" transform="translate(0 0)">
+								<rect class="powerrect" x="100" y="2236" width="100" height="472" data-start-year="1236" data-end-year="1708" data-region="Ireland" data-is-center="false" style="fill:rgb(209,16,36);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="EnglandScotland" transform="translate(0 0)">
+								<rect class="powerrect" x="200" y="2603" width="100" height="105" data-start-year="1603" data-end-year="1708" data-region="Scotland" data-is-center="false" style="fill:rgb(209,16,36);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="EnglandBritannia" transform="translate(0 0)">
+								<rect class="powerrect" x="300" y="1928" width="100" height="780" data-start-year="928" data-end-year="1708" data-region="Britannia" data-is-center="true" style="fill:rgb(209,16,36);" />
+								<text class="powertitle" x="350" y="1943" text-anchor="middle" alignment-baseline="middle">England</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="francegroup" class="powergroup" data-power-name="France" visibility="visible">
+							<g id="FranceGallia" transform="translate(0 0)">
+								<rect class="powerrect" x="1000" y="1988" width="100" height="1031" data-start-year="988" data-end-year="Present" data-region="Gallia" data-is-center="true" style="fill:rgb(0,36,150);" />
+								<text class="powertitle" x="1050" y="2003" text-anchor="middle" alignment-baseline="middle">France</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="franksgroup" class="powergroup" data-power-name="Franks" visibility="visible">
+							<g id="FranksGermania" transform="translate(0 0)">
+								<rect class="powerrect" x="900" y="1783" width="100" height="60" data-start-year="783" data-end-year="843" data-region="Germania" data-is-center="false" style="fill:rgb(92,156,214);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="FranksGallia" transform="translate(0 0)">
+								<rect class="powerrect" x="1000" y="1614" width="100" height="229" data-start-year="614" data-end-year="843" data-region="Gallia" data-is-center="true" style="fill:rgb(92,156,214);" />
+								<text class="powertitle" x="1050" y="1629" text-anchor="middle" alignment-baseline="middle">Franks</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="FranksAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="1803" width="100" height="42" data-start-year="803" data-end-year="845" data-region="Adriatic Coast" data-is-center="false" style="fill:rgb(92,156,214);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="germanfranksgroup" class="powergroup" data-power-name="German Franks" visibility="visible">
+							<g id="German FranksGermania" transform="translate(0 0)">
+								<rect class="powerrect" x="900" y="1900" width="100" height="62" data-start-year="900" data-end-year="962" data-region="Germania" data-is-center="true" style="fill:rgb(201,201,201);" />
+								<text class="powertitle" x="950" y="1915" text-anchor="middle" alignment-baseline="middle">German Fr...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="germanygroup" class="powergroup" data-power-name="Germany" visibility="visible">
+							<g id="GermanyGermania" transform="translate(0 0)">
+								<rect class="powerrect" x="900" y="2872" width="100" height="147" data-start-year="1872" data-end-year="Present" data-region="Germania" data-is-center="true" style="fill:rgb(82,82,82);" />
+								<text class="powertitle" x="950" y="2887" text-anchor="middle" alignment-baseline="middle">Germany</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="goldenhordegroup" class="powergroup" data-power-name="Golden Horde" visibility="visible">
+							<g id="Golden HordeEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="2260" width="100" height="107" data-start-year="1260" data-end-year="1367" data-region="European Steppe" data-is-center="true" style="fill:rgb(249,2,3);" />
+								<text class="powertitle" x="650" y="2275" text-anchor="middle" alignment-baseline="middle">Golden Ho...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="holyromanempiregroup" class="powergroup" data-power-name="Holy Roman Empire" visibility="visible">
+							<g id="Holy Roman EmpireGermania" transform="translate(0 0)">
+								<rect class="powerrect" x="900" y="1963" width="100" height="685" data-start-year="963" data-end-year="1648" data-region="Germania" data-is-center="true" style="fill:rgb(123,123,123);" />
+								<text class="powertitle" x="950" y="1978" text-anchor="middle" alignment-baseline="middle">Holy Roma...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="hungarygroup" class="powergroup" data-power-name="Hungary" visibility="visible">
+							<g id="HungaryDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="2291" width="100" height="40" data-start-year="1291" data-end-year="1331" data-region="Dacia" data-is-center="false" style="fill:rgb(215, 29, 50);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="HungaryAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="2138" width="100" height="146" data-start-year="1138" data-end-year="1284" data-region="Adriatic Coast" data-is-center="true" style="fill:rgb(215, 29, 50);" />
+								<text class="powertitle" x="1450" y="2153" text-anchor="middle" alignment-baseline="middle">Hungary</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="irelandgroup" class="powergroup" data-power-name="Ireland" visibility="visible">
+							<g id="IrelandIreland" transform="translate(0 0)">
+								<rect class="powerrect" x="100" y="2923" width="100" height="96" data-start-year="1923" data-end-year="Present" data-region="Ireland" data-is-center="true" style="fill:rgb(22,155,98);" />
+								<text class="powertitle" x="150" y="2938" text-anchor="middle" alignment-baseline="middle">Ireland</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="italygroup" class="powergroup" data-power-name="Italy" visibility="visible">
+							<g id="ItalyItalia" transform="translate(0 0)">
+								<rect class="powerrect" x="1200" y="2861" width="100" height="158" data-start-year="1861" data-end-year="Present" data-region="Italia" data-is-center="true" style="fill:rgb(0,147,69);" />
+								<text class="powertitle" x="1250" y="2876" text-anchor="middle" alignment-baseline="middle">Italy</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="khazarsgroup" class="powergroup" data-power-name="Khazars" visibility="visible">
+							<g id="KhazarsEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="1670" width="100" height="60" data-start-year="670" data-end-year="730" data-region="European Steppe" data-is-center="true" style="fill:rgb(93, 188, 210);" />
+								<text class="powertitle" x="650" y="1685" text-anchor="middle" alignment-baseline="middle">Khazars</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="kievanrusgroup" class="powergroup" data-power-name="Kievan Rus" visibility="visible">
+							<g id="Kievan RusEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="1862" width="100" height="192" data-start-year="862" data-end-year="1054" data-region="European Steppe" data-is-center="true" style="fill:rgb(232,3,106);" />
+								<text class="powertitle" x="650" y="1877" text-anchor="middle" alignment-baseline="middle">Kievan Rus</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="knightsoftheswordgroup" class="powergroup" data-power-name="Knights of the Sword" visibility="visible">
+							<g id="Knights of the SwordBaltics" transform="translate(0 0)">
+								<rect class="powerrect" x="500" y="2225" width="100" height="11" data-start-year="1225" data-end-year="1236" data-region="Baltics" data-is-center="true" style="fill:rgb(213, 42, 29);" />
+								<text class="powertitle" visibility="hidden" x="550" y="2240" text-anchor="middle" alignment-baseline="middle">Knights o...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="lithuaniagroup" class="powergroup" data-power-name="Lithuania" visibility="visible">
+							<g id="LithuaniaEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="2367" width="100" height="19" data-start-year="1367" data-end-year="1386" data-region="European Steppe" data-is-center="true" style="fill:rgb(33, 124, 89);" />
+								<text class="powertitle" visibility="hidden" x="650" y="2382" text-anchor="middle" alignment-baseline="middle">Lithuania</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="macedoniagroup" class="powergroup" data-power-name="Macedonia" visibility="visible">
+							<g id="MacedoniaEastern Mediterranean" transform="translate(0 0)">
+								<rect class="powerrect" x="1500" y="663" width="100" height="36" data-start-year="337BC" data-end-year="301BC" data-region="Eastern Mediterranean" data-is-center="true" style="fill:rgb(0,255,255);" />
+								<text class="powertitle" x="1550" y="678" text-anchor="middle" alignment-baseline="middle">Macedonia</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="mongolsgroup" class="powergroup" data-power-name="Mongols" visibility="visible">
+							<g id="MongolsEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="2242" width="100" height="17" data-start-year="1242" data-end-year="1259" data-region="European Steppe" data-is-center="true" style="fill:rgb(145,114,186);" />
+								<text class="powertitle" visibility="hidden" x="650" y="2257" text-anchor="middle" alignment-baseline="middle">Mongols</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="numidiagroup" class="powergroup" data-power-name="Numidia" visibility="visible">
+							<g id="NumidiaNorth Africa" transform="translate(0 0)">
+								<rect class="powerrect" x="1300" y="798" width="100" height="95" data-start-year="202BC" data-end-year="107BC" data-region="North Africa" data-is-center="true" style="fill:rgb(137,43,42);" />
+								<text class="powertitle" x="1350" y="813" text-anchor="middle" alignment-baseline="middle">Numidia</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="ostragothsgroup" class="powergroup" data-power-name="Ostragoths" visibility="visible">
+							<g id="OstragothsItalia" transform="translate(0 0)">
+								<rect class="powerrect" x="1200" y="1476" width="100" height="74" data-start-year="476" data-end-year="550" data-region="Italia" data-is-center="true" style="fill:rgb(242,160,104);" />
+								<text class="powertitle" x="1250" y="1491" text-anchor="middle" alignment-baseline="middle">Ostragoths</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="ottomanempiregroup" class="powergroup" data-power-name="Ottoman Empire" visibility="visible">
+							<g id="Ottoman EmpireDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="2527" width="100" height="164" data-start-year="1527" data-end-year="1691" data-region="Dacia" data-is-center="false" style="fill:rgb(226,10,23);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Ottoman EmpireNorth Africa" transform="translate(0 0)">
+								<rect class="powerrect" x="1300" y="2575" width="100" height="256" data-start-year="1575" data-end-year="1831" data-region="North Africa" data-is-center="false" style="fill:rgb(226,10,23);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Ottoman EmpireAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="2464" width="100" height="415" data-start-year="1464" data-end-year="1879" data-region="Adriatic Coast" data-is-center="false" style="fill:rgb(226,10,23);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Ottoman EmpireEastern Mediterranean" transform="translate(0 0)">
+								<rect class="powerrect" x="1500" y="2394" width="100" height="485" data-start-year="1394" data-end-year="1879" data-region="Eastern Mediterranean" data-is-center="true" style="fill:rgb(226,10,23);" />
+								<text class="powertitle" x="1550" y="2409" text-anchor="middle" alignment-baseline="middle">Ottoman E...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="polandgroup" class="powergroup" data-power-name="Poland" visibility="visible">
+							<g id="PolandPoland" transform="translate(0 0)">
+								<rect class="powerrect" x="700" y="1966" width="100" height="420" data-start-year="966" data-end-year="1386" data-region="Poland" data-is-center="true" style="fill:rgb(153,51,0);" />
+								<text class="powertitle" x="750" y="1981" text-anchor="middle" alignment-baseline="middle">Poland</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<rect class="powerrect" x="700" y="2919" width="100" height="100" data-start-year="1919" data-end-year="Present" data-region="Poland" data-is-center="false" style="fill:rgb(153,51,0);" />
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="poland-lithuaniagroup" class="powergroup" data-power-name="Poland-Lithuania" visibility="visible">
+							<g id="Poland-LithuaniaBaltics" transform="translate(0 0)">
+								<rect class="powerrect" x="500" y="2560" width="100" height="65" data-start-year="1560" data-end-year="1625" data-region="Baltics" data-is-center="false" style="fill:rgb(200,67,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Poland-LithuaniaEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="2386" width="100" height="407" data-start-year="1386" data-end-year="1793" data-region="European Steppe" data-is-center="false" style="fill:rgb(200,67,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="Poland-LithuaniaPoland" transform="translate(0 0)">
+								<rect class="powerrect" x="700" y="2386" width="100" height="409" data-start-year="1386" data-end-year="1795" data-region="Poland" data-is-center="true" style="fill:rgb(200,67,0);" />
+								<text class="powertitle" x="750" y="2401" text-anchor="middle" alignment-baseline="middle">Poland-Li...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="romaniagroup" class="powergroup" data-power-name="Romania" visibility="visible">
+							<g id="RomaniaDacia" transform="translate(0 0)">
+								<rect class="powerrect" x="800" y="2919" width="100" height="100" data-start-year="1919" data-end-year="Present" data-region="Dacia" data-is-center="true" style="fill:rgb(253,209,22);" />
+								<text class="powertitle" x="850" y="2934" text-anchor="middle" alignment-baseline="middle">Romania</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="romegroup" class="powergroup" data-power-name="Rome" visibility="visible">
+							<g id="RomeBritannia" transform="translate(0 0)">
+								<rect class="powerrect" x="300" y="1059" width="100" height="351" data-start-year="59" data-end-year="410" data-region="Britannia" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeGermania" transform="translate(0 0)">
+								<rect class="powerrect" x="900" y="992" width="100" height="18" data-start-year="8BC" data-end-year="10" data-region="Germania" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeGallia" transform="translate(0 0)">
+								<rect class="powerrect" x="1000" y="949" width="100" height="527" data-start-year="51BC" data-end-year="476" data-region="Gallia" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeHispania" transform="translate(0 0)">
+								<rect class="powerrect" x="1100" y="795" width="100" height="681" data-start-year="205BC" data-end-year="476" data-region="Hispania" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeItalia" transform="translate(0 0)">
+								<rect class="powerrect" x="1200" y="247" width="100" height="1229" data-start-year="753BC" data-end-year="476" data-region="Italia" data-is-center="true" style="fill:rgb(192,0,0);" />
+								<text class="powertitle" x="1250" y="262" text-anchor="middle" alignment-baseline="middle">Rome</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeNorth Africa" transform="translate(0 0)">
+								<rect class="powerrect" x="1300" y="970" width="100" height="459" data-start-year="30BC" data-end-year="429" data-region="North Africa" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="832" width="100" height="563" data-start-year="168BC" data-end-year="395" data-region="Adriatic Coast" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RomeEastern Mediterranean" transform="translate(0 0)">
+								<rect class="powerrect" x="1500" y="971" width="100" height="424" data-start-year="29BC" data-end-year="395" data-region="Eastern Mediterranean" data-is-center="false" style="fill:rgb(192,0,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="russiagroup" class="powergroup" data-power-name="Russia" visibility="visible">
+							<g id="RussiaBaltics" transform="translate(0 0)">
+								<rect class="powerrect" x="500" y="2721" width="100" height="197" data-start-year="1721" data-end-year="1918" data-region="Baltics" data-is-center="false" style="fill:rgb(191,143,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<rect class="powerrect" x="500" y="2941" width="100" height="50" data-start-year="1941" data-end-year="1991" data-region="Baltics" data-is-center="false" style="fill:rgb(191,143,0);" />
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RussiaEuropean Steppe" transform="translate(0 0)">
+								<rect class="powerrect" x="600" y="2793" width="100" height="198" data-start-year="1793" data-end-year="1991" data-region="European Steppe" data-is-center="true" style="fill:rgb(191,143,0);" />
+								<text class="powertitle" x="650" y="2808" text-anchor="middle" alignment-baseline="middle">Russia</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="RussiaPoland" transform="translate(0 0)">
+								<rect class="powerrect" x="700" y="2816" width="100" height="98" data-start-year="1816" data-end-year="1914" data-region="Poland" data-is-center="false" style="fill:rgb(191,143,0);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="scotlandgroup" class="powergroup" data-power-name="Scotland" visibility="visible">
+							<g id="ScotlandScotland" transform="translate(0 0)">
+								<rect class="powerrect" x="200" y="1844" width="100" height="759" data-start-year="844" data-end-year="1603" data-region="Scotland" data-is-center="true" style="fill:rgb(0,122,192);" />
+								<text class="powertitle" x="250" y="1859" text-anchor="middle" alignment-baseline="middle">Scotland</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="spaingroup" class="powergroup" data-power-name="Spain" visibility="visible">
+							<g id="SpainHispania" transform="translate(0 0)">
+								<rect class="powerrect" x="1100" y="2480" width="100" height="539" data-start-year="1480" data-end-year="Present" data-region="Hispania" data-is-center="true" style="fill:rgb(254,196,0);" />
+								<text class="powertitle" x="1150" y="2495" text-anchor="middle" alignment-baseline="middle">Spain</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="swedengroup" class="powergroup" data-power-name="Sweden" visibility="visible">
+							<g id="SwedenSkandinavia" transform="translate(0 0)">
+								<rect class="powerrect" x="400" y="2815" width="100" height="90" data-start-year="1815" data-end-year="1905" data-region="Skandinavia" data-is-center="true" style="fill:rgb(0,106,166);" />
+								<text class="powertitle" x="450" y="2830" text-anchor="middle" alignment-baseline="middle">Sweden</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="SwedenBaltics" transform="translate(0 0)">
+								<rect class="powerrect" x="500" y="2625" width="100" height="96" data-start-year="1625" data-end-year="1721" data-region="Baltics" data-is-center="false" style="fill:rgb(0,106,166);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="teutonicknightsgroup" class="powergroup" data-power-name="Teutonic Knights" visibility="visible">
+							<g id="Teutonic KnightsBaltics" transform="translate(0 0)">
+								<rect class="powerrect" x="500" y="2236" width="100" height="324" data-start-year="1236" data-end-year="1560" data-region="Baltics" data-is-center="true" style="fill:rgb(255, 200, 3);" />
+								<text class="powertitle" x="550" y="2251" text-anchor="middle" alignment-baseline="middle">Teutonic ...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="unitedkingdomgroup" class="powergroup" data-power-name="United Kingdom" visibility="visible">
+							<g id="United KingdomIreland" transform="translate(0 0)">
+								<rect class="powerrect" x="100" y="2708" width="100" height="215" data-start-year="1708" data-end-year="1923" data-region="Ireland" data-is-center="false" style="fill:rgb(208,20,44);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="United KingdomScotland" transform="translate(0 0)">
+								<rect class="powerrect" x="200" y="2708" width="100" height="311" data-start-year="1708" data-end-year="Present" data-region="Scotland" data-is-center="false" style="fill:rgb(208,20,44);" />
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+							<g id="United KingdomBritannia" transform="translate(0 0)">
+								<rect class="powerrect" x="300" y="2708" width="100" height="311" data-start-year="1708" data-end-year="Present" data-region="Britannia" data-is-center="true" style="fill:rgb(208,20,44);" />
+								<text class="powertitle" x="350" y="2723" text-anchor="middle" alignment-baseline="middle">United Ki...</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="visigothsgroup" class="powergroup" data-power-name="Visigoths" visibility="visible">
+							<g id="VisigothsHispania" transform="translate(0 0)">
+								<rect class="powerrect" x="1100" y="1477" width="100" height="236" data-start-year="477" data-end-year="713" data-region="Hispania" data-is-center="true" style="fill:rgb(198,89,17);" />
+								<text class="powertitle" x="1150" y="1492" text-anchor="middle" alignment-baseline="middle">Visigoths</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+						<g id="yugoslaviagroup" class="powergroup" data-power-name="Yugoslavia" visibility="visible">
+							<g id="YugoslaviaAdriatic Coast" transform="translate(0 0)">
+								<rect class="powerrect" x="1400" y="2919" width="100" height="72" data-start-year="1919" data-end-year="1991" data-region="Adriatic Coast" data-is-center="true" style="fill:rgb(1, 56, 157);" />
+								<text class="powertitle" x="1450" y="2934" text-anchor="middle" alignment-baseline="middle">Yugoslavia</text>
+								<animateTransform class="powerfocusanimationtranslate" attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+								<animate class="powerfocusanimationopacity" attributeName="opacity" attributeType="XML" type="translate" from="1" to="0" dur="0.75s" begin="indefinite" data-direction="forward" fill="none"/>
+							</g>
+						</g>
+					</g>
+				</g>
+				<g id="powertooltip" visibility="hidden">
+					<rect x="3" y="3" width="50" height="90" fill="black" opacity="0.4" />
+					<rect x="0" y="0" width="50" height="90" fill="white" />
+					<text id="powertooltippower" class="tooltiptext" x="4" y="20">powertooltippower</text>
+					<text id="powertooltipregion" class="tooltiptext" x ="4" y="40">powertooltipregion</text>
+					<text id="powertooltipyears" class="tooltiptext" x="4" y="60">powertooltipyears</text>
+				</g>
+				<g id="yeartooltip" visibility="hidden">
+					<rect x="0" y="0" width="0" height="19" rx="5" ry="5" fill="white" opacity="0.5"/>
+					<text id="yeartooltipyear" class="tooltiptext" x="4" y="17">year</text>
+				</g>
+				<g id="bodyselectionrect" visibility="hidden">
+					<rect x="0" y="0" width="100" height="100"></rect>
+				</g>
+
+				<script type="text/javascript" xlink:href="scripts/BodyScript.js"></script>

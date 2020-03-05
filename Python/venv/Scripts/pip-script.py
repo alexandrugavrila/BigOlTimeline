@@ -1,4 +1,4 @@
-#!C:\Users\alexa\Desktop\Personal\BigOlTimeline\Python\venv\Scripts\python.exe
+#!C:\_Code\Projects\Personal\BigOlTimeline\Python\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip'
 __requires__ = 'pip==19.0.3'
 import re

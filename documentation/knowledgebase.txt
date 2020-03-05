@@ -4,6 +4,34 @@ Programming Languages
             Add to beginning: array.push()
             Add to end:       array.unshift()
 
+    Python
+        if __name__ == "__main__": exists so that you can call separate files without executing their top level code
+        
+        for()
+            for item in list: 
+                iterates over all the items in the list
+            for idx, item in enumerate(list): 
+                iterates over all the items in the list and allows you to reference the index
+
+        super() 
+            super() with no parameters refers to the subclass's superclass
+            super() takes two optional parameters, the subclass and an instance of the subclass 
+            
+            ex. class SubClass(SuperClass):
+                    def __init__(): super(SubClass, self).(...)
+                
+            In this example the super call is equivalent to a parameterless call
+
+            ex. class SubClass(SuperClass):
+                    def __init__(): super(SuperClass, self).(...)
+
+            In this example the call to super searches in the super class of the super class
+
+        pandas
+            dataframe.shape returns (length, width) of the dataframe
+
+
+
 Concepts
     CTM
         Object on webpages are controlled with a current transform matrix. Transformations cascade as they are
@@ -13,6 +41,10 @@ Concepts
             [a c e][x1]   [x2]
             [b d f][y1] = [y2]
             [0 0 1][ 1]   [ 1]
+
+
+
+
 
 Tool Functions
 
@@ -36,5 +68,16 @@ Tool Functions
             Home: move to top
             PgDn: move down 1 z-level
             End: move to bottom
+
+    PyCharm
+        Comment Selection
+            Ctrl-/
+        UnComment Selection
+            Ctrl-
+
+        How to install local .whl package into venv (Windows)
+            In pycharm terminal:
+                > [path_to_venv]\Scripts\activate
+                > pip install [path_to_whl]
 
     

@@ -292,7 +292,6 @@ function powerDblclick(evt) {
             addAnimationEndListeners(focustranslateanimations[0], translateFocusAnimationEnd);     // Add an end listener to a focusanimation so we don't sent things to visible till it ends
             executeAnimationsBackwards(focustranslateanimations);  // Run the animation backwards
             
-            addAnimationEndListeners(focusopacityanimations[0], opacityFocusAnimationBackwardEnd);
             displayInline(focusdisplayrects);
             setFillNone(focusopacityanimations);
             executeAnimationsBackwards(focusopacityanimations);
@@ -301,7 +300,6 @@ function powerDblclick(evt) {
             if(focusinvis.length) {makeVisible(focusinvis);}        // Make all of the invisible elements visible
             if(focusdisplayregions.length) {displayInline(focusdisplayregions);}  // Display all of the nondisplayed elements
             
-            addAnimationEndListeners(focusopacityanimations[0], opacityFocusAnimationBackwardEnd);
             displayInline(focusdisplayrects);
             setFillNone(focusopacityanimations);
             executeAnimationsBackwards(focusopacityanimations);
@@ -319,15 +317,13 @@ function translateFocusAnimationEnd(evt) {
     evt.target.removeEventListener('endEvent', translateFocusAnimationEnd);  // Remove the end event
 }
 
+
 function opacityFocusAnimationForwardEnd(evt) {
     displayNone(this.parentElement);
     focusdisplayrects.push(this.parentElement);
     evt.target.removeEventListener('endEvent', opacityFocusAnimationForwardEnd);
 }
 
-function opacityFocusAnimationBackwardEnd(evt) {
-
-}
 
 // Chart Body Events
 
