@@ -11,6 +11,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="styles/BOTStylesheet.css">
+	<link rel="stylesheet" href="styles/TutorialStylesheet.css">
 
 	<svg id="svgresources" width="0" height="0">
 		<script type="text/javascript" xlink:href="scripts/HelperFunctions.js"></script>
@@ -145,11 +146,13 @@
 </head>
 
 <body>
+	<div id=pointereventblock display="none"></div> <!-- Blocks pointer events for everything below z-index 1 -->
 	<h1>Big Ol Timeline</h1>
 	<div id="chart">
-		<div id="headerdiv">	
+		<div id="headerdiv">
+			<div id="chartheaderhighlight" class="tutorialhighlight">	
+			</div>	
 			<svg id="headersvg" width="1500" height="27" style="overflow:visible" visibility="hidden">
-			
 				<g id="headerbackground">
 					<rect width="1500" height="30" fill="white"/>
 				</g>
@@ -738,7 +741,6 @@
 	
 		<div id="bodydiv">
 			<svg id="bodysvg" width="1500" height="7000" viewbox="0 0 1500 7000" visibility="hidden">
-				
 				<defs>
 					<filter id="powerborder">
 						<feMorphology operator="erode" in="SourceAlpha" radius="4" result="dilated_alpha_outer" />
@@ -1707,7 +1709,6 @@
 
 				<script type="text/javascript" xlink:href="scripts/BodyScript.js"></script>
 			</svg>
-
 		</div>
 	</div>
 </body>

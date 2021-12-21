@@ -1,3 +1,5 @@
+console.log("HeaderScript.js running.")
+
 /* VARIABLE DECLARATIONS */
 
 var headersvg = document.getElementById('headersvg');

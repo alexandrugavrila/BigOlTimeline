@@ -5,7 +5,9 @@ var bodysvg = document.getElementById('bodysvg');
 var chartbody = document.getElementById('chartbody');
 var timelinebody = document.getElementById('timelinebody');
 // Style elements
-var svgStyleSheet = document.styleSheets[1];
+console.log("BodyScript.js running.")
+
+var svgStyleSheet = document.styleSheets[2];
 var pyearlabelstyle, syearlabelstyle = getYearLabelStyles();
 // Power group hover tooltip elements
 var powergroups = document.getElementsByClassName('powergroup');

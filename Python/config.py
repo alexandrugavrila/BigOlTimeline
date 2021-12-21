@@ -7,11 +7,11 @@ import pandas as pd
 import helperfunctions as hf
 
 file_paths = {  # The dictionary of all the relevant file paths, imported by any other scripts if needed
-    'BOT_data': r'C:\_Code\Projects\Personal\BigOlTimeline\data\BigOlTimeline_Data.xlsx',  # The path for the excel sheet
-    'base_HTML': r'C:\_Code\Projects\Personal\BigOlTimeline\blankBOT.html',  # The path for the html framework file
-    'final_HTML': r'C:\_Code\Projects\Personal\BigOlTimeline\index.html',  # The path for the filled out html
-    'map_preview': r'C:\_Code\Projects\Personal\BigOlTimeline\img\map_preview.svg',  # The path for the map preview svg
-    'chart_preview': r'C:\_Code\Projects\Personal\BigOlTimeline\img\chart_preview.svg'  # The path for the chart preview svg
+    'BOT_data': r'D:\Personal\Projects\BigOlTimeline\Code\BigOlTimeline\data\BigOlTimeline_Data.xlsx',  # The path for the excel sheet
+    'base_HTML': r'D:\Personal\Projects\BigOlTimeline\Code\BigOlTimeline\blankBOT.html',  # The path for the html framework file
+    'final_HTML': r'D:\Personal\Projects\BigOlTimeline\Code\BigOlTimeline\index.html',  # The path for the filled out html
+    'map_preview': r'D:\Personal\Projects\BigOlTimeline\Code\BigOlTimeline\img\map_preview.svg',  # The path for the map preview svg
+    'chart_preview': r'D:\Personal\Projects\BigOlTimeline\Code\BigOlTimeline\img\chart_preview.svg'  # The path for the chart preview svg
 }
 
 chart_params = {

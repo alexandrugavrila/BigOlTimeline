@@ -1,0 +1,26 @@
+/* blocks pointer events on entire screen */
+#pointereventblock {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* shadow of entire screen with cutout on element */
+.tutorialhighlight {
+    display: block;
+    position: absolute;
+    top: 5px;
+    bottom: -10px;
+    right: 700px;
+    left: 90px;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .4);
+    pointer-events: none;
+}
+
+.tutorialpopup {
+    display: block;
+    position: absolute;
+}
