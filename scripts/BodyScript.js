@@ -30,7 +30,12 @@ var bodyselectrectgroup = document.getElementById('bodyselectionrect');    // Th
 var bodyselectrect = bodyselectrectgroup.getElementsByTagName('rect')[0];       // The rectangle element inside of the selection group
 // Controls elements
 var controlspopup = document.getElementById('controlspopup');
-
+// Tutorial elements
+var pointereventblock = document.getElementById('pointereventblock');
+var tutoriallaunchmodal = document.getElementById('tutoriallaunchmodal');
+var tutorialmodalclose = document.getElementById('tutorialmodalclose');
+// Element highlights
+var chartheaderhighlight = document.getElementById('chartheaderhighlight');
 
 // Global variables
 var chartbottom = -1000
@@ -61,5 +66,7 @@ bodysvg.addEventListener('wheel', chartBodyMouseWheel);
 bodysvg.addEventListener('mouseenter', chartBodyMouseEnter);
 bodysvg.addEventListener('mousemove', chartBodyMouseMove);
 bodysvg.addEventListener('mouseout', chartBodyMouseOut);
+
+tutorialmodalclose.addEventListener('click', tutorialLaunchModalCloseClick);
 
 initializeChart();

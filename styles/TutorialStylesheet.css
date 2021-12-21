@@ -1,5 +1,6 @@
 /* blocks pointer events on entire screen */
 #pointereventblock {
+    display: none;
     position: fixed;
     top: 0;
     right: 0;
@@ -10,7 +11,7 @@
 
 /* shadow of entire screen with cutout on element */
 .tutorialhighlight {
-    display: block;
+    display: none;
     position: absolute;
     top: 5px;
     bottom: -10px;
@@ -23,4 +24,84 @@
 .tutorialpopup {
     display: block;
     position: absolute;
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Header */
+.modalheader {
+    padding: 2px 16px;
+    background-color: /*bl2*/#A6BDE0;
+    color: black;
+}
+
+/* Modal Body */
+.modalbody {
+    padding: 2px 16px;
+    color: black;
+}
+
+/* Modal Footer */
+.modalfooter {
+    padding: 6px 0px;
+    background-color: /*bl2*/#A6BDE0;
+    color: /*br1*/#E0C9A6;
+}
+
+/* Modal Content */
+.modalcontent {
+    position: relative;
+    background-color: /*br1*/#E0C9A6;
+    font-family: Arial;
+    margin: auto;
+    padding: 0;
+    border: 1px solid /*br1*/#E0C9A6;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+    color: /*bl1*/#1F3659;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Launch Tutorial Button */
+.windowbutton{
+    background-color: /*n*/#fefbf7;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    height: 25px;
+    width: 100px;
+    margin-left: 30px;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
 }

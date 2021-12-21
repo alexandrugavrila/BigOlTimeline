@@ -8,15 +8,17 @@
 -->
 
 <!DOCTYPE html>
-<html>
+<html land="en-us">
 <head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/BOTStylesheet.css">
 	<link rel="stylesheet" href="styles/TutorialStylesheet.css">
 
 	<svg id="svgresources" width="0" height="0">
+		<script type="text/javascript" xlink:href="scripts/BOTFunctions.js"></script>
 		<script type="text/javascript" xlink:href="scripts/HelperFunctions.js"></script>
 		<script type="text/javascript" xlink:href="scripts/EventHandlers.js"></script>
-		<script type="text/javascript" xlink:href="scripts/TutorialScript.js"></script>
+		<script type="text/javascript" xlink:href="scripts/TutorialFunctions.js"></script>
 
 		<style>
 			.chartspine {
@@ -43,8 +45,8 @@
 				font-family: Arial;
 				pointer-events: none; }
 			.yearlabelbackground {
-				stroke: none;
-				fill: white;}
+				stroke: none; 
+				fill:/*br1*/#E0C9A6}
 
 			.powertitle {
 				font: 15px Arial; 
@@ -56,10 +58,9 @@
 				pointer-events: none; }
 			.powergroup { filter: url('#powerborder') }
 			.powergrouphover { filter: url('#powerhover') }
-				
 
 			.regionbox {
-				fill:rgb(255,255,255);
+				fill:/*n*/#fefbf7;;
 				stroke:black;
 				stroke-width:2 }
 			.regiontext {	
@@ -69,7 +70,7 @@
 			
 
 			.interfacebox {
-				fill: white;
+				fill:/*n*/#fefbf7;;
 				stroke: black;
 				stroke-width: 1; }
 			.interfacetext {
@@ -90,7 +91,7 @@
 			
 
 			.buttonbox {
-				fill: white;
+				fill: /*n*/#fefbf7;
 				stroke: black;
 				stroke-width: 1; }
 			.buttontext {
@@ -98,7 +99,7 @@
 				font-family: Arial;
 				pointer-events: none; }
 			.buttonboxhover {
-				fill: white;
+				fill: /*n*/#fefbf7;
 				stroke: black;
 				stroke-width: 2; }
 			.buttonboxclick {
@@ -108,7 +109,7 @@
 
 
 			.checkboxbox {
-				fill: white;
+				fill: /*n*/#fefbf7;;
 				stroke: black;
 				stroke-width: 1; }
 			.checkboxclick {
@@ -147,14 +148,32 @@
 </head>
 
 <body>
-	<div id=pointereventblock></div> <!-- Blocks pointer events for everything below z-index 1 -->
+	<div id=pointereventblock></div>		<!-- Blocks pointer events for everything below z-index 1 -->
+	
+	<div id=tutoriallaunchmodal class="modal">		<!-- Modal shows up on first visit to ask about tutorial launch -->
+		<div class="modalcontent">	
+			<div class="modalheader">
+				<span id="tutorialmodalclose" class="close">&times;</span>
+				<h2>Welcome to Big Ol' Timeline!</h2>
+			</div>
+			<div class="modalbody">
+				<p>It looks like this is your first visit,</p>
+				<p>would you like to see a quick tutorial?</p>
+			</div>
+			<div class="modalfooter">
+				<button id="tutorialmodallaunchbutton" type="button" class="windowbutton">Launch</button>
+				<button id="tutorialmodalclosebutton" type="button" class="windowbutton">Close</button>
+			</div>
+		</div>
+	</div>
+	
 	<h1>Big Ol Timeline</h1>
 	<div id="chart">
 		<div id="headerdiv">
 			<div id="chartheaderhighlight" class="tutorialhighlight"></div>	
 			<svg id="headersvg" width="1500" height="27" style="overflow:visible" visibility="hidden">
 				<g id="headerbackground">
-					<rect width="1500" height="30" fill="white"/>
+					<rect id="headerbarbackground" width="1500" height="30" fill="#E0C9A6"/>
 				</g>
 				<g id="headerbar">
 					<g id="regions">

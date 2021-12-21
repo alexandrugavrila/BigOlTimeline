@@ -1,6 +1,20 @@
+/**************** Color Reference Chart ****************
+**Name******************Comment****************Color****
+
+Blue1                      bl1                   #1F3659
+Blue2                      bl2                   #A6BDE0
+Neutral                    n                     #fefbf7
+Brown1                     br1                   #E0C9A6
+
+*/
+
 
 h1 {
    font-family: Arial; 
+}
+
+body {
+    background-color: /*br1*/#E0C9A6;
 }
 
 .centered {
