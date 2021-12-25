@@ -29,8 +29,8 @@ function initializeChart() {
 
     makeVisible(bodysvg);
     makeVisible(headersvg);
-
-    tutorialCheck();
+    
+    // tutorialCheck();
 }
 
 

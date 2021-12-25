@@ -34,8 +34,11 @@ var controlspopup = document.getElementById('controlspopup');
 var pointereventblock = document.getElementById('pointereventblock');
 var tutoriallaunchmodal = document.getElementById('tutoriallaunchmodal');
 var tutorialmodalclose = document.getElementById('tutorialmodalclose');
-// Element highlights
-var chartheaderhighlight = document.getElementById('chartheaderhighlight');
+var tutorialmodallaunchbutton = document.getElementById('tutorialmodallaunchbutton');
+var tutorialmodalclosebutton = document.getElementById('tutorialmodalclosebutton');
+var chartheadertutorial = document.getElementById('chartheadertutorial')
+var chartheadertutorialhighlight = document.getElementById('chartheadertutorialhighlight');
+var chartheadertutorialpopup = document.getElementById('chartheadertutorialpopup');
 
 // Global variables
 var chartbottom = -1000
@@ -67,6 +70,8 @@ bodysvg.addEventListener('mouseenter', chartBodyMouseEnter);
 bodysvg.addEventListener('mousemove', chartBodyMouseMove);
 bodysvg.addEventListener('mouseout', chartBodyMouseOut);
 
-tutorialmodalclose.addEventListener('click', tutorialLaunchModalCloseClick);
+tutorialmodalclose.addEventListener('click', tutorialLaunchModalClose);
+tutorialmodalclosebutton.addEventListener('click', tutorialLaunchModalClose);
+tutorialmodallaunchbutton.addEventListener('click', launchTutorial);
 
 initializeChart();

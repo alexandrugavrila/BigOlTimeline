@@ -526,8 +526,5 @@ function chartPanMouseMove(evt) {
     adjustYearLabelTranslates();    // Keep the year labels where they need to be after a pan
 }
 
-// Tutorial Launch Modal Events
-function tutorialLaunchModalCloseClick() {
-    tutoriallaunchmodal.style.display = "none";
-}
+
 

@@ -5,6 +5,19 @@ function tutorialCheck(){
 }
 
 
-function launchTutorial(){
+function tutorialLaunchModalClose() {
+    // Close the tutorial lauch modal
 
+    tutoriallaunchmodal.style.display = "none";
+}
+
+
+function launchTutorial(){
+    // Runs the tutorial
+    
+    tutoriallaunchmodal.style.display = "none"; // Hide the tutorial launch modal
+    pointereventblock.style.display = "block";  // Block pointer events on the website below the tutorial
+    
+    //Start chart header tutorial
+    chartheadertutorial.style.visibility = "visible";
 }

@@ -149,7 +149,6 @@
 
 <body>
 	<div id=pointereventblock></div>		<!-- Blocks pointer events for everything below z-index 1 -->
-	
 	<div id=tutoriallaunchmodal class="modal">		<!-- Modal shows up on first visit to ask about tutorial launch -->
 		<div class="modalcontent">	
 			<div class="modalheader">
@@ -161,8 +160,8 @@
 				<p>would you like to see a quick tutorial?</p>
 			</div>
 			<div class="modalfooter">
-				<button id="tutorialmodallaunchbutton" type="button" class="windowbutton">Launch</button>
-				<button id="tutorialmodalclosebutton" type="button" class="windowbutton">Close</button>
+				<button id="tutorialmodallaunchbutton" type="button" class="modalbutton">Launch</button>
+				<button id="tutorialmodalclosebutton" type="button" class="modalbutton">Close</button>
 			</div>
 		</div>
 	</div>
@@ -170,7 +169,21 @@
 	<h1>Big Ol Timeline</h1>
 	<div id="chart">
 		<div id="headerdiv">
-			<div id="chartheaderhighlight" class="tutorialhighlight"></div>	
+			<div id="chartheadertutorial">
+				<div id="chartheadertutorialhighlight" class="tutorialhighlight"></div>
+
+				<div id="chartheadertutorialpopup" class="tutorialpopup">
+					<div class="tutorialpopupbody">
+						<span id=chartheadertutorialtext1>This is the chart header. Every column is a region of the world.</span>
+						<span id=chartheadertutorialtext2>Hovering your mouse over a chart heading will show you a map of what region that represents. Try it!</span>
+					</div>
+					<div class="tutorialpopupfooter">
+						<button id="chartheadertutorialnextbutton" type="button" class="tutorialpopupbutton">Close</button>
+						<button id="chartheadertutorialclosebutton" type="button" class="tutorialpopupbutton">Next</button>
+					</div>
+				</div>
+
+			</div>
 			<svg id="headersvg" width="1500" height="27" style="overflow:visible" visibility="hidden">
 				<g id="headerbackground">
 					<rect id="headerbarbackground" width="1500" height="30" fill="#E0C9A6"/>
