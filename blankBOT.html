@@ -169,21 +169,34 @@
 	<h1>Big Ol Timeline</h1>
 	<div id="chart">
 		<div id="headerdiv">
-			<div id="chartheadertutorial">
+			<div id="tutorialchartheader">
 				<div id="chartheadertutorialhighlight" class="tutorialhighlight"></div>
 
-				<div id="chartheadertutorialpopup" class="tutorialpopup">
+				<div id="chartheadertutorialpopup" class="tutorialpopup tutorialpopupbottom">
 					<div class="tutorialpopupbody">
 						<span id=chartheadertutorialtext1>This is the chart header. Every column is a region of the world.</span>
 						<span id=chartheadertutorialtext2>Hovering your mouse over a chart heading will show you a map of what region that represents. Try it!</span>
 					</div>
 					<div class="tutorialpopupfooter">
-						<button id="chartheadertutorialnextbutton" type="button" class="tutorialpopupbutton">Close</button>
+						<button id="chartheadertutorialnextbutton" type="button" class="tutorialpopupbutton">Back</button>
 						<button id="chartheadertutorialclosebutton" type="button" class="tutorialpopupbutton">Next</button>
 					</div>
 				</div>
-
 			</div>
+			<div id="tutorialchartcontrols">
+				<div id="chartcontrolstutorialhighlight" class="tutorialhighlight"></div>
+
+				<div id="chartcontrolstutorialpopup" class="tutorialpopup tutorialpopupbottomleft">
+					<div class="tutorialpopupbody">
+						<span id=chartcontrolstutorialtext1>If you forget any of the controls for the chart, just click this button.</span>
+					</div>
+					<div class="tutorialpopupfooter">
+						<button id="chartcontrolstutorialnextbutton" type="button" class="tutorialpopupbutton">Back</button>
+						<button id="chartcontrolstutorialclosebutton" type="button" class="tutorialpopupbutton">Next</button>
+					</div>
+				</div>
+			</div>
+
 			<svg id="headersvg" width="1500" height="27" style="overflow:visible" visibility="hidden">
 				<g id="headerbackground">
 					<rect id="headerbarbackground" width="1500" height="30" fill="#E0C9A6"/>
@@ -667,6 +680,34 @@
 		</div>	
 	
 		<div id="bodydiv">
+			<div id="tutorialchartyearbar">
+				<div id="chartyearbartutorialhighlight" class="tutorialhighlight"></div>
+
+				<div id="chartyearbartutorialpopup" class="tutorialpopup tutorialpopupright">
+					<div class="tutorialpopupbody">
+						<span id=chartyearbartutorialtext1>This is the year bar of the chart. The lower you go, the closer you get to the present. Negative numbers represent years BC.</span>
+					</div>
+					<div class="tutorialpopupfooter">
+						<button id="chartyearbartutorialnextbutton" type="button" class="tutorialpopupbutton">Back</button>
+						<button id="chartyearbartutorialclosebutton" type="button" class="tutorialpopupbutton">Next</button>
+					</div>
+				</div>
+			</div>
+			<div id="tutorialchartpowerblock">
+				<div id="chartpowerblocktutorialhighlight" class="tutorialhighlight"></div>
+
+				<div id="chartpowerblocktutorialpopup" class="tutorialpopup tutorialpopupleft">
+					<div class="tutorialpopupbody">
+						<span id=chartpowerblocktutorialtext1>Every block in the chart represents a power that had control of the region.</span>
+						<span id=chartpowerblocktutorialtext2>Hover over the block to see more information about that period of time.</span>
+					</div>
+					<div class="tutorialpopupfooter">
+						<button id="chartpowerblocktutorialnextbutton" type="button" class="tutorialpopupbutton">Back</button>
+						<button id="chartpowerblocktutorialclosebutton" type="button" class="tutorialpopupbutton">Next</button>
+					</div>
+				</div>
+			</div>
+
 			<svg id="bodysvg" width="1500" height="7000" viewbox="0 0 1500 7000" visibility="hidden">
 				<defs>
 					<filter id="powerborder">

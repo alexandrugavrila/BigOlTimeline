@@ -83,7 +83,7 @@
 
 /* blocks pointer events on entire screen */
 #pointereventblock {
-    display: none;
+    display: block;
     position: fixed;
     top: 0;
     right: 0;
@@ -110,28 +110,55 @@
     background-color: #555;
     border-radius: 6px;
     padding: 8px 5px;
-    width: 210px;
-    top: 50px;
-    left: 250px;
-
 }
-
-/* Popup Body */
-/* .tutorialpopupbody {
-    text-align: center;
-} */
 
 .tutorialpopupbody span {
     color: #fff;
 }
 
-/* Popup arrow bottom */
-.tutorialpopupbody span::after {
+/* Popup arrows */
+.tutorialpopupbottom .tutorialpopupbody span::after {
     content: "";
     position: absolute;
     top: -9px;
     left: 50%;
     transform: rotate(180deg);
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tutorialpopupright .tutorialpopupbody span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    transform: rotate(90deg);
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tutorialpopupleft .tutorialpopupbody span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: rotate(270deg);
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tutorialpopupbottomleft .tutorialpopupbody span::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 0px;
+    transform: rotate(135deg);
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
@@ -147,14 +174,65 @@
     margin: 5px;
 }
 
-#chartheadertutorial {
+.tutorialhighlight {
     visibility: visible; 
     z-index: 2;
 }
 
+/* ELEMENT SPECIFIC TUTORIAL SECTIONS */
+
+/* Chart header elememts */
 #chartheadertutorialhighlight {
     top: 0px;
     bottom: -10px;
     right: 700px;
     left: 90px;
+}
+
+#chartheadertutorialpopup {
+    width: 210px;
+    top: 50px;
+    left: 250px;
+}
+
+/* Chart controls elements */
+#chartcontrolstutorialhighlight {
+    top: 0px;
+    bottom: -10px;
+    right: 1400px;
+    left: 50px;
+}
+
+#chartcontrolstutorialpopup {
+    width: 210px;
+    top: 45px;
+    left: 105px;
+}
+
+/* Chart year bar elements */
+#chartyearbartutorialhighlight {
+    top: 30px;
+    bottom: 5500px;
+    right: 1400px;
+    left: 40px;
+}
+
+#chartyearbartutorialpopup {
+    width: 210px;
+    top: 250px;
+    left: 120px;
+}
+
+/* Chart powerblock elements */
+#chartpowerblocktutorialhighlight {
+    top: 180px;
+    left: 640px;
+    width: 65px;
+    height: 270px;
+}
+
+#chartpowerblocktutorialpopup {
+    width: 210px;
+    top: 230px;
+    left: 400px;
 }
