@@ -1,0 +1,13 @@
+COOKIES FUNCTION
+
+function controlsCheckBoxMouseUp() { 
+    controlscheckboxrect.classList.remove('checkboxclick');
+    controlscheckboxrect.classList.add('checkbox');
+    toggleVisibility(controlscheckmark);
+    if(controlscheckmark.getAttributeNS(null, 'visibility') == 'visible') {
+        document.cookie = "showcontrols=false; Secure; SameSite=Strict";
+    }
+    else {
+        document.cookie = "showcontrols=true; Secure; SameSite=Strict";
+    }
+}

@@ -101,32 +101,6 @@ function controlsAnimationEnd(evt) {
 }
 
 
-function controlsCheckBoxMouseOut() {
-    if(controlscheckboxrect.classList.contains('checkboxclick')){
-        controlsCheckBoxMouseUp();
-    }
-}
-
-
-function controlsCheckBoxMouseDown() {
-    controlscheckboxrect.classList.remove('checkbox');
-    controlscheckboxrect.classList.add('checkboxclick');
-}
-
-
-function controlsCheckBoxMouseUp() {
-    controlscheckboxrect.classList.remove('checkboxclick');
-    controlscheckboxrect.classList.add('checkbox');
-    toggleVisibility(controlscheckmark);
-    if(controlscheckmark.getAttributeNS(null, 'visibility') == 'visible') {
-        document.cookie = "showcontrols=false; Secure; SameSite=Strict";
-    }
-    else {
-        document.cookie = "showcontrols=true; Secure; SameSite=Strict";
-    }
-}
-
-
 /* BODY EVENTS */
 
 

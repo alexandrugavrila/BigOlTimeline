@@ -140,10 +140,6 @@
 				stroke: black;
 				stroke-width: 2; }
 		</style>
-
-		<symbol id="checkmark" viewBox="0 0 210 297">
-			<path d="m 4.5357142,170.75595 c 19.6910608,12.95152 39.9418038,27.75437 66.5238088,63.5 C 96.276073,184.39676 111.93172,117.65038 209.39881,51.315476"/>
-		</symbol>
 	</svg>
 </head>
 
@@ -315,20 +311,15 @@
 							<rect id=controlsbuttonbox class="buttonbox" x="10" y="2" width="80" height="26" rx="5" ry="5"/>
 							<text id=controlsbuttontext class="buttontext" x="50" y="15" text-anchor="middle" alignment-baseline="middle">Controls</text>
 						</g>
-						<g id="controlspopup" display="inline">
-							<rect id="controlspopupbox" class="interfacebox" x="500" y="300" width="260" height="130"/>
+						<g id="controlspopup" display="none">
+							<rect id="controlspopupbox" class="interfacebox" x="500" y="300" width="260" height="105"/>
 							<text class="interfacetext" x="504" y="320">Click and drag to pan</text>
 							<text class="interfacetext" x="504" y="340">Alt-Mousewheel to zoom on mouse</text>
 							<text class="interfacetext" x="504" y="360">Double-Click a power to focus on it</text>
 
-							<g id="controlscheckbox">
-								<rect id="controlscheckboxrect" class="checkboxbox" x="504" y="380" width="10" height="10" rx="1" ry="1"/>
-								<use xlink:href="#checkmark" id="controlscheckmark"class = "checkmark" height="9" width ="9" x="504.5"  y="381" visibility="hidden"/>
-								<text id="controlscheckboxtext" class="checkboxtext" x="520" y="388">Do not open instructions on chart load</text>
-							</g>
 							<g id="controlsminimizebutton">
-								<rect id=controlsminimizebuttonbox class="buttonbox" x="590" y="400" width="80" height="20" rx="5" ry="5"/>
-								<text id=controlsminimizebuttontext class="buttontext" x="630" y="410" text-anchor="middle" alignment-baseline="middle">Minimize</text>
+								<rect id=controlsminimizebuttonbox class="buttonbox" x="590" y="375" width="80" height="20" rx="5" ry="5"/>
+								<text id=controlsminimizebuttontext class="buttontext" x="630" y="385" text-anchor="middle" alignment-baseline="middle">Minimize</text>
 							</g>
 						</g>
 						<g id="controlsanimationgroup">
@@ -341,7 +332,7 @@
 								dur="0.2s"
 								begin="indefinite"
 								fill="freeze"
-								data-direction="backward"
+								data-direction="forward"
 							/>
 							<animate id="controlsanimationy" class="controlsanimation"
 								xlink:href="#controlsanimationrect" 
@@ -351,7 +342,7 @@
 								dur="0.2s"
 								begin="indefinite"
 								fill="freeze"
-								data-direction="backward"
+								data-direction="forward"
 							/>
 							<animate id="controlsanimationheight" class="controlsanimation"
 								xlink:href="#controlsanimationrect" 
@@ -361,7 +352,7 @@
 								dur="0.2s"
 								begin="indefinite"
 								fill="freeze"
-								data-direction="backward"
+								data-direction="forward"
 							/>
 							<animate id="controlsanimationwidth" class="controlsanimation finalanimation"
 								xlink:href="#controlsanimationrect" 
@@ -371,7 +362,7 @@
 								dur="0.2s"
 								begin="indefinite"
 								fill="freeze"
-								data-direction="backward"
+								data-direction="forward"
 							/>
 						</g>
 					</g>
