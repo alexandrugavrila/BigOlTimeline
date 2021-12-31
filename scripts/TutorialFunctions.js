@@ -19,5 +19,5 @@ function launchTutorial(){
     pointereventblock.style.display = "block";  // Block pointer events on the website below the tutorial
     
     //Start chart header tutorial
-    chartheadertutorial.style.visibility = "visible";
+    tutorialchartheader.style.display = "block";
 }

@@ -36,9 +36,18 @@ var tutoriallaunchmodal = document.getElementById('tutoriallaunchmodal');
 var tutorialmodalclose = document.getElementById('tutorialmodalclose');
 var tutorialmodallaunchbutton = document.getElementById('tutorialmodallaunchbutton');
 var tutorialmodalclosebutton = document.getElementById('tutorialmodalclosebutton');
-var chartheadertutorial = document.getElementById('chartheadertutorial')
+var tutorialchartheader = document.getElementById('tutorialchartheader')
 var chartheadertutorialhighlight = document.getElementById('chartheadertutorialhighlight');
 var chartheadertutorialpopup = document.getElementById('chartheadertutorialpopup');
+var tutorialchartcontrols = document.getElementById('tutorialchartcontrols')
+var chartcontrolstutorialhighlight = document.getElementById('chartcontrolstutorialhighlight');
+var chartcontrolstutorialpopup = document.getElementById('chartcontrolstutorialpopup');
+var tutorialchartyearbar = document.getElementById('tutorialchartyearbar')
+var chartyearbartutorialhighlight = document.getElementById('chartyearbartutorialhighlight');
+var chartyearbartutorialpopup = document.getElementById('chartyearbartutorialpopup');
+var tutorialchartpowerblock = document.getElementById('tutorialchartpowerblock')
+var chartpowerblocktutorialhighlight = document.getElementById('chartpowerblocktutorialhighlight');
+var chartpowerblocktutorialpopup = document.getElementById('chartpowerblocktutorialpopup');
 
 // Global variables
 var chartbottom = -1000

@@ -8,25 +8,15 @@ function initializeChart() {
     for(var i = 0; i < 10; i ++) {    // Run a mouse scroll out event 15 times to initialize the chart as zoomed out
         simulateEvent(bodysvg, 'wheel', {clientX: -coord.x + 100, clientY: -coord.y, deltaY: 1, altKey: true});
     }
-    cookies = document.cookie.split(';')
+    cookies = document.cookie.split(';');
     for(i in cookies) {
-        if(cookies[i].includes('showcontrols')) {
-            values=cookies[i].split('=');
-            if(values[1] == 'true') {
-                controlspopup.setAttributeNS(null, 'display', 'inline');
-                setAnimationDirectionFlag(controlsanimations, 'backward');
-            }else{
-                controlspopup.setAttributeNS(null, 'display', 'none');
-                makeVisible(controlscheckmark);
-                setAnimationDirectionFlag(controlsanimations, 'forward');
-            }
+        if(!cookies[i].includes('firstvisit')) { // If this is the first visit
+            tutoriallaunchmodal.style.display = "inline";
+            document.cookie = "firstvisit=false; Secure; SameSite=Strict";
         }
     }
 
-    // Once everything is set up propery display the header and body
-    // bodysvg.setAttributeNS(null, 'display', 'inline');
-    // headersvg.setAttributeNS(null, 'display', 'inline');
-
+    // Once everything is set up properly display the header and body
     makeVisible(bodysvg);
     makeVisible(headersvg);
     

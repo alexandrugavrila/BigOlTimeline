@@ -28,7 +28,6 @@
     animation-duration: 0.4s
 }
 
-
 /* Modal Header */
 .modalheader {
     padding: 2px 16px;
@@ -75,12 +74,6 @@
     margin-left: 30px;
 }
 
-/* Add Animation */
-@keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-}
-
 /* blocks pointer events on entire screen */
 #pointereventblock {
     display: none;
@@ -92,13 +85,17 @@
     z-index: 1;
 }
 
+.tutorialsection {
+    display: none;
+}
+
 /* shadow of entire screen with cutout on element */
 .tutorialhighlight {
     position: absolute;
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .4);
+    box-shadow: 0 0 0 1000vmax rgba(0, 0, 0, .4);
     pointer-events: none;
+    z-index: 2;
 }
-
 
 /* POPUP ELEMENTS */
 
@@ -110,10 +107,22 @@
     background-color: #555;
     border-radius: 6px;
     padding: 8px 5px;
+    z-index: 3;
+    animation-name: animatefade;
+    animation-duration: 0.6s
 }
 
 .tutorialpopupbody span {
     color: #fff;
+}
+
+/* Popup Footer */
+.tutorialpopupfooter {
+    padding: 6px 0px 0px;
+}
+
+.tutorialpopupbutton {
+    margin: 5px;
 }
 
 /* Popup arrows */
@@ -165,20 +174,6 @@
     border-color: #555 transparent transparent transparent;
 }
 
-/* Popup Footer */
-.tutorialpopupfooter {
-    padding: 6px 0px 0px;
-}
-
-.tutorialpopupbutton {
-    margin: 5px;
-}
-
-.tutorialhighlight {
-    visibility: visible; 
-    z-index: 2;
-}
-
 /* ELEMENT SPECIFIC TUTORIAL SECTIONS */
 
 /* Chart header elememts */
@@ -213,14 +208,14 @@
 #chartyearbartutorialhighlight {
     top: 30px;
     bottom: 5500px;
-    right: 1400px;
-    left: 40px;
+    right: 1405px;
+    left: 58px;
 }
 
 #chartyearbartutorialpopup {
     width: 210px;
     top: 250px;
-    left: 120px;
+    left: 110px;
 }
 
 /* Chart powerblock elements */
@@ -228,7 +223,7 @@
     top: 180px;
     left: 640px;
     width: 65px;
-    height: 270px;
+    height: 220px;
 }
 
 #chartpowerblocktutorialpopup {
